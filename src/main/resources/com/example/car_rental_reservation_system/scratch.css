@@ -1,0 +1,44 @@
+.root {
+ -fx-background-image: url("Icons/190325-rental-cars-cs-229p.jpg");
+ -fx-background-repeat: no-repeat;
+ -fx-background-size: cover;
+ -fx-background-position: center;
+}
+
+.LoginPanel {
+ -fx-background-color: linear-gradient(#1488CC, #2B32B2);
+ -fx-background-radius: 10;
+ -fx-border-radius: 10;
+ -fx-border-color: #000000;
+ -fx-border-width: 2;
+ -fx-padding: 10;
+ -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+
+}
+.text-field {
+ -fx-background-color: #ffffff;
+ -fx-background-radius: 10;
+ -fx-border-radius: 10;
+ -fx-border-color: #000000;
+ -fx-border-width: 2;
+ -fx-padding: 10;
+ -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+}
+.jfx-button {
+    -fx-background-color: #4CAF50; /* Background color */
+    -fx-text-fill: white; /* Text color */
+    -fx-font-size: 14px; /* Font size */
+    -fx-padding: 10 20; /* Padding */
+}
+
+/* Hover effect */
+.jfx-button:hover {
+    -fx-background-color: #45a049; /* Darker background color on hover */
+}
+
+/* Pressed effect */
+.jfx-button:pressed {
+    -fx-background-color: #3c883c; /* Even darker background color when pressed */
+}
