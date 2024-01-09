@@ -47,6 +47,48 @@
 
 
 }
+.dashpanels {
+/* how to make left side gradient  */
+
+ -fx-background-color: linear-gradient(#1446A0, #DB3069);
+ -fx-background-radius: 10;
+ -fx-border-radius: 10;
+ -fx-border-color: #000000;
+ -fx-border-width: 2;
+ -fx-padding: 10;
+
+ -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+ -fx-background-radius: 10;
+ -fx-border-radius: 10;
+ -fx-border-color: #000000;
+ -fx-border-width: 2;
+ -fx-padding: 10;
+ -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+-fx-translate-x: 5;
+
+}
+.dashpanels1 {
+/* how to make left side gradient  */
+
+ -fx-background-color: linear-gradient(#1D3461, #1F487E);
+ -fx-padding: 10;
+
+
+ -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+
+
+}
+.dashpanels-circle {
+    -fx-background-color: #EBEBD3;
+    -fx-background-radius: 50%; /* Use a circular shape */
+
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+}
 .titlebar {
  -fx-background-color: linear-gradient(#1488CC, #2B32B2);
  -fx-border-radius: 10;
@@ -89,4 +131,49 @@
 /* Pressed effect */
 .jfx-button1:pressed {
     -fx-background-color: #3c883c; /* Even darker background color when pressed */
+}
+
+.custom-text-field {
+    -jfx-unfocus-color: #4d4d4d;
+    -jfx-focus-color: #009688;
+    -jfx-default-label-columncount: 1;
+    -jfx-focused-label-columncount: 1;
+    -jfx-label-float: true;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+    -fx-border-color: linear-gradient(to bottom right, #00A7E1, #083D77);
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+
+.table-view .table-column {
+    -fx-alignment: CENTER;s
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #33658A;
+    -fx-background-radius: 8px 8px 0px 0px;
+    -fx-background-inset: 0 0 0 0;
+}
+
+.table-view .column-header, .filter {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #fff;
+    -fx-font-family: "Arial";
+}
+
+/* Customize the background color of the second column cells */
+.table-view .table-row-cell table-cell {
+     -fx-background-color: transparent;
+}
+
+.table-row-cell .table-cell {
+   -fx-background-color: transparent/* Replace with your desired color */
 }

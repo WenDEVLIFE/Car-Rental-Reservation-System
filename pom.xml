@@ -54,6 +54,13 @@
             <version>9.0.10</version> <!-- Check for the latest version on the JFoenix GitHub page -->
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version> <!-- Use the version that matches your MySQL server version -->
+        </dependency>
+
+
     </dependencies>
 
     <build>

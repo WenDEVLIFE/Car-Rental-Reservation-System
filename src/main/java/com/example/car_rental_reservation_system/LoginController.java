@@ -3,10 +3,7 @@ package com.example.car_rental_reservation_system;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -26,6 +23,10 @@ public class LoginController {
     @FXML
     private Button CloseButton;
 
+    @FXML
+    private CheckBox checkPasswordBox;
+
+
     public void setStage(Stage stage){
         this.stage = stage;
 
@@ -34,7 +35,7 @@ public class LoginController {
     @FXML
     void LoginAction(javafx.event.ActionEvent event) {
 
-
+         // call the loginAuthenticator class
         loginAuthentication login = new loginAuthentication();
         login.Login(event);
 
@@ -58,5 +59,24 @@ public class LoginController {
         CloseButton.setTooltip(tooltip2);
 
         System.out.println("LoginController has been initialized");
+
+    }
+
+    @FXML
+    void checkpassword (ActionEvent event) {
+        System.out.println("Check password");
+
+        if (checkPasswordBox.isSelected()) {
+            // If checkbox is selected, show the password
+            passwordfield.setPromptText(passwordfield.getText());
+            passwordfield.clear();
+
+        } else {
+            // If checkbox is not selected, hide the password
+            passwordfield.setText(passwordfield.getPromptText());
+            passwordfield.setPromptText("Password");
+
+        }
+
     }
 }
