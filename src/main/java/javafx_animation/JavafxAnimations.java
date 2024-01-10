@@ -3,7 +3,9 @@ package javafx_animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafxf_functions.UserTable;
@@ -41,65 +43,68 @@ public class JavafxAnimations {
         dashboardScaleTransition.setToX(1);
         dashboardScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), dashboardPanel);
-        rotateTransition.setByAngle(360);
-        rotateTransition.play();
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), dashboardPanel);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
 
         ScaleTransition carScaleTransition = new ScaleTransition(Duration.seconds(1), CarPanel);
         carScaleTransition.setToX(1);
         carScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition2 = new RotateTransition(Duration.seconds(2), CarPanel);
-        rotateTransition2.setByAngle(360);
-        rotateTransition2.play();
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), CarPanel);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
 
         ScaleTransition adminScaleTransition = new ScaleTransition(Duration.seconds(1), AdminPane);
         adminScaleTransition.setToX(1);
         adminScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition3 = new RotateTransition(Duration.seconds(2), AdminPane);
-        rotateTransition3.setByAngle(360);
-        rotateTransition3.play();
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), AdminPane);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
 
         ScaleTransition dashboardTitleScaleTransition = new ScaleTransition(Duration.seconds(1), DashboardTitle);
         dashboardTitleScaleTransition.setToX(1);
         dashboardTitleScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition4 = new RotateTransition(Duration.seconds(2), DashboardTitle);
-        rotateTransition4.setByAngle(360);
-        rotateTransition4.play();
+        FadeTransition fadeTransition4 = new FadeTransition(Duration.seconds(1), DashboardTitle);
+        fadeTransition4.setFromValue(0);
+        fadeTransition4.setToValue(1);
 
         ScaleTransition dashboardBackgroundScaleTransition = new ScaleTransition(Duration.seconds(1), DashBoardBackground);
         dashboardBackgroundScaleTransition.setToX(1);
         dashboardBackgroundScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition5 = new RotateTransition(Duration.seconds(2), DashBoardBackground);
-        rotateTransition5.setByAngle(360);
-        rotateTransition5.play();
+        FadeTransition fadeTransition5 = new FadeTransition(Duration.seconds(1), DashBoardBackground);
+        fadeTransition5.setFromValue(0);
+        fadeTransition5.setToValue(1);
 
         ScaleTransition staffScaleTransition = new ScaleTransition(Duration.seconds(1), StaffPane);
         staffScaleTransition.setToX(1);
         staffScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition6 = new RotateTransition(Duration.seconds(2), StaffPane);
-        rotateTransition6.setByAngle(360);
-        rotateTransition6.play();
+        FadeTransition fadeTransition6 = new FadeTransition(Duration.seconds(1), StaffPane);
+        fadeTransition6.setFromValue(0);
+        fadeTransition6.setToValue(1);
 
         ScaleTransition reportScaleTransition = new ScaleTransition(Duration.seconds(1), ReportPane);
         reportScaleTransition.setToX(1);
         reportScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition7 = new RotateTransition(Duration.seconds(2), ReportPane);
-        rotateTransition7.setByAngle(360);
-        rotateTransition7.play();
+        FadeTransition fadeTransition7 = new FadeTransition(Duration.seconds(1), ReportPane);
+        fadeTransition7.setFromValue(0);
+        fadeTransition7.setToValue(1);
 
         ScaleTransition availableCarsScaleTransition = new ScaleTransition(Duration.seconds(1), AvailableCarsPane);
         availableCarsScaleTransition.setToX(1);
         availableCarsScaleTransition.setToY(1);
 
-        RotateTransition rotateTransition8 = new RotateTransition(Duration.seconds(2), AvailableCarsPane);
-        rotateTransition8.setByAngle(360);
-        rotateTransition8.play();
+        FadeTransition fadeTransition8 = new FadeTransition(Duration.seconds(1), AvailableCarsPane);
+        fadeTransition8.setFromValue(0);
+        fadeTransition8.setToValue(1);
+
+
+
 
 
 
@@ -139,4 +144,31 @@ public class JavafxAnimations {
         fadeTransition4.play();
     }
 
+    public void fade_calendars(Pane calendarPanel, Pane calendarpanel, FlowPane calendar, TabPane dashboardTabPane) {
+
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), calendarPanel);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), calendarpanel);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), calendar);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
+        fadeTransition3.play();
+
+        FadeTransition fadeTransition4 = new FadeTransition(Duration.seconds(1), dashboardTabPane);
+        fadeTransition4.setFromValue(0);
+        fadeTransition4.setToValue(1);
+        fadeTransition4.play();
+
+
+
+
+    }
 }

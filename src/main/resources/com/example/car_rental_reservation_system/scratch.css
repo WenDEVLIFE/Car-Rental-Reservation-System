@@ -177,3 +177,11 @@
 .table-row-cell .table-cell {
    -fx-background-color: transparent/* Replace with your desired color */
 }
+
+/* Style for children nodes within the FlowPane */
+.yourFlowPaneClass > * {
+    -fx-padding: 2; /* Padding for each child node */
+    -fx-margin: 2; /* Margin for each child node */
+     -fx-background-color: #ffffff;
+     -fx-text-fill: white;
+}

@@ -35,9 +35,22 @@ public class LoginController {
     @FXML
     void LoginAction(javafx.event.ActionEvent event) {
 
-         // call the loginAuthenticator class
-        loginAuthentication login = new loginAuthentication();
-        login.Login(event);
+        String username = usernamefield.getText();
+        String password = passwordfield.getText();
+
+        if(username.isEmpty() || password.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter your username and password");
+            alert.showAndWait();
+        }
+        else {
+            // call the loginAuthenticator class
+            loginAuthentication login = new loginAuthentication();
+            login.Login(event, username, password,usernamefield, passwordfield );
+        }
+
 
 
     }

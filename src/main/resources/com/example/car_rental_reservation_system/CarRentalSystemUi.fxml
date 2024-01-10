@@ -13,8 +13,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="770.0" prefWidth="1001.0" stylesheets="@scratch.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.car_rental_reservation_system.CarSystemController">
    <children>
@@ -148,27 +150,27 @@
                         </Pane>
                         <Pane fx:id="DashboardTitle" layoutX="144.0" layoutY="33.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
                            <children>
-                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="794.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons/car.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="635.0" layoutY="4.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="664.0" layoutY="4.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="Setusername1" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="627.0" layoutY="29.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="664.0" layoutY="29.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="setstatus1" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
@@ -186,27 +188,27 @@
                      <children>
                         <Pane fx:id="AdminTitle1" layoutX="144.0" layoutY="32.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
                            <children>
-                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="794.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="646.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons/car.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="635.0" layoutY="4.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                              <Label layoutX="713.0" layoutY="7.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="664.0" layoutY="4.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="Setusername2" layoutX="752.0" layoutY="4.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="627.0" layoutY="29.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                              <Label layoutX="697.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="664.0" layoutY="29.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="setstatus2" layoutX="752.0" layoutY="27.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
@@ -269,6 +271,79 @@
                      </children></AnchorPane>
                </content>
           </Tab>
+            <Tab fx:id="CalendarTab" text="Calendar">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
+                     <children>
+                        <Pane fx:id="DashboardTitle1" layoutX="144.0" layoutY="32.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Setusername3" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="setstatus3" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <FlowPane fx:id="calendar" layoutX="246.0" layoutY="171.0" prefHeight="608.0" prefWidth="666.0" styleClass="yourFlowPaneClass" stylesheets="@scratch.css" />
+                        <Pane fx:id="CalendarPanel" layoutX="214.0" layoutY="88.0" prefHeight="83.0" prefWidth="672.0" styleClass="dashpanels" stylesheets="@scratch.css">
+                           <children>
+                              <Text fx:id="month" fill="#f8f8f8" layoutX="319.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month" wrappingWidth="222.0">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="year" fill="#f8f8f8" layoutX="165.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year" wrappingWidth="110.0">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="BackCalendar" layoutX="39.0" layoutY="19.0" mnemonicParsing="false" onAction="#back" prefHeight="55.0" prefWidth="64.0" styleClass="jfx-button" stylesheets="@scratch.css" text="&lt;&lt;" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="NextCalendar" layoutX="574.0" layoutY="19.0" mnemonicParsing="false" onAction="#next" prefHeight="55.0" prefWidth="68.0" styleClass="jfx-button" stylesheets="@scratch.css" text="&gt;&gt;" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Button>
+                              <Text fx:id="month1" fill="#f8f8f8" layoutX="207.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calendar" wrappingWidth="160.0">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="calendarpanel" layoutX="214.0" layoutY="796.0" prefHeight="15.0" prefWidth="707.0" styleClass="dashpanels" stylesheets="@scratch.css" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
       <Pane layoutY="23.0" prefHeight="783.0" prefWidth="150.0" styleClass="navbar" stylesheets="@scratch.css">
@@ -295,7 +370,7 @@
                   <Font size="11.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="9.0" layoutY="185.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Calendar   ">
+            <JFXButton layoutX="9.0" layoutY="185.0" onAction="#nextCalendar" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Calendar   ">
                <font>
                   <Font size="9.0" />
                </font>

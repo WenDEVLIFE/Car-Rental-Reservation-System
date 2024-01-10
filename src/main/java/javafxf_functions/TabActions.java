@@ -15,4 +15,7 @@ public class TabActions {
         DashboardTabPane.getSelectionModel().select(AdminTab);
     }
 
+    public void Calendar(Tab CalendarTab, TabPane DashboardTabPane) {
+        DashboardTabPane.getSelectionModel().select(CalendarTab);
+    }
 }

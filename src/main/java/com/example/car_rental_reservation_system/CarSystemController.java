@@ -7,13 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx_animation.JavafxAnimations;
 import javafxf_functions.*;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 
 public class CarSystemController {
 
@@ -29,6 +30,9 @@ public class CarSystemController {
     private AnchorPane dashboardRoot;
 
     @FXML
+    private FlowPane calendar;
+
+    @FXML
     private Pane dashboardPanel;
 
     @FXML
@@ -37,10 +41,8 @@ public class CarSystemController {
     @FXML
     private Pane AdminPane;
 
-
     @FXML
     private Pane DashboardTitle;
-
 
     @FXML
     private Pane DashBoardBackground;
@@ -64,6 +66,12 @@ public class CarSystemController {
     private Pane AdminBackground;
 
     @FXML
+    private Pane CalendarPanel;
+
+    @FXML
+    private Pane calendarpanel;
+
+    @FXML
     private TabPane DashboardTabPane;
 
     @FXML
@@ -71,6 +79,9 @@ public class CarSystemController {
 
     @FXML
     private Tab AdminTab;
+
+    @FXML
+    private Tab CalendarTab;
 
     @FXML
     private ComboBox <String> StatusUser;
@@ -87,10 +98,38 @@ public class CarSystemController {
     @FXML
     private CheckBox checkPasswordBox;
 
+
+    @FXML
+    private Label setstatus1;
+
+    @FXML
+    private Label Setusername1;
+
+    @FXML
+    private Label setstatus2;
+
+    @FXML
+    private Label Setusername2;
+
+    @FXML
+    private Label setstatus3;
+
+    @FXML
+    private Label Setusername3;
+
+    @FXML
+    private Text year;
+
+    @FXML
+    private Text month;
+
+
+    public ZonedDateTime dateFocus;
+      public ZonedDateTime today;
+
+
     @FXML
     private TableView<UserTable> UserView;
-
-
 
     ObservableList <UserTable>  UserList= FXCollections.observableArrayList();
 
@@ -102,6 +141,19 @@ public class CarSystemController {
     public void Setstage(Stage CarStage){
 
         this.CarStage_Receiver = CarStage;
+    }
+    public void setUsername_And_Status(String username, String status){
+        System.out.println(username);
+        System.out.println(status);
+
+        // This will set the username and status on all tabs and panes
+        Setusername1.setText(username);
+        setstatus1.setText(status);
+        Setusername2.setText(username);
+        setstatus2.setText(status);
+        Setusername3.setText(username);
+        setstatus3.setText(status);
+
     }
 
     @FXML
@@ -138,6 +190,19 @@ public class CarSystemController {
                 DashBoardBackground, StaffPane, ReportPane, AvailableCarsPane);
 
     }
+    @FXML
+    void nextCalendar (ActionEvent event){
+
+        // This will be connected on the car system fxml file
+        TabActions tabActions = new TabActions();
+        tabActions.Calendar(CalendarTab, DashboardTabPane);
+
+        // Create scale transitions
+
+        // Create scale transitions
+        JavafxAnimations animations = new JavafxAnimations();
+        animations.fade_calendars(  CalendarPanel, calendarpanel, calendar, DashboardTabPane);
+    }
 
     @FXML
     void CreateUser (ActionEvent event) {
@@ -151,9 +216,6 @@ public class CarSystemController {
         animations.fade_animations(UserPane, UserView, AdminTitle1, AdminBackground);
 
     }
-
-
-
 
 
 
@@ -209,7 +271,12 @@ public class CarSystemController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    public static boolean verifyPasswordLength(String password) {
+        int length = password.length();
+        return length >= 8 && length <=20;
+    }
 
+    // This function is to see passworld and hide the password
 
         @FXML
         void checkpassword (ActionEvent event) {
@@ -231,6 +298,20 @@ public class CarSystemController {
 
         }
 
+    @FXML
+    void next(ActionEvent event) {
+        dateFocus = dateFocus.plusMonths(1);
+        calendar.getChildren().clear();
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        calendarDisplay.drawCalendar();
+    }
+    @FXML
+    void back(ActionEvent event) {
+        dateFocus = dateFocus.minusMonths(1);
+        calendar.getChildren().clear();
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        calendarDisplay.drawCalendar();
+    }
 
 
     public void initialize (){
@@ -241,6 +322,12 @@ public class CarSystemController {
         CloseButton.setTooltip(tooltip2);
 
         System.out.println(CarStage_Receiver+"has a value");
+
+        dateFocus = ZonedDateTime.now();
+        today = ZonedDateTime.now();
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        calendarDisplay.drawCalendar();
+
 
          // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
@@ -282,10 +369,7 @@ public class CarSystemController {
 
 
     }
-    public static boolean verifyPasswordLength(String password) {
-        int length = password.length();
-        return length >= 8 && length <=20;
-    }
+
 
     public void LoadUserTable(){
         UserView.getItems().clear();
