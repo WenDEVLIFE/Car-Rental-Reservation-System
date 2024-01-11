@@ -2,10 +2,10 @@ package javafxf_functions;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.io.ObjectInputFilter;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -123,5 +123,39 @@ public class ConnectMysql {
         return hexString.toString();
     }
 
+    public void InsertAppointment_TaskInfo(String appointment_info, String receviedDate, Text calendarinfo){
+        String date = calendarinfo.getText();
+        try {
+            Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(TaskID) FROM tasktable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String query = "INSERT INTO tasktable (TaskID, TaskInfo, Date) VALUES (?, ?, ?)";
+            try (PreparedStatement pst = con.prepareStatement(query)) {
+                pst.setInt(1, newId);
+                pst.setString(2, appointment_info);
+                pst.setString(3, date);
+
+                int rowsAffected = pst.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Task has been added");
+                    alert.showAndWait();
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Log or display the exception
+        }
+    }
 
 }

@@ -33,4 +33,23 @@ public class DeleteDataFromMYSQL {
             throw new RuntimeException(e);
         }
     }
+    public void DeleteTask(TaskTable selectedTask){
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+            String deleteQuery = "DELETE FROM tasktable WHERE TaskID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, selectedTask.getTaskID()); // Assuming there's a method named getId() in your User class
+                int rowsDeleted = preparedStatement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("User deleted successfully");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("System Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("User deletion successfully");
+                    alert.showAndWait();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

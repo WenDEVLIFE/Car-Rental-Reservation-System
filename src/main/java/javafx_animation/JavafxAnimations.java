@@ -1,7 +1,6 @@
 package javafx_animation;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -170,5 +169,40 @@ public class JavafxAnimations {
 
 
 
+    }
+
+
+    public void fade_Calendar_Activity(Pane CalendarDisplayPane, Pane CalendarTitlePane) {
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), CalendarDisplayPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), CalendarTitlePane);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+
+
+    }
+
+    public void fade_Appointment(Pane AppointmentPane, Pane AppointmentInputPane, Pane AppointmentBackground) {
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), AppointmentPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), AppointmentInputPane);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), AppointmentBackground);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
+        fadeTransition3.play();
     }
 }

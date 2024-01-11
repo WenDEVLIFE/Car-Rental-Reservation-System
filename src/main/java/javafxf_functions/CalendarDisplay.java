@@ -1,11 +1,19 @@
 package javafxf_functions;
 
+import com.example.car_rental_reservation_system.CarSystemController;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx_animation.JavafxAnimations;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -21,16 +29,45 @@ public class CalendarDisplay {
 
     private ZonedDateTime today;
 
-    public CalendarDisplay(FlowPane calendar, Text year, Text month, ZonedDateTime dateFocus, ZonedDateTime today) {
+    private Text todayinfo;
+
+    private Text calendarinfo;
+
+    private Tab calendarInputTab;
+
+    private TabPane DashboardTabPane;
+
+    private Pane CalendarDisplayPane;
+
+    private Pane CalendarTitlePane;
+
+    private ObservableList<TaskTable> TaskList;
+
+    private TableView<TaskTable> TaskView;
+
+    public CalendarDisplay(FlowPane calendar, Text year, Text month, ZonedDateTime dateFocus, ZonedDateTime today, Text todayinfo, Text calendarinfo, Tab CalendarInputTab, TabPane DashboardTabPane, Pane CalendarDisplayPane, Pane CalendarTitlePane, ObservableList<TaskTable> TaskList, TableView<TaskTable> TaskView ) {
+
         this.calendar = calendar;
         this.year = year;
         this.month = month;
         this.dateFocus = dateFocus;
         this.today = today;
+        this.todayinfo = todayinfo;
+        this.calendarinfo = calendarinfo;
+        this.calendarInputTab = CalendarInputTab;
+        this.DashboardTabPane = DashboardTabPane;
+        this.CalendarDisplayPane = CalendarDisplayPane;
+        this.CalendarTitlePane = CalendarTitlePane;
+        this.TaskList = TaskList;
+        this.TaskView = TaskView;
+
     }
 
+
+
+
     public void drawCalendar() {
-        if (calendar == null || year == null || month == null || dateFocus == null || today == null) {
+        if (calendar == null || year == null || month == null || dateFocus == null || today == null || todayinfo == null || calendarinfo == null || calendarInputTab == null || DashboardTabPane == null || CalendarDisplayPane == null || CalendarTitlePane == null || TaskList == null || TaskView == null) {
             throw new NullPointerException("One or more of the parameters are null");
         } else {
             if (year != null || month != null) {
@@ -67,6 +104,51 @@ public class CalendarDisplay {
                             double textTranslationY = -(rectangleHeight / 2) * 0.75;
                             date.setTranslateY(textTranslationY);
                             stackPane.getChildren().add(date);
+
+
+                            // Create calendar activities for given date
+                            stackPane.setOnMouseClicked(event -> {
+                                int clickedDay = Integer.parseInt(date.getText());
+                                int clickedMonth = dateFocus.getMonthValue();
+                                int clickedYear = dateFocus.getYear();
+
+
+                                ZonedDateTime clickedDate = ZonedDateTime.of(clickedYear, clickedMonth, clickedDay, 0, 0, 0, 0, dateFocus.getZone());
+
+
+                                String formattedDate = String.format("%d-%d-%d", clickedYear, clickedMonth, clickedDate. getDayOfMonth());
+
+
+                                // Create calendar activities for given date
+                              TabActions tabActions = new TabActions();
+                              tabActions.GoTOAppointment( DashboardTabPane, calendarInputTab);
+
+                                todayinfo.setText("Today:");
+                                calendarinfo.setText(formattedDate);
+
+                                String formatdate = calendarinfo.getText();
+                                System.out.println(formatdate);
+
+                                JavafxAnimations fade = new JavafxAnimations();
+                                fade.fade_Calendar_Activity(CalendarDisplayPane, CalendarTitlePane);
+
+                                CarSystemController datereceiver = new CarSystemController();
+                                datereceiver.DateReceiver(formatdate);
+
+                                // Create calendar activities for given date
+                                String desiredDate = calendarinfo.getText();
+                                FilteredList<TaskTable> filteredData = new FilteredList<>(TaskList);
+
+                                filteredData.setPredicate(task -> task.DateProperty().get().equals(desiredDate));
+
+
+                                TaskView.setItems(filteredData);
+
+                                LoadCalendarActivity();
+
+                                System.out.println(formattedDate);
+                                // You can use clickedYear, clickedMonth, and clickedDay as needed
+                            });
 
                             if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
                                 rectangle.setStroke(Color.BLUE);
@@ -139,5 +221,16 @@ public class CalendarDisplay {
         }
 
         return createCalendarMap(calendarActivities);
+    }
+    public void LoadCalendarActivity(){
+        TaskView.getItems().clear();
+        try {
+            RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
+            TaskList= retrieveFromMYSQL.RetrieveCalendarActivity();
+            TaskView.setItems(TaskList);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

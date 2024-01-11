@@ -39,6 +39,7 @@ public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
 
                             // remove the student from the table and to the database
                             UserList.remove(selectedUser);
+                            UserView.refresh();
                         }
                     });
                 } else if (buttonText.equals("Edit")) {

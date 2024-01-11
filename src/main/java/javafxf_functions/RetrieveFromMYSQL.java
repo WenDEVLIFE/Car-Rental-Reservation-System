@@ -32,4 +32,26 @@ public class RetrieveFromMYSQL {
 
         return UserList;
     }
+
+    public ObservableList<TaskTable> RetrieveCalendarActivity() {
+        ObservableList<TaskTable> TaskList= FXCollections.observableArrayList();
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT TaskID, TaskInfo, Date FROM tasktable")) {
+
+            // Populate the ObservableList with data from the ResultSet
+            while (resultSet.next()) {
+                int id = resultSet.getInt("TaskID");
+                String taskinfo = resultSet.getString("TaskInfo");
+                String date = resultSet.getString("Date");
+
+                TaskList.add(new TaskTable(id, taskinfo, date));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return TaskList;
+    }
 }

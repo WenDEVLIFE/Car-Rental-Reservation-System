@@ -3,10 +3,10 @@ package com.example.car_rental_reservation_system;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -72,6 +72,21 @@ public class CarSystemController {
     private Pane calendarpanel;
 
     @FXML
+    private Pane CalendarTitlePane;
+
+    @FXML
+    private Pane CalendarDisplayPane;
+
+    @FXML
+    private Pane AppointmentPane;
+
+    @FXML
+    private Pane AppointmentBackground;
+
+    @FXML
+    private Pane AppointmentInputPane;
+
+    @FXML
     private TabPane DashboardTabPane;
 
     @FXML
@@ -82,6 +97,13 @@ public class CarSystemController {
 
     @FXML
     private Tab CalendarTab;
+
+    @FXML
+    private Tab CalendarInputTab;
+
+
+    @FXML
+    private Tab AppointmentTab;
 
     @FXML
     private ComboBox <String> StatusUser;
@@ -117,15 +139,40 @@ public class CarSystemController {
     @FXML
     private Label Setusername3;
 
+
+    @FXML
+    private Label Setusername4;
+
+    @FXML
+    private Label setstatus4;
+
+
+    @FXML
+    private Label Setusername5;
+
+    @FXML
+    private Label setstatus5;
+
+
     @FXML
     private Text year;
 
     @FXML
     private Text month;
 
+    @FXML
+    private Text todayinfo;
+
+    @FXML
+    private Text calendarinfo;
+
+    @FXML
+    private TextArea AppointmentTextArea;
 
     public ZonedDateTime dateFocus;
       public ZonedDateTime today;
+
+      public String receviedDate;
 
 
     @FXML
@@ -133,11 +180,12 @@ public class CarSystemController {
 
     ObservableList <UserTable>  UserList= FXCollections.observableArrayList();
 
+    @FXML
+    private TableView<TaskTable> TaskView;
 
-
+    ObservableList <TaskTable>  TaskList= FXCollections.observableArrayList();
 
     // This will be connected on the car system fxml file
-
     public void Setstage(Stage CarStage){
 
         this.CarStage_Receiver = CarStage;
@@ -153,7 +201,21 @@ public class CarSystemController {
         setstatus2.setText(status);
         Setusername3.setText(username);
         setstatus3.setText(status);
+        Setusername4.setText(username);
+        setstatus4.setText(status);
+        Setusername5.setText(username);
+        setstatus5.setText(status);
 
+    }
+
+    public void DateReceiver(String formatdate){
+        if( formatdate!=null){
+            System.out.println("The date is successfully received");
+            this.receviedDate = formatdate;
+            System.out.println("We successfully received the date "+receviedDate);
+        } else {
+            throw new NullPointerException("The date is null");
+        }
     }
 
     @FXML
@@ -169,10 +231,22 @@ public class CarSystemController {
     @FXML
     void Logout (ActionEvent event) throws IOException {
 
-            System.out.println("Logout");
-            CarStage_Receiver.close();
-            LoadLogin loadLogin = new LoadLogin();
-            loadLogin.loadLogin();
+           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+           alert.setTitle("Confirmation Dialog");
+           alert.setHeaderText("Look, a Confirmation Dialog");
+           alert.setContentText("Are you sure you want to logout?");
+           alert.showAndWait();
+              if (alert.getResult() == ButtonType.OK) {
+                // ... user chose OK
+                  System.out.println("Logout");
+                  CarStage_Receiver.close();
+                  LoadLogin loadLogin = new LoadLogin();
+                  loadLogin.loadLogin();
+            } else {
+                // ... user chose CANCEL or closed the dialog
+                System.out.println("You clicked cancel");
+              }
+
 
 
     }
@@ -302,17 +376,44 @@ public class CarSystemController {
     void next(ActionEvent event) {
         dateFocus = dateFocus.plusMonths(1);
         calendar.getChildren().clear();
-        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane, CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
         calendarDisplay.drawCalendar();
     }
     @FXML
     void back(ActionEvent event) {
         dateFocus = dateFocus.minusMonths(1);
         calendar.getChildren().clear();
-        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane, CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
         calendarDisplay.drawCalendar();
     }
 
+    @FXML
+    void CreateAppointment (ActionEvent event) {
+          String date = calendarinfo.getText();
+        // This will be connected on the car system fxml file
+        TabActions tabActions = new TabActions();
+        tabActions.CreateAppointmentActions(AppointmentTab, DashboardTabPane);
+
+        // Create scale transitions
+        JavafxAnimations fade = new JavafxAnimations();
+        fade.fade_Appointment(AppointmentPane, AppointmentInputPane, AppointmentBackground);
+
+    }
+
+    @FXML
+    void SendApointment_MYSQL (ActionEvent event){
+      String appointment_info = AppointmentTextArea.getText();
+        if (appointment_info.isEmpty()){
+            showErrorAlert("Please fill up the appointment field");
+        } else {
+            try {
+                ConnectMysql connectMysql = new ConnectMysql();
+                connectMysql.InsertAppointment_TaskInfo(appointment_info, receviedDate, calendarinfo);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void initialize (){
         Tooltip tooltip = new Tooltip("Minimize");
@@ -325,9 +426,8 @@ public class CarSystemController {
 
         dateFocus = ZonedDateTime.now();
         today = ZonedDateTime.now();
-        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today);
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane,CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
         calendarDisplay.drawCalendar();
-
 
          // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
@@ -368,6 +468,31 @@ public class CarSystemController {
         LoadUserTable(); // This will load the user table
 
 
+        TableColumn<TaskTable, Integer> taskIDColumn = new TableColumn<>("TaskID");
+        taskIDColumn.setCellValueFactory(cellData -> cellData.getValue().taskIDProperty().asObject());
+        taskIDColumn.setCellFactory(CustomTableCellFactoryTask.cellFactoryForInteger());
+        taskIDColumn.setMinWidth(110);
+
+        TableColumn<TaskTable, String> taskNameColumn = new TableColumn<>("Task Name");
+        taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
+        taskNameColumn.setCellFactory(CustomTableCellFactoryTask.cellFactoryForString());
+        taskNameColumn.setMinWidth(285);
+
+        TableColumn<TaskTable, String> taskStatusColumn = new TableColumn<>("Date");
+        taskStatusColumn.setCellValueFactory(cellData ->  cellData.getValue().DateProperty());
+        taskStatusColumn.setCellFactory(CustomTableCellFactoryTask.cellFactoryForString());
+        taskStatusColumn.setMinWidth(110);
+
+        TableColumn <TaskTable, Void> actionColumn3 = new TableColumn<>("Done Task");
+        actionColumn3.setCellFactory(param -> new ButtonCalendar("Done Task", TaskView, TaskList));
+        actionColumn3.setMinWidth(100);
+
+        TableColumn<TaskTable, Void> actionColumn4 = new TableColumn<>("Delete Task");
+        actionColumn4.setCellFactory(param -> new ButtonCalendar("Delete Task", TaskView, TaskList));
+
+        TaskView.getColumns().addAll(taskIDColumn, taskNameColumn, taskStatusColumn, actionColumn3, actionColumn4);
+
+
     }
 
 
@@ -383,6 +508,7 @@ public class CarSystemController {
         }
 
     }
+
 
 
 }

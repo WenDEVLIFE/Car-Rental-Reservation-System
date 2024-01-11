@@ -18,4 +18,13 @@ public class TabActions {
     public void Calendar(Tab CalendarTab, TabPane DashboardTabPane) {
         DashboardTabPane.getSelectionModel().select(CalendarTab);
     }
+    public void GoTOAppointment(TabPane DashboardTabPane, Tab CalendarInputTab) {
+        DashboardTabPane.getSelectionModel().select(CalendarInputTab);
+    }
+
+    public void CreateAppointmentActions(Tab AppointmentTab, TabPane DashboardTabPane) {
+        DashboardTabPane.getSelectionModel().select(AppointmentTab);
+    }
+
+
 }
