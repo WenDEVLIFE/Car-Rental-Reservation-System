@@ -27,63 +27,6 @@
             <content>
               <AnchorPane fx:id="dashboardRoot" minHeight="0.0" minWidth="0.0" prefHeight="730.0" prefWidth="1001.0" styleClass="color-full-background" stylesheets="@scratch.css">
                      <children>
-                        <Pane fx:id="dashboardPanel" layoutX="162.0" layoutY="264.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
-                           <children>
-                              <Label layoutX="58.0" layoutY="14.0" prefHeight="65.0" prefWidth="150.0" text="TOTAL CARS" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/car.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Pane fx:id="CarPanel" layoutX="440.0" layoutY="264.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
-                           <children>
-                              <Label layoutX="58.0" layoutY="14.0" prefHeight="65.0" prefWidth="178.0" text="RENTED CARS" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/vehicle.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Pane fx:id="AdminPane" layoutX="721.0" layoutY="264.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
-                           <children>
-                              <Label layoutX="84.0" layoutY="14.0" prefHeight="65.0" prefWidth="98.0" text="Admin" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/software-engineer.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
                         <Pane fx:id="DashBoardBackground" layoutX="147.0" layoutY="81.0" prefHeight="172.0" prefWidth="861.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
                               <Label fx:id="DashBoardTitle" layoutX="14.0" layoutY="44.0" prefHeight="67.0" prefWidth="349.0" text="DASHBOARD" textFill="#fcfcfc">
@@ -92,7 +35,7 @@
                                  </font>
                               </Label>
                            </children></Pane>
-                        <Pane fx:id="StaffPane" layoutX="162.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
+                        <Pane fx:id="StaffPane" layoutX="162.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels4" stylesheets="@scratch.css">
                            <children>
                               <Label layoutX="84.0" layoutY="14.0" prefHeight="65.0" prefWidth="98.0" text="STAFF" textFill="#fcfcfc">
                                  <font>
@@ -111,7 +54,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="ReportPane" layoutX="440.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
+                        <Pane fx:id="ReportPane" layoutX="440.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels5" stylesheets="@scratch.css">
                            <children>
                               <Label layoutX="65.0" layoutY="14.0" prefHeight="65.0" prefWidth="136.0" text="REPORTS" textFill="#fcfcfc">
                                  <font>
@@ -130,7 +73,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="AvailableCarsPane" layoutX="721.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
+                        <Pane fx:id="AvailableCarsPane" layoutX="721.0" layoutY="509.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels6" stylesheets="@scratch.css">
                            <children>
                               <Label layoutX="73.0" layoutY="14.0" prefHeight="65.0" prefWidth="144.0" text="Available cars" textFill="#fcfcfc">
                                  <font>
@@ -174,6 +117,63 @@
                               <Label fx:id="setstatus1" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="dashboardPanel" layoutX="162.0" layoutY="241.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels" stylesheets="@scratch.css">
+                           <children>
+                              <Label layoutX="58.0" layoutY="14.0" prefHeight="65.0" prefWidth="150.0" text="TOTAL CARS" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="CarPanel" layoutX="440.0" layoutY="241.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                           <children>
+                              <Label layoutX="58.0" layoutY="14.0" prefHeight="65.0" prefWidth="178.0" text="RENTED CARS" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/vehicle.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AdminPane" layoutX="721.0" layoutY="241.0" prefHeight="213.0" prefWidth="266.0" styleClass="dashpanels3" stylesheets="@scratch.css">
+                           <children>
+                              <Label layoutX="84.0" layoutY="14.0" prefHeight="65.0" prefWidth="98.0" text="Admin" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="80.0" fitWidth="124.0" layoutX="84.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/software-engineer.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="116.0" layoutY="126.0" prefHeight="73.0" prefWidth="57.0" text="0" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
                                  </font>
                               </Label>
                            </children>
@@ -305,7 +305,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <FlowPane fx:id="calendar" layoutX="246.0" layoutY="171.0" prefHeight="608.0" prefWidth="666.0" styleClass="yourFlowPaneClass" stylesheets="@scratch.css" />
+                        <FlowPane fx:id="calendar" layoutX="261.0" layoutY="171.0" prefHeight="617.0" prefWidth="624.0" styleClass="yourFlowPaneClass" stylesheets="@scratch.css" />
                         <Pane fx:id="CalendarPanel" layoutX="214.0" layoutY="88.0" prefHeight="83.0" prefWidth="672.0" styleClass="dashpanels" stylesheets="@scratch.css">
                            <children>
                               <Text fx:id="month" fill="#f8f8f8" layoutX="319.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month" wrappingWidth="222.0">
@@ -453,6 +453,134 @@
                      </children></AnchorPane>
               </content>
             </Tab>
+            <Tab fx:id="AddRentCarTab" text="Add a rent car">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
+                     <children>
+                        <Pane fx:id="AddRentCarPane" layoutX="144.0" layoutY="32.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Setusername6" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="setstatus6" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AddRentCarPaneBG" layoutX="148.0" layoutY="80.0" prefHeight="96.0" prefWidth="855.0" styleClass="root" stylesheets="@scratch.css">
+                           <children>
+                              <Label fx:id="DashBoardTitle12" layoutX="14.0" prefHeight="67.0" prefWidth="349.0" text="Add rent a car" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="43.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <TableView fx:id="CarView" layoutX="501.0" layoutY="148.0" prefHeight="654.0" prefWidth="500.0" />
+                        <Pane fx:id="CarPane" layoutX="145.0" layoutY="151.0" prefHeight="649.0" prefWidth="351.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                           <children>
+                              <Button layoutX="64.0" layoutY="483.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="193.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Add a car to rent" />
+                              <JFXTextField layoutX="15.0" layoutY="59.0" prefHeight="41.0" prefWidth="321.0" />
+                              <Label fx:id="DashBoardTitle122" layoutX="18.0" layoutY="20.0" prefHeight="33.0" prefWidth="158.0" text="Car Name" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField layoutX="15.0" layoutY="148.0" prefHeight="41.0" prefWidth="321.0" />
+                              <Label fx:id="DashBoardTitle1221" layoutX="18.0" layoutY="108.0" prefHeight="33.0" prefWidth="205.0" text="Car Plate Number" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField layoutX="16.0" layoutY="234.0" prefHeight="41.0" prefWidth="321.0" />
+                              <Label fx:id="DashBoardTitle12211" layoutX="18.0" layoutY="201.0" prefHeight="33.0" prefWidth="205.0" text="Car Plate Number" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="18.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Insert a image" />
+                              <Label fx:id="DashBoardTitle122111" layoutX="18.0" layoutY="292.0" prefHeight="33.0" prefWidth="317.0" text="Car image" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle1221111" layoutX="153.0" layoutY="329.0" prefHeight="33.0" prefWidth="193.0" text="Null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="AvailableRentedCarTab" text="AvailableCars">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
+                     <children>
+                        <Pane fx:id="AVAILableCarBG" layoutX="146.0" layoutY="78.0" prefHeight="96.0" prefWidth="855.0" styleClass="root" stylesheets="@scratch.css">
+                           <children>
+                              <Label fx:id="DashBoardTitle121" layoutX="14.0" layoutY="15.0" prefHeight="67.0" prefWidth="478.0" text="Availabe cars to rent" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="43.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AvailableCarPane" layoutX="145.0" layoutY="30.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Setusername7" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="setstatus7" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <TableView fx:id="CarView1" layoutX="166.0" layoutY="167.0" prefHeight="624.0" prefWidth="813.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
       <Pane layoutY="23.0" prefHeight="783.0" prefWidth="150.0" styleClass="navbar" stylesheets="@scratch.css">
@@ -462,7 +590,7 @@
                   <Image url="@icons/CarLogo2.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="8.0" layoutY="336.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Add Car">
+            <JFXButton layoutX="8.0" layoutY="336.0" onAction="#AddCarTabActions" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Add Car">
                <font>
                   <Font size="9.0" />
                </font>
@@ -491,7 +619,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="9.0" layoutY="235.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Rent a car  ">
+            <JFXButton layoutX="9.0" layoutY="235.0" onAction="#RentACarAction" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Rent a car  ">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -515,7 +643,7 @@
                   <Font size="9.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="7.0" layoutY="385.0" onAction="#CreateUser" prefHeight="48.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="    Create User">
+            <JFXButton layoutX="9.0" layoutY="494.0" onAction="#CreateUser" prefHeight="48.0" prefWidth="135.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="    Create User">
                <font>
                   <Font size="9.0" />
                </font>
@@ -525,29 +653,49 @@
                   <Image url="@icons/addcar.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="9.0" layoutY="439.0" prefHeight="47.0" prefWidth="135.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="      Personal info">
+            <JFXButton layoutX="8.0" layoutY="551.0" prefHeight="47.0" prefWidth="135.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="      Personal info">
                <font>
                   <Font size="9.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="9.0" layoutY="492.0" onAction="#Logout" prefHeight="42.0" prefWidth="135.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="       Logout     ">
+            <JFXButton layoutX="8.0" layoutY="606.0" onAction="#Logout" prefHeight="42.0" prefWidth="135.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="       Logout     ">
                <font>
                   <Font size="9.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="33.0" fitWidth="48.0" layoutX="27.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="33.0" fitWidth="48.0" layoutX="27.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/icons8-logout-64.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="28.0" fitWidth="48.0" layoutX="28.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="48.0" layoutX="29.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/add-group.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="27.0" fitWidth="32.0" layoutX="30.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="27.0" fitWidth="32.0" layoutX="30.0" layoutY="561.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/icons8-personal-64.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="8.0" layoutY="392.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="       Pending Cars">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="RentedCars" layoutX="7.0" layoutY="446.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="  Rented Cars">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="33.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/car.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="31.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/car.png" />
                </image>
             </ImageView>
          </children>

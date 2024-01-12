@@ -58,14 +58,84 @@
  -fx-padding: 10;
 
  -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
- -fx-background-radius: 10;
- -fx-border-radius: 10;
- -fx-border-color: #000000;
- -fx-border-width: 2;
- -fx-padding: 10;
- -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
 
--fx-translate-x: 5;
+    -fx-translate-x: 5;
+
+}
+
+.dashpanels2 {
+    /* how to make left side gradient  */
+
+    -fx-background-color: linear-gradient(#1446A0, #8AE1FC);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-translate-x: 5;
+
+}
+.dashpanels3 {
+    /* how to make left side gradient  */
+
+    -fx-background-color: linear-gradient(#1BE7FF, #6EEB83);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-translate-x: 5;
+
+}
+.dashpanels4 {
+    /* how to make left side gradient  */
+
+    -fx-background-color: linear-gradient(#1BE7FF, #FFB800);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-translate-x: 5;
+
+}
+.dashpanels5 {
+    /* how to make left side gradient  */
+
+    -fx-background-color: linear-gradient(#3066BE, #28C2FF);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-translate-x: 5;
+
+}
+.dashpanels6 {
+    /* how to make left side gradient  */
+
+    -fx-background-color: linear-gradient(#60AFFF, #28C2FF);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-translate-x: 5;
 
 }
 .dashpanels1 {
@@ -80,15 +150,7 @@
 
 
 }
-.dashpanels-circle {
-    -fx-background-color: #EBEBD3;
-    -fx-background-radius: 50%; /* Use a circular shape */
 
-    -fx-border-width: 2;
-    -fx-padding: 10;
-
-    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
-}
 .titlebar {
  -fx-background-color: linear-gradient(#1488CC, #2B32B2);
  -fx-border-radius: 10;
@@ -150,7 +212,7 @@
 }
 
 .table-view .table-column {
-    -fx-alignment: CENTER;s
+    -fx-alignment: CENTER;
 }
 
 .table-view .column-header-background {

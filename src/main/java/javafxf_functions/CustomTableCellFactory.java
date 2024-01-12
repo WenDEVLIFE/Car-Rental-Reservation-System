@@ -5,6 +5,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
+// This class is used to create custom table cells
 public class CustomTableCellFactory {
     public static Callback<TableColumn<UserTable, String>, TableCell<UserTable, String>> cellFactoryForString() {
         return column -> new TableCell<>() {

@@ -10,4 +10,6 @@ module com.example.car_rental_reservation_system {
     exports com.example.car_rental_reservation_system;
     exports javafxf_functions;
     opens javafxf_functions to javafx.fxml;
+    exports DatabaseFunction;
+    opens DatabaseFunction to javafx.fxml;
 }

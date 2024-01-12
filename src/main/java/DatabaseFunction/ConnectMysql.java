@@ -1,8 +1,9 @@
-package javafxf_functions;
+package DatabaseFunction;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafxf_functions.UserTable;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

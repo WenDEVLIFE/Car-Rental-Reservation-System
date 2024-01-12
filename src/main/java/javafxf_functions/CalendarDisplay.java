@@ -1,5 +1,6 @@
 package javafxf_functions;
 
+import DatabaseFunction.RetrieveFromMYSQL;
 import com.example.car_rental_reservation_system.CarSystemController;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -9,14 +10,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx_animation.JavafxAnimations;
 
 import java.time.ZonedDateTime;
-import java.util.*;
 
 public class CalendarDisplay {
 
@@ -67,6 +66,9 @@ public class CalendarDisplay {
 
 
     public void drawCalendar() {
+         /* Code for drawing calendar in the calendar pane of the Calendar tab
+         * This code will check also the passed paremeter if its null or not
+         * */
         if (calendar == null || year == null || month == null || dateFocus == null || today == null || todayinfo == null || calendarinfo == null || calendarInputTab == null || DashboardTabPane == null || CalendarDisplayPane == null || CalendarTitlePane == null || TaskList == null || TaskView == null) {
             throw new NullPointerException("One or more of the parameters are null");
         } else {
@@ -83,10 +85,11 @@ public class CalendarDisplay {
                 int monthMaxDate = dateFocus.getMonth().length(dateFocus.toLocalDate().isLeapYear());
                 int dateOffset = ZonedDateTime.of(dateFocus.getYear(), dateFocus.getMonthValue(), 1, 0, 0, 0, 0, dateFocus.getZone()).getDayOfWeek().getValue();
 
-                for (int i = 0; i < 6; i++) {
-                    for (int j = 0; j < 7; j++) {
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
                         StackPane stackPane = new StackPane();
 
+                        // Create a rectangle for each cell
                         Rectangle rectangle = new Rectangle();
                         rectangle.setFill(Color.TRANSPARENT);
                         rectangle.setStroke(Color.BLACK);
@@ -97,6 +100,7 @@ public class CalendarDisplay {
                         rectangle.setHeight(rectangleHeight);
                         stackPane.getChildren().add(rectangle);
 
+                        // Create calendar activities for given date
                         int calculatedDate = (j + 1) + (7 * i);
                         int currentDate = calculatedDate - dateOffset;
                         if (calculatedDate > dateOffset && currentDate >= 1 && currentDate <= monthMaxDate) {
@@ -135,17 +139,9 @@ public class CalendarDisplay {
                                 CarSystemController datereceiver = new CarSystemController();
                                 datereceiver.DateReceiver(formatdate);
 
-                                // Create calendar activities for given date
-                                String desiredDate = calendarinfo.getText();
-                                FilteredList<TaskTable> filteredData = new FilteredList<>(TaskList);
-
-                                filteredData.setPredicate(task -> task.DateProperty().get().equals(desiredDate));
-
-
-                                TaskView.setItems(filteredData);
 
                                 LoadCalendarActivity();
-
+                                filterTasksByDate();
                                 System.out.println(formattedDate);
                                 // You can use clickedYear, clickedMonth, and clickedDay as needed
                             });
@@ -165,6 +161,7 @@ public class CalendarDisplay {
         }
     }
 
+    /* This is an unused code for creating calendar activities for given date
     private void createCalendarActivity(List<CalendarActivity> calendarActivities, double rectangleHeight, double rectangleWidth, StackPane stackPane) {
         VBox calendarActivityBox = new VBox();
         for (int k = 0; k < calendarActivities.size(); k++) {
@@ -222,15 +219,42 @@ public class CalendarDisplay {
 
         return createCalendarMap(calendarActivities);
     }
-    public void LoadCalendarActivity(){
-        TaskView.getItems().clear();
+    */
+
+    public void LoadCalendarActivity() {
         try {
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
-            TaskList= retrieveFromMYSQL.RetrieveCalendarActivity();
-            TaskView.setItems(TaskList);
-        } catch (Exception e){
+            ObservableList<TaskTable> newTaskList = retrieveFromMYSQL.RetrieveCalendarActivity();
+
+            // Update the TaskList with the new data
+            TaskList.setAll(newTaskList);
+
+            // Filter and set items in TaskView based on the selected date
+            filterTasksByDate();
+
+            // Debugging: Print TaskList and desiredDate to the console
+            System.out.println("TaskList: " + TaskList);
+            System.out.println("Desired Date: " + calendarinfo.getText());
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+    private void filterTasksByDate() {
+        String desiredDate = calendarinfo.getText();
+
+        // Debugging: Print desiredDate to the console
+        System.out.println("Filtering by Date: " + desiredDate);
+
+        // Create a FilteredList based on the TaskList
+        FilteredList<TaskTable> filteredData = new FilteredList<>(TaskList);
+
+        // Set the predicate to filter tasks based on the selected date
+        filteredData.setPredicate(task -> task.DateProperty().get().equals(desiredDate));
+
+        // Set the filtered items in TaskView
+        TaskView.setItems(filteredData);
+    }
+
 }

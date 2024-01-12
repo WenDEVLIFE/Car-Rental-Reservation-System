@@ -1,9 +1,10 @@
 package com.example.car_rental_reservation_system;
 
+import DatabaseFunction.ConnectMysql;
+import DatabaseFunction.RetrieveFromMYSQL;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -87,6 +88,21 @@ public class CarSystemController {
     private Pane AppointmentInputPane;
 
     @FXML
+    private Pane CarPane;
+
+    @FXML
+    private Pane AddRentCarPaneBG;
+
+    @FXML
+    private Pane AddRentCarPanerPane;
+
+    @FXML
+    private Pane AvailableCarPane;
+
+    @FXML
+    private Pane AVAILableCarBG;
+
+    @FXML
     private TabPane DashboardTabPane;
 
     @FXML
@@ -104,6 +120,16 @@ public class CarSystemController {
 
     @FXML
     private Tab AppointmentTab;
+
+
+    @FXML
+    private Tab AddRentCarTab;
+
+
+    @FXML
+    private Tab AvailableRentedCarTab;
+
+
 
     @FXML
     private ComboBox <String> StatusUser;
@@ -153,6 +179,19 @@ public class CarSystemController {
     @FXML
     private Label setstatus5;
 
+    @FXML
+    private Label Setusername6;
+
+    @FXML
+    private Label setstatus6;
+
+
+    @FXML
+    private Label Setusername7;
+
+    @FXML
+    private Label setstatus7;
+
 
     @FXML
     private Text year;
@@ -185,6 +224,18 @@ public class CarSystemController {
 
     ObservableList <TaskTable>  TaskList= FXCollections.observableArrayList();
 
+
+    @FXML
+    private TableView<String> CarView1;
+
+    ObservableList <String>  CarList= FXCollections.observableArrayList();
+
+
+    @FXML
+    private TableView<String> CarView;
+
+    ObservableList <String>  AvailableCarList= FXCollections.observableArrayList();
+
     // This will be connected on the car system fxml file
     public void Setstage(Stage CarStage){
 
@@ -205,11 +256,17 @@ public class CarSystemController {
         setstatus4.setText(status);
         Setusername5.setText(username);
         setstatus5.setText(status);
+        Setusername6.setText(username);
+        setstatus6.setText(status);
+        Setusername7.setText(username);
+        setstatus7.setText(status);
 
     }
 
     public void DateReceiver(String formatdate){
+        // recveive the format date function
         if( formatdate!=null){
+            //
             System.out.println("The date is successfully received");
             this.receviedDate = formatdate;
             System.out.println("We successfully received the date "+receviedDate);
@@ -290,17 +347,39 @@ public class CarSystemController {
         animations.fade_animations(UserPane, UserView, AdminTitle1, AdminBackground);
 
     }
+    @FXML
+    void AddCarTabActions (ActionEvent event){
+
+        TabActions tabActions = new TabActions();
+        tabActions.GoToAddCar(DashboardTabPane, AddRentCarTab);
+
+        JavafxAnimations animations = new JavafxAnimations();
+        animations.FaceRentCar( CarPane, AddRentCarPaneBG, AddRentCarPanerPane, CarView);
+    }
+
+    @FXML
+    void RentACarAction (ActionEvent event){
+        TabActions tabActions = new TabActions();
+        tabActions.GoToAvailCars( DashboardTabPane, AvailableRentedCarTab );
+
+        JavafxAnimations animations = new JavafxAnimations();
+        animations.AvailableCar( AvailableCarPane, AVAILableCarBG, CarView1);
+
+
+    }
 
 
 
     // This action is to create a user
      @FXML
      void CreateUserToDB(ActionEvent event) {
+        // This will create a user to the database
          String username = UsernameField.getText();
          String password = PasswordfieldText.getText();
          String confirmpassword = ConfirmpasswordFieldText.getText();
          String status = StatusUser.getSelectionModel().getSelectedItem();
 
+         // This will check if the fields are null or not
          if (username.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || status.isEmpty()) {
              showErrorAlert("Please fill up all the fields");
          } else {
@@ -325,7 +404,8 @@ public class CarSystemController {
                              showErrorAlert("Password must have at least one uppercase letter and one special character");
                          } else {
                              ConnectMysql connectMysql = new ConnectMysql();
-                             connectMysql.checkUsername(username, password, status, UserList, UserView, UsernameField, PasswordfieldText, ConfirmpasswordFieldText, StatusUser);
+                             connectMysql.checkUsername(username, password, status, UserList, UserView,
+                                     UsernameField, PasswordfieldText, ConfirmpasswordFieldText, StatusUser);
                          }
                      }
                  } catch (Exception e) {
@@ -346,6 +426,7 @@ public class CarSystemController {
         alert.showAndWait();
     }
     public static boolean verifyPasswordLength(String password) {
+        // This function will check the assigned password length
         int length = password.length();
         return length >= 8 && length <=20;
     }
@@ -374,16 +455,25 @@ public class CarSystemController {
 
     @FXML
     void next(ActionEvent event) {
+        /*  This is the back function button of the calendar
+         * Then it will add the months and pass the parameter */
         dateFocus = dateFocus.plusMonths(1);
         calendar.getChildren().clear();
-        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane, CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo,
+                calendarinfo,CalendarInputTab, DashboardTabPane, CalendarDisplayPane,
+                CalendarTitlePane, TaskList, TaskView);
         calendarDisplay.drawCalendar();
     }
+
     @FXML
     void back(ActionEvent event) {
+        /*  This is the back function button of the calendar
+        * Then it will minus the months and pass the parameter */
         dateFocus = dateFocus.minusMonths(1);
         calendar.getChildren().clear();
-        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane, CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
+        CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today,
+                todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane,
+                CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);
         calendarDisplay.drawCalendar();
     }
 
@@ -402,11 +492,13 @@ public class CarSystemController {
 
     @FXML
     void SendApointment_MYSQL (ActionEvent event){
+        // This will send the appointment to the database
       String appointment_info = AppointmentTextArea.getText();
         if (appointment_info.isEmpty()){
             showErrorAlert("Please fill up the appointment field");
         } else {
             try {
+                // Call the connectMysql class to insert the appointment to the database
                 ConnectMysql connectMysql = new ConnectMysql();
                 connectMysql.InsertAppointment_TaskInfo(appointment_info, receviedDate, calendarinfo);
             } catch (Exception e){
@@ -416,6 +508,8 @@ public class CarSystemController {
     }
 
     public void initialize (){
+
+        // This will set the tooltip of the minimize and close button
         Tooltip tooltip = new Tooltip("Minimize");
         MinimizeButton.setTooltip(tooltip);
 
@@ -468,6 +562,7 @@ public class CarSystemController {
         LoadUserTable(); // This will load the user table
 
 
+        // This will load the task table
         TableColumn<TaskTable, Integer> taskIDColumn = new TableColumn<>("TaskID");
         taskIDColumn.setCellValueFactory(cellData -> cellData.getValue().taskIDProperty().asObject());
         taskIDColumn.setCellFactory(CustomTableCellFactoryTask.cellFactoryForInteger());
@@ -495,11 +590,12 @@ public class CarSystemController {
 
     }
 
-
+    // This will load the user table
     public void LoadUserTable(){
         UserView.getItems().clear();
 
         try{
+            // calll the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             UserList = retrieveFromMYSQL.RetrieveUserTable();
             UserView.setItems(UserList);

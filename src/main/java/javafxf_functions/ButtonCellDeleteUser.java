@@ -1,9 +1,8 @@
 package javafxf_functions;
 
+import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
     private final Button button;

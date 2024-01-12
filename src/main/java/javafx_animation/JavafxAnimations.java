@@ -2,12 +2,17 @@ package javafx_animation;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javafxf_functions.TaskTable;
 import javafxf_functions.UserTable;
+
+import java.sql.*;
 
 public class JavafxAnimations {
 
@@ -201,6 +206,49 @@ public class JavafxAnimations {
         fadeTransition2.play();
 
         FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), AppointmentBackground);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
+        fadeTransition3.play();
+    }
+
+
+    public void FaceRentCar(Pane CarPane, Pane AddRentCarPaneBG, Pane AddRentCarPanerPane, TableView<String> CarView) {
+
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), CarPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), AddRentCarPaneBG);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), AddRentCarPanerPane);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
+        fadeTransition3.play();
+
+        FadeTransition fadeTransition4 = new FadeTransition(Duration.seconds(1), CarView);
+        fadeTransition4.setFromValue(0);
+        fadeTransition4.setToValue(1);
+        fadeTransition4.play();
+    }
+
+    public void AvailableCar(Pane AvailableCarPane, Pane AvaiLableCarBG, TableView<String> CarView1) {
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), AvailableCarPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), AvaiLableCarBG);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), CarView1);
         fadeTransition3.setFromValue(0);
         fadeTransition3.setToValue(1);
         fadeTransition3.play();

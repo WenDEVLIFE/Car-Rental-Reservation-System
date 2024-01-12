@@ -1,10 +1,11 @@
 package javafxf_functions;
 
+import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
+// This class is used to create a button in a table cell
 public class ButtonCalendar extends TableCell<TaskTable, Void> {
     private final Button button;
 
@@ -12,6 +13,7 @@ public class ButtonCalendar extends TableCell<TaskTable, Void> {
 
     private ObservableList<TaskTable> TaskList;
 
+    // Constructor for the ButtonCell
     public ButtonCalendar(String buttonText, TableView<TaskTable> TaskView, ObservableList<TaskTable> TaskList) {
         this.button = new Button(buttonText);
         this.TaskView = TaskView;
@@ -40,7 +42,6 @@ public class ButtonCalendar extends TableCell<TaskTable, Void> {
 
 
                 } else if (buttonText.equals("Delete Task")) {
-                    // Code for editing user
                     // You may want to open a new dialog or switch to another view here
                     // For example, show an edit dialog or switch to the edit user view
                     // Code for deleting user

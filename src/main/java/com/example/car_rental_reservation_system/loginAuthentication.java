@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class loginAuthentication {
 
+    // This is the connection to the database without this, you cannot connect to the database
     public String MYSQL_URL = "jdbc:mysql://localhost:3306/car_rental_resevation_db";
     public String MYSQL_USERNAME = "root";
 
@@ -29,18 +30,30 @@ public class loginAuthentication {
     private Stage CarStage;
 
     public void Login(ActionEvent event, String username, String password, TextField usernameField, PasswordField passwordField) {
+        // Code for login then check the username and password if it is correct
         try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will find the username and password in the database then check if it is correct
             String sql = "SELECT username, password, salt FROM caruser WHERE username=?";
+
+            // Then proceed to the statement to check the username and password
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setString(1, username);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
+
+                        // This will get the salt and hashed password from the database
                         Blob saltBlob = resultSet.getBlob("salt");
                         int saltLength = (int) saltBlob.length();
                         byte[] saltBytes = saltBlob.getBytes(1, saltLength);
                         String hashedPassword = resultSet.getString("password");
 
+                        // This will check the password if it is correct
                         if (validatePassword(password, saltBytes, hashedPassword)) {
+
+                            /* This will check the status of the user if it is admin or user
+                            * also call the three methods search status, clear textfield and passwordfield*/
+
                             searchstatus( username,event);
                             usernameField.clear();
                             passwordField.clear();
@@ -64,6 +77,8 @@ public class loginAuthentication {
         try {
             // Hash the entered password with the stored salt and compare with stored hash
             String computedHashedPassword = hashPassword(enteredPassword, storedSalt);
+
+            // Then it will return the compute hashed password
             return storedHashedPassword.equals(computedHashedPassword);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
@@ -72,20 +87,27 @@ public class loginAuthentication {
     }
 
     private String hashPassword(String pass, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        // This will hash the password using PBKDF2 algorithm
         int iterations = 10000;
         int keyLength = 256;
 
+          /* This will hash the password using PBKDF2 algorithma and used of this will read the interations and key length */
         KeySpec keySpec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);
 
         try {
+            // Then proceed here to get the Instance of the SecretKeyFactory assigned to PBKDF2WithHmacSHA256
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+
+            // This will get the hashed password
             byte[] hashedPassword = factory.generateSecret(keySpec).getEncoded();
 
+            // This will convert the hashed password to hex string
             StringBuilder hexString = new StringBuilder();
             for (byte b : hashedPassword) {
                 hexString.append(String.format("%02x", b));
             }
 
+            // Then it will return the hex string
             return hexString.toString();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw e;
@@ -94,6 +116,7 @@ public class loginAuthentication {
 
     private void LoginSuccess(ActionEvent event, String username, String status) {
 
+        // Display the login success message
         System.out.println("Login");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Login");
@@ -108,8 +131,13 @@ public class loginAuthentication {
 
     }
     private void searchstatus(String username, ActionEvent event) throws SQLException {
+         // Connect to the database to find the username status
         Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+
+        // This will find the status of the user
         String sql = "SELECT status FROM caruser WHERE username=?";
+
+        // Then proceed to the statement to find the status of the user
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -117,7 +145,7 @@ public class loginAuthentication {
         String status = resultSet.getString("status");
         System.out.println(status);
 
-
+      // This will call the login success method
         LoginSuccess(event, username, status);
     }
 
@@ -175,6 +203,7 @@ public class loginAuthentication {
         }
     }
     private void showErrorAlert(String message) {
+        // This an error message if the username or password is incorrect
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
