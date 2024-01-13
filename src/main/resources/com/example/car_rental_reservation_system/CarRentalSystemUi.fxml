@@ -496,38 +496,38 @@
                            </children>
                         </Pane>
                         <TableView fx:id="CarView" layoutX="501.0" layoutY="148.0" prefHeight="654.0" prefWidth="500.0" />
-                        <Pane fx:id="CarPane" layoutX="145.0" layoutY="151.0" prefHeight="649.0" prefWidth="351.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                        <Pane fx:id="CarPane" layoutX="143.0" layoutY="151.0" prefHeight="649.0" prefWidth="351.0" styleClass="dashpanels2" stylesheets="@scratch.css">
                            <children>
-                              <Button layoutX="64.0" layoutY="483.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="193.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Add a car to rent" />
-                              <JFXTextField layoutX="15.0" layoutY="59.0" prefHeight="41.0" prefWidth="321.0" />
-                              <Label fx:id="DashBoardTitle122" layoutX="18.0" layoutY="20.0" prefHeight="33.0" prefWidth="158.0" text="Car Name" textFill="#fcfcfc">
+                              <Button layoutX="64.0" layoutY="483.0" mnemonicParsing="false" onAction="#AddRentedCars" prefHeight="47.0" prefWidth="193.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Add a car to rent" />
+                              <JFXTextField fx:id="Carname" layoutX="15.0" layoutY="67.0" prefHeight="41.0" prefWidth="321.0" />
+                              <Label fx:id="DashBoardTitle122" layoutX="26.0" layoutY="22.0" prefHeight="33.0" prefWidth="158.0" text="Car Name" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="23.0" />
                                  </font>
                               </Label>
-                              <JFXTextField layoutX="15.0" layoutY="148.0" prefHeight="41.0" prefWidth="321.0" />
-                              <Label fx:id="DashBoardTitle1221" layoutX="18.0" layoutY="108.0" prefHeight="33.0" prefWidth="205.0" text="Car Plate Number" textFill="#fcfcfc">
+                              <JFXTextField fx:id="CarPlateNum" layoutX="15.0" layoutY="169.0" prefHeight="41.0" prefWidth="321.0" />
+                              <Label fx:id="DashBoardTitle1221" layoutX="18.0" layoutY="126.0" prefHeight="33.0" prefWidth="205.0" text="Car Plate Number" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="23.0" />
                                  </font>
                               </Label>
-                              <JFXTextField layoutX="16.0" layoutY="234.0" prefHeight="41.0" prefWidth="321.0" />
-                              <Label fx:id="DashBoardTitle12211" layoutX="18.0" layoutY="201.0" prefHeight="33.0" prefWidth="205.0" text="Car Plate Number" textFill="#fcfcfc">
+                              <Button layoutX="18.0" layoutY="373.0" mnemonicParsing="false" onAction="#AddImageAction" prefHeight="40.0" prefWidth="135.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Insert a image" />
+                              <Label fx:id="DashBoardTitle122111" layoutX="17.0" layoutY="334.0" prefHeight="33.0" prefWidth="317.0" text="Car image" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="23.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="18.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Insert a image" />
-                              <Label fx:id="DashBoardTitle122111" layoutX="18.0" layoutY="292.0" prefHeight="33.0" prefWidth="317.0" text="Car image" textFill="#fcfcfc">
+                              <Label fx:id="CarFile" layoutX="166.0" layoutY="376.0" prefHeight="33.0" prefWidth="182.0" text="No File Chosen" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="23.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="DashBoardTitle1221111" layoutX="153.0" layoutY="329.0" prefHeight="33.0" prefWidth="193.0" text="Null" textFill="#fcfcfc">
+                              <Label fx:id="DashBoardTitle12211" layoutX="30.0" layoutY="234.0" prefHeight="33.0" prefWidth="150.0" text="Car Price" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="23.0" />
                                  </font>
                               </Label>
+                              <JFXTextField fx:id="CarPrice" layoutX="20.0" layoutY="277.0" prefHeight="41.0" prefWidth="321.0" />
                            </children>
                         </Pane>
                      </children>

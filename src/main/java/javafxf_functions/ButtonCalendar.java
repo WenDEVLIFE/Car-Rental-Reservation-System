@@ -88,7 +88,7 @@ public class ButtonCalendar extends TableCell<TaskTable, Void> {
             // Set style class for the button based on buttonText
             String buttonText = button.getText();
             if ("Done Task".equals(buttonText) || "Delete Task".equals(buttonText)) {
-                button.getStyleClass().add("jfx-button");
+                button.getStyleClass().add("jfx-buttoncell");
             }
 
             setGraphic(button);

@@ -60,9 +60,9 @@ public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
             // Set style class for the button based on buttonText
             String buttonText = getButton().getText();
             if ("Delete".equals(buttonText)) {
-                button.getStyleClass().add("jfx-button");
+                button.getStyleClass().add("jfx-buttoncell");
             } else if ("Edit".equals(buttonText)) {
-                button.getStyleClass().add("jfx-button");
+                button.getStyleClass().add("jfx-buttoncell");
             }
 
             setGraphic(button);

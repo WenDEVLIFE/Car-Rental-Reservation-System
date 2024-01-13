@@ -1,6 +1,9 @@
 package DatabaseFunction;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableView;
+import javafxf_functions.CarImage;
 import javafxf_functions.TaskTable;
 import javafxf_functions.UserTable;
 
@@ -14,10 +17,9 @@ public class DeleteDataFromMYSQL {
     /* This is the connection to the database without this,
     you cannot connectto the database */
 
-    public String MYSQL_URL = "jdbc:mysql://localhost:3306/car_rental_resevation_db";
-    public String MYSQL_USERNAME = "root";
-
-    public String MYSQL_PASSWORD = "";
+    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
 
     public void deleteUser(UserTable selectedUser) {
@@ -74,4 +76,32 @@ public class DeleteDataFromMYSQL {
             throw new RuntimeException(e);
         }
     }
+    public static void DeleteCar( int carID) {
+        // Code for deleting car from database
+        try (Connection connection = DriverManager.getConnection(MYSQLDATABASE.getDatabaseURL(), MYSQLDATABASE.getDatabaseUsername(), MYSQLDATABASE.getDatabasePassword())) {
+
+            // This will find the car by the CarID
+            String deleteQuery = "DELETE FROM rentedcars WHERE CarID = ?";
+
+            // Then passed on the prepared statement to delete the CarID
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, carID); // Assuming there's a method named getId() in your User class
+                int rowsDeleted = preparedStatement.executeUpdate();
+
+                // This will show the alert if the car is deleted
+                if (rowsDeleted > 0) {
+                    System.out.println("Car deleted successfully");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("System Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Car deletion successfully");
+                    alert.showAndWait();
+                }
+            }
+        } catch (SQLException e) {
+            // This will error if the code is incorrect but the code is working fine
+            throw new RuntimeException(e);
+        }
+    }
+
 }

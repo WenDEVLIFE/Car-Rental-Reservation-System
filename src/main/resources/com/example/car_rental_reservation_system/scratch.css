@@ -195,6 +195,22 @@
     -fx-background-color: #3c883c; /* Even darker background color when pressed */
 }
 
+.jfx-buttoncell {
+    -fx-background-color: #4CAF50; /* Background color */
+    -fx-text-fill: white; /* Text color */
+    -fx-font-size: 10px; /* Font size */
+    -fx-padding: 10 20; /* Padding */
+}
+
+/* Hover effect */
+.jfx-buttoncell:hover {
+    -fx-background-color: #45a049; /* Darker background color on hover */
+}
+
+/* Pressed effect */
+.jfx-buttoncell:pressed {
+    -fx-background-color: #3c883c; /* Even darker background color when pressed */
+}
 .custom-text-field {
     -jfx-unfocus-color: #4d4d4d;
     -jfx-focus-color: #009688;

@@ -13,10 +13,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 
 public class ConnectMysql {
-    public String MYSQL_URL = "jdbc:mysql://localhost:3306/car_rental_resevation_db";
-    public String MYSQL_USERNAME = "root";
-
-    public String MYSQL_PASSWORD = "";
+    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
     public void checkUsername (String username, String password, String status, ObservableList<UserTable> UserList, TableView<UserTable> UserView, TextField UsernameField, PasswordField PasswordfieldText, PasswordField ConfirmpasswordFieldText, ComboBox<String> StatusUser){
         try {

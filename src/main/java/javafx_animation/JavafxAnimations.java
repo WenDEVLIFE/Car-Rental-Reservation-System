@@ -2,17 +2,13 @@ package javafx_animation;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import javafxf_functions.TaskTable;
+import javafxf_functions.CarImage;
 import javafxf_functions.UserTable;
-
-import java.sql.*;
 
 public class JavafxAnimations {
 
@@ -212,7 +208,7 @@ public class JavafxAnimations {
     }
 
 
-    public void FaceRentCar(Pane CarPane, Pane AddRentCarPaneBG, Pane AddRentCarPanerPane, TableView<String> CarView) {
+    public void FaceRentCar(Pane CarPane, Pane AddRentCarPaneBG, Pane AddRentCarPanerPane, TableView<CarImage> CarView) {
 
         // Create fade transitions
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), CarPane);
@@ -236,7 +232,7 @@ public class JavafxAnimations {
         fadeTransition4.play();
     }
 
-    public void AvailableCar(Pane AvailableCarPane, Pane AvaiLableCarBG, TableView<String> CarView1) {
+    public void AvailableCar(Pane AvailableCarPane, Pane AvaiLableCarBG, TableView<CarImage> CarView1) {
         // Create fade transitions
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), AvailableCarPane);
         fadeTransition.setFromValue(0);

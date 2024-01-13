@@ -2,18 +2,21 @@ package DatabaseFunction;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafxf_functions.CarImage;
 import javafxf_functions.TaskTable;
 import javafxf_functions.UserTable;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 
 public  class RetrieveFromMYSQL {
 
     // This is the connection to the database without this, you cannot connect to the database
-    public String MYSQL_URL = "jdbc:mysql://localhost:3306/car_rental_resevation_db";
-    public String MYSQL_USERNAME = "root";
-
-    public String MYSQL_PASSWORD = "";
+    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
     // This will retrieve the data from the database and put it on the table
     public ObservableList<UserTable> RetrieveUserTable() {
@@ -63,5 +66,36 @@ public  class RetrieveFromMYSQL {
 
         // This will return the TaskList
         return TaskList;
+    }
+
+    public ObservableList<CarImage> RetrieveCarTable() {
+        ObservableList<CarImage> CarList = FXCollections.observableArrayList();
+
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT CarID, Carname, CarPlateNum, CarPrice, CarImage FROM rentedcars")) {
+
+            while (resultSet.next()) {
+                int carID = resultSet.getInt("CarID");
+                String carname = resultSet.getString("Carname");
+                String carPlateNum = resultSet.getString("CarPlateNum");
+                int carPrice = resultSet.getInt("CarPrice");
+
+                // Retrieve BLOB data
+                Blob carImageBlob = resultSet.getBlob("CarImage");
+                InputStream carImageStream = carImageBlob.getBinaryStream();
+
+                // Convert BLOB to Image
+                Image carImage = new Image(carImageStream);
+
+                // Add CarImage to the list
+                CarList.add(new CarImage(carID, carname, carPlateNum, carPrice, carImage));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return CarList;
     }
 }

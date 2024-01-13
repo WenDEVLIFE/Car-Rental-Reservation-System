@@ -1,5 +1,7 @@
 package com.example.car_rental_reservation_system;
 
+import DatabaseFunction.MYSQLDATABASE;
+import com.example.car_rental_reservation_system.CarSystemController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,10 +25,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class loginAuthentication {
 
     // This is the connection to the database without this, you cannot connect to the database
-    public String MYSQL_URL = "jdbc:mysql://localhost:3306/car_rental_resevation_db";
-    public String MYSQL_USERNAME = "root";
-
-    public String MYSQL_PASSWORD = "";
+    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
     private Stage CarStage;
 
     public void Login(ActionEvent event, String username, String password, TextField usernameField, PasswordField passwordField) {
