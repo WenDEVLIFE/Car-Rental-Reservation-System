@@ -1,4 +1,4 @@
-package com.example.car_rental_reservation_system;
+package javafxf_functions;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

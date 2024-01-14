@@ -53,4 +53,10 @@ public class CarImage {
     public SimpleIntegerProperty CarIDProperty() {
         return CarID;
     }
+
+    public String getCarname() {
+        return Carname.get();
+    }
 }
+
+

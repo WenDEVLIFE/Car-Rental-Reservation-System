@@ -13,12 +13,18 @@ public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
 
     private ObservableList<CarImage> CarList;
 
+    private TabPane DashboardTabPane;
+
+    private Tab RentCarTab;
+
     // Constructor for the ButtonCell
-     public ButtonCellDeleteCar (String buttonText, TableView<CarImage> CarView, ObservableList<CarImage> CarList, TableView <CarImage> CarView1 ) {
+     public ButtonCellDeleteCar (String buttonText, TableView<CarImage> CarView, ObservableList<CarImage> CarList, TableView <CarImage> CarView1, TabPane DashboardTabPane, Tab RentCarTab ) {
         this.button = new Button(buttonText);
         this.CarView = CarView;
         this.CarList = CarList;
         this.CarView1 = CarView1;
+        this.DashboardTabPane = DashboardTabPane;
+        this.RentCarTab = RentCarTab;
 
         this.button.setOnAction(event -> {
             CarImage SelectedCar = getTableRow().getItem();
@@ -33,10 +39,7 @@ public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
                         if (response == ButtonType.OK) {
 
                             // Delete car from database
-                            DeleteDataFromMYSQL.DeleteCar( SelectedCar.getCarID());
-                            CarList.remove(SelectedCar);
-                            CarView.refresh();
-                            CarView1.refresh();
+
                         }
                     });
 
@@ -48,6 +51,9 @@ public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
                  else if (buttonText.equals("Rent Car")) {
 
                      System.out.println("Rent Car");
+
+                        TabActions tabActions = new TabActions();
+                        tabActions.RentCar(DashboardTabPane, RentCarTab);
 
                 }
             }
@@ -80,8 +86,8 @@ public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
 
 
     // Static method to create a callback for the table column
-    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage, Void>> forTableColumn(String buttonText , TableView<CarImage> CarView, ObservableList<CarImage> CarList, TableView <CarImage> CarView1) {
-        return param -> new ButtonCellDeleteCar (buttonText , CarView, CarList, CarView1);
+    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage, Void>> forTableColumn(String buttonText , TableView<CarImage> CarView, ObservableList<CarImage> CarList, TableView <CarImage> CarView1, TabPane DashboardTabPane, Tab RentCarTab) {
+        return param -> new ButtonCellDeleteCar (buttonText , CarView, CarList, CarView1, DashboardTabPane, RentCarTab);
     }
 }
 

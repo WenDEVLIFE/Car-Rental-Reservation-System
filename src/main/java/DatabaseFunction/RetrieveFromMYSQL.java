@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafxf_functions.CarImage;
+import javafxf_functions.CarImage2;
 import javafxf_functions.TaskTable;
 import javafxf_functions.UserTable;
 
@@ -97,5 +98,42 @@ public  class RetrieveFromMYSQL {
         }
 
         return CarList;
+    }
+
+    public ObservableList<CarImage2> RetrievePendingCar() {
+        ObservableList<CarImage2> RentedCars = FXCollections.observableArrayList();
+
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT CarID, Carname, CarPlateNum, CarPrice, CarImage,PersonRentName, DateRented, DateReturn FROM availablecar")) {
+
+            while (resultSet.next()) {
+                int carID = resultSet.getInt("CarID");
+                String carname = resultSet.getString("Carname");
+                String carPlateNum = resultSet.getString("CarPlateNum");
+                int carPrice = resultSet.getInt("CarPrice");
+
+                // Retrieve BLOB data
+                Blob carImageBlob = resultSet.getBlob("CarImage");
+                InputStream carImageStream = carImageBlob.getBinaryStream();
+
+                // Convert BLOB to Image
+                Image carImage = new Image(carImageStream);
+
+                String PersonRentedName = resultSet.getString("PersonRentName");
+                String DateRented = resultSet.getString("DateRented");
+                String DateReturn = resultSet.getString("DateReturn");
+
+
+
+                // Add CarImage to the list
+                RentedCars.add(new CarImage2(carID, carname, carPlateNum, carPrice, carImage , PersonRentedName, DateRented, DateReturn));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return RentedCars ;
     }
 }

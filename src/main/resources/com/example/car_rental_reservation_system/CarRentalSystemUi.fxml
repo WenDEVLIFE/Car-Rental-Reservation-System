@@ -545,6 +545,12 @@
                                     <Font name="Berlin Sans FB Demi Bold" size="43.0" />
                                  </font>
                               </Label>
+                              <JFXTextField fx:id="Search_AvailableCars" layoutX="558.0" layoutY="41.0" prefHeight="41.0" prefWidth="276.0" />
+                              <Label layoutX="465.0" layoutY="46.0" prefHeight="31.0" prefWidth="81.0" text="Search" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="27.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                         <Pane fx:id="AvailableCarPane" layoutX="145.0" layoutY="30.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
@@ -577,6 +583,222 @@
                            </children>
                         </Pane>
                         <TableView fx:id="CarView1" layoutX="166.0" layoutY="167.0" prefHeight="624.0" prefWidth="813.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="PendingCarTab" text="PendingCars">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
+                     <children>
+                        <Pane fx:id="AvailableCarPane1" layoutX="144.0" layoutY="33.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Setusername8" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="setstatus8" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AVAILableCarBG1" layoutX="145.0" layoutY="81.0" prefHeight="96.0" prefWidth="855.0" styleClass="root" stylesheets="@scratch.css">
+                           <children>
+                              <Label fx:id="DashBoardTitle1211" layoutX="14.0" layoutY="15.0" prefHeight="67.0" prefWidth="478.0" text="Pending Rented Cars" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="43.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="Search_AvailableCars1" layoutX="558.0" layoutY="41.0" prefHeight="41.0" prefWidth="276.0" />
+                              <Label layoutX="465.0" layoutY="46.0" prefHeight="31.0" prefWidth="81.0" text="Search" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <TableView fx:id="CarView11" layoutX="151.0" layoutY="170.0" prefHeight="638.0" prefWidth="846.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="RentCarTab" text="RentCar">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
+                     <children>
+                        <Pane fx:id="AvailableCarPane11" layoutX="144.0" layoutY="34.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="711.0" layoutY="12.0" prefHeight="15.0" prefWidth="33.0" text="User:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Setusername9" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="703.0" layoutY="27.0" prefHeight="15.0" prefWidth="49.0" text="Status:" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="setstatus9" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AVAILableCarBG11" layoutX="145.0" layoutY="82.0" prefHeight="96.0" prefWidth="855.0" styleClass="root" stylesheets="@scratch.css">
+                           <children>
+                              <Label fx:id="DashBoardTitle12111" layoutX="14.0" layoutY="15.0" prefHeight="67.0" prefWidth="478.0" text="Rented Info" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="43.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="144.0" layoutY="170.0" prefHeight="630.0" prefWidth="450.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                           <children>
+                              <JFXTextField fx:id="SearchCarName" layoutX="14.0" layoutY="54.0" prefHeight="40.0" prefWidth="423.0" />
+                              <Label fx:id="DashBoardTitle121111" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="380.0" text="Car name" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle1211111" layoutX="14.0" layoutY="106.0" prefHeight="30.0" prefWidth="380.0" text="Person rented name" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="PersonRentedName" layoutX="14.0" layoutY="156.0" prefHeight="40.0" prefWidth="423.0" />
+                              <JFXTextField fx:id="DateRented" layoutX="14.0" layoutY="330.0" prefHeight="40.0" prefWidth="423.0" />
+                              <Label fx:id="DashBoardTitle12111111" layoutX="14.0" layoutY="284.0" prefHeight="30.0" prefWidth="380.0" text="Date Rented" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle121111111" layoutX="14.0" layoutY="371.0" prefHeight="30.0" prefWidth="380.0" text="Date Return" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="DateReturn" layoutX="14.0" layoutY="417.0" prefHeight="33.0" prefWidth="423.0" />
+                              <JFXButton layoutX="145.0" layoutY="568.0" onAction="#Rent" prefHeight="48.0" prefWidth="159.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Rent" />
+                              <Label fx:id="DashBoardTitle1211111111" layoutX="22.0" layoutY="458.0" prefHeight="30.0" prefWidth="380.0" text="Cashier Name" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="CashierName" layoutX="16.0" layoutY="506.0" prefHeight="42.0" prefWidth="421.0" />
+                              <Label fx:id="DashBoardTitle121111114" layoutX="22.0" layoutY="197.0" prefHeight="30.0" prefWidth="380.0" text="Person Payed" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="PersonPay" layoutX="14.0" layoutY="243.0" prefHeight="40.0" prefWidth="423.0" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="592.0" layoutY="169.0" prefHeight="632.0" prefWidth="403.0" styleClass="CheckPane" stylesheets="@scratch.css">
+                           <children>
+                              <Label fx:id="DashBoardTitle12111111" layoutX="20.0" layoutY="14.0" prefHeight="30.0" prefWidth="364.0" text="Car rental Management System" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton layoutX="52.0" layoutY="567.0" prefHeight="40.0" prefWidth="101.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Print" />
+                              <JFXButton layoutX="193.0" layoutY="567.0" prefHeight="40.0" prefWidth="101.0" styleClass="jfx-button" stylesheets="@scratch.css" text="Clear" />
+                              <Label fx:id="DashBoardTitle121111112" layoutX="12.0" layoutY="98.0" prefHeight="30.0" prefWidth="182.0" text="Person Name" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="PersonLabel" layoutX="12.0" layoutY="135.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle1211111122" layoutX="11.0" layoutY="165.0" prefHeight="30.0" prefWidth="182.0" text="Cashier Name" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="CashierLabel" layoutX="12.0" layoutY="204.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle12111111221" layoutX="12.0" layoutY="242.0" prefHeight="30.0" prefWidth="182.0" text="Person Payed" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Paylabel" layoutX="12.0" layoutY="280.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle121111112211" layoutX="14.0" layoutY="310.0" prefHeight="30.0" prefWidth="86.0" text="Date " textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle1211111121111" layoutX="12.0" layoutY="352.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle121111113" layoutX="79.0" layoutY="44.0" prefHeight="30.0" prefWidth="245.0" text="Matina Crossing, Davao City" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle1211111122111" layoutX="12.0" layoutY="382.0" prefHeight="30.0" prefWidth="150.0" text="Date rented " textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle12111111211111" layoutX="12.0" layoutY="422.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle12111111221111" layoutX="12.0" layoutY="459.0" prefHeight="30.0" prefWidth="150.0" text="Date rented " textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="DashBoardTitle121111112111111" layoutX="12.0" layoutY="499.0" prefHeight="30.0" prefWidth="182.0" text="null" textFill="#222020">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
               </content>
@@ -678,24 +900,24 @@
                   <Image url="@icons/icons8-personal-64.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="8.0" layoutY="392.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="       Pending Cars">
+            <JFXButton fx:id="RentedCars" layoutX="8.0" layoutY="392.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="  Rented Cars">
                <font>
                   <Font size="9.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="RentedCars" layoutX="7.0" layoutY="446.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="  Rented Cars">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </JFXButton>
-            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="33.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="33.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/car.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="31.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+            <JFXButton fx:id="RentedCars1" layoutX="8.0" layoutY="444.0" prefHeight="42.0" prefWidth="136.0" styleClass="jfx-button1" stylesheets="@scratch.css" text="Reports">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="33.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icons/car.png" />
+                  <Image url="@icons/seo-report.png" />
                </image>
             </ImageView>
          </children>

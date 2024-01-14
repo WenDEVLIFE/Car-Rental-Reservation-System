@@ -9,9 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -132,6 +133,11 @@ public class CarSystemController {
     private Tab AvailableRentedCarTab;
 
     @FXML
+    private Tab PendingCarTab;
+
+    @FXML
+    private Tab RentCarTab;
+    @FXML
     private ComboBox <String> StatusUser;
 
     @FXML
@@ -145,6 +151,27 @@ public class CarSystemController {
 
     @FXML
     private TextField CarPrice;
+
+    @FXML
+    private TextField Search_AvailableCars;
+
+    @FXML
+    private TextField SearchCarName;
+
+    @FXML
+    private TextField PersonRentedName;
+
+    @FXML
+    private TextField DateRented;
+
+    @FXML
+    private TextField PersonPay;
+
+    @FXML
+    private TextField DateReturn;
+
+    @FXML
+    private TextField CashierName;
 
 
     @FXML
@@ -175,13 +202,11 @@ public class CarSystemController {
     @FXML
     private Label Setusername3;
 
-
     @FXML
     private Label Setusername4;
 
     @FXML
     private Label setstatus4;
-
 
     @FXML
     private Label Setusername5;
@@ -195,7 +220,6 @@ public class CarSystemController {
     @FXML
     private Label setstatus6;
 
-
     @FXML
     private Label Setusername7;
 
@@ -203,8 +227,40 @@ public class CarSystemController {
     private Label setstatus7;
 
     @FXML
-    private Label CarFile;
+    private Label Setusername8;
 
+    @FXML
+    private Label setstatus8;
+
+    @FXML
+    private Label Setusername9;
+
+    @FXML
+    private Label setstatus9;
+
+
+    @FXML
+    private Label PersonLabel;
+
+    @FXML
+    private Label CashierLabel;
+
+    @FXML
+    private Label Paylabel;
+
+    @FXML
+    private Label DateLabel;
+
+    @FXML
+    private Label DateRLabel;
+
+    @FXML
+    private Label DateRRLabel;
+
+
+
+    @FXML
+    private Label CarFile;
 
 
     @FXML
@@ -247,7 +303,12 @@ public class CarSystemController {
     @FXML
     private TableView<CarImage> CarView;
 
+    @FXML
+    private TableView<CarImage2> CarView2;
+
     ObservableList <CarImage>  CarList= FXCollections.observableArrayList();
+
+    ObservableList <CarImage2>  RentedCars= FXCollections.observableArrayList();
 
     // This will be connected on the car system fxml file
     public void Setstage(Stage CarStage){
@@ -273,6 +334,10 @@ public class CarSystemController {
         setstatus6.setText(status);
         Setusername7.setText(username);
         setstatus7.setText(status);
+        Setusername8.setText(username);
+        setstatus8.setText(status);
+        Setusername9.setText(username);
+        setstatus9.setText(status);
 
     }
 
@@ -381,7 +446,24 @@ public class CarSystemController {
 
     }
 
+    @FXML
+    void CreateAppointment (ActionEvent event) {
+        String date = calendarinfo.getText();
+        // This will be connected on the car system fxml file
+        TabActions tabActions = new TabActions();
+        tabActions.CreateAppointmentActions(AppointmentTab, DashboardTabPane);
 
+        // Create scale transitions
+        JavafxAnimations fade = new JavafxAnimations();
+        fade.fade_Appointment(AppointmentPane, AppointmentInputPane, AppointmentBackground);
+
+    }
+ @ FXML
+ void PendingAction (ActionEvent event){
+        TabActions  tabActions = new TabActions();
+        tabActions.PendingCars(DashboardTabPane, PendingCarTab);
+
+ }
 
     // This action is to create a user
      @FXML
@@ -491,19 +573,6 @@ public class CarSystemController {
     }
 
     @FXML
-    void CreateAppointment (ActionEvent event) {
-          String date = calendarinfo.getText();
-        // This will be connected on the car system fxml file
-        TabActions tabActions = new TabActions();
-        tabActions.CreateAppointmentActions(AppointmentTab, DashboardTabPane);
-
-        // Create scale transitions
-        JavafxAnimations fade = new JavafxAnimations();
-        fade.fade_Appointment(AppointmentPane, AppointmentInputPane, AppointmentBackground);
-
-    }
-
-    @FXML
     void SendApointment_MYSQL (ActionEvent event){
         // This will send the appointment to the database
       String appointment_info = AppointmentTextArea.getText();
@@ -566,7 +635,31 @@ public class CarSystemController {
             }
         }
     }
+    @FXML
+    void Rent (ActionEvent event){
+        // This will rent the car
+        String carname = SearchCarName.getText();
+        String personrented = PersonRentedName.getText();
+        String date_rented = DateRented.getText();
+        String personpay = PersonPay.getText();
+        int pay = Integer.parseInt(personpay);
+        String date_return = DateReturn.getText();
+        String cashiername = CashierName.getText();
 
+        if (personrented.isEmpty() || date_rented.isEmpty() || personpay.isEmpty() || date_return.isEmpty() || cashiername.isEmpty() || carname.isEmpty()){
+            showErrorAlert("Please fill up all the fields");
+        } else {
+            try {
+                // Call the connectMysql class to insert the appointment to the database
+                RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
+                rentMYSQL_database.MoveTheRentCarToPending(carname, personrented, date_rented, pay, date_return, cashiername, PersonPay,PersonLabel, DateRLabel, DateRRLabel, CashierLabel, Paylabel, DateLabel, RentedCars, CarView2);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
     public void initialize (){
 
         // This will set the tooltip of the minimize and close button
@@ -592,6 +685,13 @@ public class CarSystemController {
         StatusUser.setItems(Status);
 
         StatusUser.setValue("Select a status");
+
+        // This is the function of autosearch in car table
+        Search_AvailableCars.setPromptText("Search Available Cars");
+        Search_AvailableCars.textProperty().addListener((observable, oldValue, newValue) -> {
+            CarView1.setItems(CarList.filtered(carImage -> carImage.getCarname().toLowerCase().contains(newValue.toLowerCase())));
+        });
+
 
         TableColumn<UserTable, Integer> userIDColumn = new TableColumn<>("UserID");
         userIDColumn.setCellValueFactory(cellData -> cellData.getValue().userIDProperty().asObject());
@@ -673,7 +773,7 @@ public class CarSystemController {
         carPriceColumn.setCellFactory(CustomTableCellFactoryCar.cellFactoryForInteger());
 
         TableColumn <CarImage, Void> actionColumn5 = new TableColumn<>("Delete Car");
-        actionColumn5.setCellFactory(param -> new ButtonCellDeleteCar("Delete Car", CarView, CarList, CarView1));
+        actionColumn5.setCellFactory(param -> new ButtonCellDeleteCar("Delete Car", CarView, CarList, CarView1, DashboardTabPane, RentCarTab));
         actionColumn5.setMinWidth(100);
 
         CarView.getColumns().addAll(carIDColumn, imageColumn, carNameColumn, carPlateNumColumn, carPriceColumn, actionColumn5);
@@ -707,17 +807,62 @@ public class CarSystemController {
         carPriceColumn1.setMinWidth(110);
 
         TableColumn <CarImage, Void> actionColumn55 = new TableColumn<>("Delete Car");
-        actionColumn55.setCellFactory(param -> new ButtonCellDeleteCar("Delete Car", CarView, CarList, CarView1));
+        actionColumn55.setCellFactory(param -> new ButtonCellDeleteCar("Delete Car", CarView, CarList, CarView1, DashboardTabPane, RentCarTab));
         actionColumn55.setMinWidth(100);
 
         TableColumn <CarImage, Void> actionColumn6 = new TableColumn<>("Rent Car");
-        actionColumn6.setCellFactory(param -> new ButtonCellDeleteCar("Rent Car", CarView, CarList, CarView1));
+        actionColumn6.setCellFactory(param -> new ButtonCellDeleteCar("Rent Car", CarView, CarList, CarView1, DashboardTabPane, RentCarTab));
         actionColumn6.setMinWidth(100);
 
         CarView1.getColumns().addAll(carIDColumn1, imageColumn1, carNameColumn1, carPlateNumColumn1, carPriceColumn1, actionColumn55, actionColumn6);
 
-
+        // This will load the car tables
         LoadCar();
+
+        TableColumn<CarImage2, Integer> CarIDColumn = new TableColumn<>("CarID");
+        CarIDColumn.setCellValueFactory(cellData -> cellData.getValue().CarIDProperty().asObject());
+        CarIDColumn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForInteger());
+
+        TableColumn<CarImage2, Image> ImageColumn = new TableColumn<>("Car Image");
+        ImageColumn.setCellValueFactory(cellData ->  cellData.getValue().CarImageProperty());
+        ImageColumn.setCellFactory(param -> new ImageTableCell2());
+
+        TableColumn<CarImage2, String> CarNameColumn = new TableColumn<>("Car Name");
+        CarNameColumn.setCellValueFactory(cellData -> cellData.getValue().CarnameProperty());
+        CarNameColumn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+
+        TableColumn<CarImage2, String> CarPlateNumColumn = new TableColumn<>("Car Plate Number");
+        CarPlateNumColumn.setCellValueFactory(cellData -> cellData.getValue().CarPlateNumProperty());
+        CarPlateNumColumn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+
+        TableColumn<CarImage2, Integer> CarPriceColumn = new TableColumn<>("Car Price");
+        CarPriceColumn.setCellValueFactory(cellData -> cellData.getValue().CarPriceProperty().asObject());
+        CarPriceColumn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForInteger());
+
+        TableColumn<CarImage2, String> PersonName = new TableColumn<>("Person Rented");
+        PersonName.setCellValueFactory(cellData -> cellData.getValue().PersonRentedProperty());
+        PersonName.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+
+        TableColumn<CarImage2, String> DateRented = new TableColumn<>("Date Rented");
+        DateRented.setCellValueFactory(cellData -> cellData.getValue().DateRentedProperty());
+        DateRented.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+
+        TableColumn<CarImage2, String> DateReturn = new TableColumn<>("Date Return");
+        DateReturn.setCellValueFactory(cellData -> cellData.getValue().DateReturnProperty());
+        DateReturn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+
+        TableColumn<CarImage2, Void> actionColumn7 = new TableColumn<>("Moved to Rented");
+        actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars));
+        actionColumn7.setMinWidth(100);
+
+        TableColumn<CarImage2, Void> actionColumn8 = new TableColumn<>("Delete");
+        actionColumn8.setCellFactory(param -> new ButtonCellDeleteCar1("Delete", CarView2, RentedCars ));
+        actionColumn8.setMinWidth(100);
+
+        CarView2.getColumns().addAll(CarIDColumn, ImageColumn, CarNameColumn, CarPlateNumColumn, CarPriceColumn, PersonName, DateRented, DateReturn, actionColumn7, actionColumn8);
+
+
+        LoadPending();
 
     }
 
@@ -743,6 +888,21 @@ public class CarSystemController {
             CarList = retrieveFromMYSQL.RetrieveCarTable();
             CarView.setItems(CarList);
             CarView1.setItems(CarList);
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void LoadPending(){
+        CarView2.getItems().clear();
+        CarView2.getItems().clear();
+        try {
+            RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
+            RentedCars = retrieveFromMYSQL.RetrievePendingCar();
+            CarView2.setItems(RentedCars);
+            CarView2.setItems( RentedCars);
 
 
         } catch (Exception e){

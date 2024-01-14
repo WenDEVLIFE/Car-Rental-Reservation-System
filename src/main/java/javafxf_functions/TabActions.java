@@ -2,6 +2,7 @@ package javafxf_functions;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 
 public class TabActions {
 
@@ -40,5 +41,15 @@ public class TabActions {
     public void GoToAvailCars(TabPane DashboardTabPane, Tab AvailableRentedCarTab) {
         // This method is used to switch between tabs
         DashboardTabPane.getSelectionModel().select(AvailableRentedCarTab);
+    }
+
+    public void PendingCars(TabPane DashboardTabPane, Tab PendingCarTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(PendingCarTab);
+    }
+
+    public void RentCar(TabPane DashboardTabPane, Tab RentCarTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(RentCarTab);
     }
 }
