@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafxf_functions.CarImage;
+import javafxf_functions.CarImage2;
 import javafxf_functions.UserTable;
 
 public class JavafxAnimations {
@@ -245,6 +246,24 @@ public class JavafxAnimations {
         fadeTransition2.play();
 
         FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), CarView1);
+        fadeTransition3.setFromValue(0);
+        fadeTransition3.setToValue(1);
+        fadeTransition3.play();
+    }
+
+    public void PendingCar(TableView<CarImage2> carView2, Pane rentedCarPane, Pane rentedCarBG) {
+        // Create fade transitions
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), carView2);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
+        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(1), rentedCarPane);
+        fadeTransition2.setFromValue(0);
+        fadeTransition2.setToValue(1);
+        fadeTransition2.play();
+
+        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(1), rentedCarBG);
         fadeTransition3.setFromValue(0);
         fadeTransition3.setToValue(1);
         fadeTransition3.play();

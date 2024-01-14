@@ -109,6 +109,12 @@ public class CarSystemController {
     private Pane AVAILableCarBG;
 
     @FXML
+    private Pane RentedCarPane;
+
+    @FXML
+    private Pane RentedCarBG;
+
+    @FXML
     private TabPane DashboardTabPane;
 
     @FXML
@@ -308,6 +314,7 @@ public class CarSystemController {
 
     ObservableList <CarImage>  CarList= FXCollections.observableArrayList();
 
+    @FXML
     ObservableList <CarImage2>  RentedCars= FXCollections.observableArrayList();
 
     // This will be connected on the car system fxml file
@@ -462,6 +469,9 @@ public class CarSystemController {
  void PendingAction (ActionEvent event){
         TabActions  tabActions = new TabActions();
         tabActions.PendingCars(DashboardTabPane, PendingCarTab);
+
+        JavafxAnimations animations = new JavafxAnimations();
+        animations.PendingCar(CarView2, RentedCarPane, RentedCarBG);
 
  }
 
