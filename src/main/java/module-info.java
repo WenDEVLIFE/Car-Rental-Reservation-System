@@ -5,6 +5,7 @@ module com.example.car_rental_reservation_system {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires mysql.connector.java;
 
     opens com.example.car_rental_reservation_system to javafx.fxml;
     exports com.example.car_rental_reservation_system;

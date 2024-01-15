@@ -13,14 +13,19 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 
 public class ConnectMysql {
-    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
-    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
-    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
+    private final String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private final String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private final String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
     public void checkUsername (String username, String password, String status, ObservableList<UserTable> UserList, TableView<UserTable> UserView, TextField UsernameField, PasswordField PasswordfieldText, PasswordField ConfirmpasswordFieldText, ComboBox<String> StatusUser){
         try {
             if( doesUsernameExist("username") ) {
                 System.out.println("Username already exists");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Username already exists");
+                alert.showAndWait();
             } else {
                 System.out.println("Username does not exist");
                 RegisterUser(username, password, status, UserList, UserView,  UsernameField,  PasswordfieldText,ConfirmpasswordFieldText, StatusUser);

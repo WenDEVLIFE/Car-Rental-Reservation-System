@@ -17,9 +17,9 @@ public class DeleteDataFromMYSQL {
     /* This is the connection to the database without this,
     you cannot connectto the database */
 
-    private String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
-    private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
-    private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
+    private final String MYSQL_URL = MYSQLDATABASE.getDatabaseURL();
+    private final String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
+    private final String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
 
     public void deleteUser(UserTable selectedUser) {

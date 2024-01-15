@@ -582,7 +582,8 @@
                               </Label>
                            </children>
                         </Pane>
-                        <TableView fx:id="CarView1" layoutX="166.0" layoutY="167.0" prefHeight="624.0" prefWidth="813.0" />
+                        <TableView fx:id="CarView1" layoutX="166.0" layoutY="167.0" prefHeight="585.0" prefWidth="813.0" />
+                        <JFXButton layoutX="512.0" layoutY="761.0" onAction="#RefreshTable" prefHeight="26.0" prefWidth="124.0" text="Refresh Table" />
                      </children>
                   </AnchorPane>
               </content>
@@ -622,7 +623,7 @@
                         </Pane>
                         <Pane fx:id="RentedCarBG" layoutX="145.0" layoutY="81.0" prefHeight="96.0" prefWidth="855.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
-                              <Label fx:id="DashBoardTitle1211" layoutX="14.0" layoutY="15.0" prefHeight="67.0" prefWidth="478.0" text="Pending Rented Cars" textFill="#fcfcfc">
+                              <Label fx:id="DashBoardTitle1211" layoutX="14.0" layoutY="15.0" prefHeight="67.0" prefWidth="478.0" text="Approved Rented Cars" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="43.0" />
                                  </font>

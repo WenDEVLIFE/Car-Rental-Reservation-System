@@ -13,7 +13,6 @@ import javafxf_functions.ImageUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 
 public class RentMYSQL_DATABASE {
@@ -86,7 +85,7 @@ public class RentMYSQL_DATABASE {
     }
 
 
-    public void MoveTheRentCarToPending(String carname, String personrented, String dateRented, int pay, String dateReturn, String cashiername, TextField personPay, Label personLabel, Label dateRLabel, Label dateRRLabel, Label cashierLabel, Label paylabel, Label dateLabel, ObservableList<CarImage2> RentedCars, TableView<CarImage2> CarView2) {
+    public void MoveTheRentCarToPending(String carname, String personrented, String dateRented, int pay, String dateReturn, String cashiername, TextField PersonPay, Label personLabel, Label DateRLabel, Label DateRRLabel, Label cashierLabel, Label paylabel, Label dateLabel, ObservableList<CarImage2> RentedCars, TableView<CarImage2> CarView2) {
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
             // SQL query to select the record based on carname
             String selectQuery = "SELECT * FROM rentedcars WHERE Carname = ?";
@@ -105,14 +104,123 @@ public class RentMYSQL_DATABASE {
                         String imageType = resultSet.getString("ImageType");
 
                         // SQL query to insert into targetTable
+                        String insertQuery = "INSERT INTO availablecar (Carname, CarPlateNum, CarPrice, CarImage, ImageType, PersonRentName, DateRented, DateReturn) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+                            insertStatement.setString(1, carname);
+                            insertStatement.setString(2, carPlateNum);
+                            insertStatement.setInt(3, carPrice);
+
+                            // Set BLOB data for insert
+                            if (carImageBlob != null) {
+                                insertStatement.setBlob(4, carImageBlob);
+                            } else {
+                                insertStatement.setNull(4, java.sql.Types.BLOB);
+                            }
+
+                            insertStatement.setString(5, imageType);
+
+                            insertStatement.setString(6, personrented);
+
+                            insertStatement.setString(7, dateRented);
+
+                            insertStatement.setString(8, dateReturn);
+
+                            // Execute the insert statement
+                            int rowsInserted = insertStatement.executeUpdate();
+
+                            if (rowsInserted > 0) {
+                                // Retrieve the auto-generated key (CarID)
+                                try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
+                                    if (generatedKeys.next()) {
+                                        int newId = generatedKeys.getInt(1);
+
+                                        // SQL query to delete the record from sourceTable
+                                        String deleteQuery = "DELETE FROM rentedcars WHERE CarID = ?";
+                                        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+                                            deleteStatement.setInt(1, carId);
+
+                                            // Execute the delete statement
+                                            int rowsDeleted = deleteStatement.executeUpdate();
+
+                                            if (rowsDeleted > 0) {
+                                                // Optionally, update UI elements or refresh tables after the operation
+                                                // For example, if CarView2 is your TableView for targetTable:
+                                                RentedCars.add(new CarImage2(newId, carname, carPlateNum, carPrice, carImage, imageType, dateRented, dateReturn));
+
+                                                // Insert sales information into salestable
+                                                String insertSalesQuery = "INSERT INTO salestable (SaleID, PersonName, Date, PayedStatus, Amount, CashierName) VALUES (?, ?, ?, ?, ?, ?)";
+                                                try (PreparedStatement insertSalesStatement = connection.prepareStatement(insertSalesQuery)) {
+                                                    int newSalesId = newId; // Assuming you want to use the new CarID as the SaleID
+                                                    insertSalesStatement.setInt(1, newSalesId);
+                                                    insertSalesStatement.setString(2, personrented);
+                                                    insertSalesStatement.setDate(3, new java.sql.Date(System.currentTimeMillis())); // Current date
+                                                    insertSalesStatement.setString(4, "Rent a car"); // You may need to adjust this based on your logic
+                                                    insertSalesStatement.setInt(5, pay);
+                                                    insertSalesStatement.setString(6, cashiername);
+
+                                                    // Execute the insert statement for sales
+                                                    int salesRowsInserted = insertSalesStatement.executeUpdate();
+
+                                                    if (salesRowsInserted > 0) {
+                                                        CarView2.setItems(RentedCars);
+                                                        personLabel.setText(personrented);
+                                                        DateRLabel.setText(dateRented);
+                                                        DateRRLabel.setText(dateReturn);
+                                                        cashierLabel.setText(cashiername);
+                                                        paylabel.setText(String.valueOf(pay));
+                                                        dateLabel.setText(String.valueOf(new java.sql.Date(System.currentTimeMillis())));
+
+                                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                                        alert.setTitle("Success");
+                                                        alert.setHeaderText(null);
+                                                        alert.setContentText("Car Moved Successfully");
+                                                        alert.showAndWait();
+                                                        
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // Handle the case where the record is not found in sourceTable
+                        System.out.println("Car not found for carname: " + carname);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public  void MovetheCarBacktoRent(String carname, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView){
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+            // SQL query to select the record based on carname
+            String selectQuery = "SELECT * FROM availablecar WHERE Carname = ?";
+            try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
+                selectStatement.setString(1, carname);
+
+                try (ResultSet resultSet = selectStatement.executeQuery()) {
+                    // Check if a record was found
+                    if (resultSet.next()) {
+                        // Retrieve data from the sourceTable
+                        int carId = resultSet.getInt("CarID");
+                        String carPlateNum = resultSet.getString("CarPlateNum");
+                        int carPrice = resultSet.getInt("CarPrice");
+                        Blob carImageBlob = resultSet.getBlob("CarImage");
+                        Image carImage = ImageUtils.convertBlobToImage(carImageBlob);
+                        String imageType = resultSet.getString("ImageType");
+
+                        // SQL query to insert into targetTable
                         Statement statement = connection.createStatement();
-                        ResultSet resultSet1 = statement.executeQuery("SELECT MAX(CarID) FROM availablecar");
+                        ResultSet resultSet1 = statement.executeQuery("SELECT MAX(CarID) FROM rentedcars");
                         int highestId = 0;
                         if (resultSet1.next()) {
                             highestId = resultSet1.getInt(1);
                         }
                         int newId = highestId + 1;
-                        String insertQuery = "INSERT INTO availablecar (CarID, Carname, CarPlateNum, CarPrice, CarImage, ImageType, PersonRentName, DateRented, DateReturn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        String insertQuery = "INSERT INTO rentedcars (CarID, Carname, CarPlateNum, CarPrice, CarImage, ImageType) VALUES (?, ?, ?, ?, ?, ?)";
                         try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
                             insertStatement.setInt(1, newId);
                             insertStatement.setString(2, carname);
@@ -128,18 +236,14 @@ public class RentMYSQL_DATABASE {
 
                             insertStatement.setString(6, imageType);
 
-                            insertStatement.setString(7, personrented);
 
-                            insertStatement.setString(8, dateRented);
-
-                            insertStatement.setString(9, dateReturn);
 
                             // Execute the insert statement
                             int rowsInserted = insertStatement.executeUpdate();
 
                             if (rowsInserted > 0) {
                                 // SQL query to delete the record from sourceTable
-                                String deleteQuery = "DELETE FROM rentedcars WHERE CarID = ?";
+                                String deleteQuery = "DELETE FROM availablecar WHERE CarID = ?";
                                 try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
                                     deleteStatement.setInt(1, carId);
 
@@ -149,33 +253,19 @@ public class RentMYSQL_DATABASE {
                                     if (rowsDeleted > 0) {
                                         // Optionally, update UI elements or refresh tables after the operation
                                         // For example, if CarView2 is your TableView for targetTable:
-                                        RentedCars.add(new CarImage2(newId, carname, carPlateNum, carPrice, carImage, imageType, dateRented, dateReturn));
+                                        CarList.add(new CarImage(newId, carname, carPlateNum, carPrice, carImage));
+                                        CarView1.setItems(CarList);
+                                        CarView.setItems(CarList);
+                                        CarView.refresh();
+                                        CarView1.refresh();
 
                                         // Insert sales information into salestable
-                                        String insertSalesQuery = "INSERT INTO salestable (SaleID, PersoName, Date, PayedStatus, Amount, CashierName) VALUES (?, ?, ?, ?, ?, ?)";
-                                        try (PreparedStatement insertSalesStatement = connection.prepareStatement(insertSalesQuery)) {
-                                            int newSalesId = highestId + 1; // You need to adjust this based on your sales table ID generation logic
-                                            insertSalesStatement.setInt(1, newSalesId);
-                                            insertSalesStatement.setString(2, personrented);
-                                            insertSalesStatement.setDate(3, new java.sql.Date(System.currentTimeMillis())); // Current date
-                                            insertSalesStatement.setInt(4, pay); // You may need to adjust this based on your logic
-                                            insertSalesStatement.setString(5, "Rent a Car");
-                                            insertSalesStatement.setString(6, cashiername);
+                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                        alert.setTitle("Success");
+                                        alert.setHeaderText(null);
+                                        alert.setContentText("Car Moved Successfully");
 
-                                            // Execute the insert statement for sales
-                                            int salesRowsInserted = insertSalesStatement.executeUpdate();
 
-                                            if (salesRowsInserted > 0) {
-                                                CarView2.setItems(RentedCars);
-                                                personLabel.setText(personrented);
-                                                dateRLabel.setText(dateRented);
-                                                dateRRLabel.setText(dateReturn);
-                                                cashierLabel.setText(cashiername);
-                                                paylabel.setText(String.valueOf(pay));
-                                                dateLabel.setText(String.valueOf(new java.sql.Date(System.currentTimeMillis())));
-
-                                            }
-                                        }
                                     }
                                 }
                             }

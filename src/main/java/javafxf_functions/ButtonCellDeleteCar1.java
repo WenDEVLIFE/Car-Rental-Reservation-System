@@ -1,5 +1,6 @@
 package javafxf_functions;
 
+import DatabaseFunction.RentMYSQL_DATABASE;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -11,13 +12,20 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
     private ObservableList<CarImage2> RentedCars;
 
+    private TableView<CarImage> CarView1;
+
+    private ObservableList<CarImage> CarList;
+
+    private TableView<CarImage> CarView;
 
     // Constructor for the ButtonCell
-    public ButtonCellDeleteCar1(String buttonText, TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars) {
+    public ButtonCellDeleteCar1(String buttonText, TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
         this.button = new Button(buttonText);
         this.CarView2 = CarView2;
         this.RentedCars = RentedCars;
-
+        this.CarView1 = CarView1;
+        this.CarList = CarList;
+        this.CarView = CarView;
 
         this.button.setOnAction(event -> {
             CarImage2 SelectedCar = getTableRow().getItem();
@@ -30,6 +38,15 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
                     alert.setContentText("Are you sure you want to approve this car?");
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
+
+                            String carname = SelectedCar.getCarName().get();
+                            System.out.println(carname);
+                            RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
+                            rentMYSQL_database.MovetheCarBacktoRent(carname,CarView1,CarList,CarView);
+                            RentedCars.remove(SelectedCar);
+                            CarView2.refresh();
+
+
 
                             // Delete car from database
 
@@ -76,7 +93,7 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
 
     // Static method to create a callback for the table column
-    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars) {
-        return param -> new ButtonCellDeleteCar1 (buttonText , CarView2, RentedCars);
+    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars,TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
+        return param -> new ButtonCellDeleteCar1 (buttonText , CarView2, RentedCars, CarView1, CarList, CarView);
     }
 }

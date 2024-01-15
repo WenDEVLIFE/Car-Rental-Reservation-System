@@ -670,6 +670,12 @@ public class CarSystemController {
         }
 
     }
+    @FXML
+    void RefreshTable(ActionEvent event){
+        // This will refresh the table
+        LoadCar();
+
+    }
     public void initialize (){
 
         // This will set the tooltip of the minimize and close button
@@ -862,14 +868,11 @@ public class CarSystemController {
         DateReturn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
 
         TableColumn<CarImage2, Void> actionColumn7 = new TableColumn<>("Moved to Rented");
-        actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars));
+        actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars, CarView1,CarList,CarView));
         actionColumn7.setMinWidth(100);
 
-        TableColumn<CarImage2, Void> actionColumn8 = new TableColumn<>("Delete");
-        actionColumn8.setCellFactory(param -> new ButtonCellDeleteCar1("Delete", CarView2, RentedCars ));
-        actionColumn8.setMinWidth(100);
 
-        CarView2.getColumns().addAll(CarIDColumn, ImageColumn, CarNameColumn, CarPlateNumColumn, CarPriceColumn, PersonName, DateRented, DateReturn, actionColumn7, actionColumn8);
+        CarView2.getColumns().addAll(CarIDColumn, ImageColumn, CarNameColumn, CarPlateNumColumn, CarPriceColumn, PersonName, DateRented, DateReturn, actionColumn7);
 
 
         LoadPending();
@@ -907,7 +910,7 @@ public class CarSystemController {
 
     public void LoadPending(){
         CarView2.getItems().clear();
-        CarView2.getItems().clear();
+
         try {
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             RentedCars = retrieveFromMYSQL.RetrievePendingCar();
