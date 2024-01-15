@@ -48,6 +48,8 @@ public class RentMYSQL_DATABASE {
 
                 int rows = selectStatement.executeUpdate();
                 if (rows > 0) {
+
+                    // Insert sales information into salestable
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
@@ -55,9 +57,11 @@ public class RentMYSQL_DATABASE {
                     alert.showAndWait();
                     Image carImage = convertFileToImage(storeImage);
 
+                    // Add the new car to the TableView for available cars
                     CarList.add(new CarImage(newId, carname, plate, price, carImage));
                     CarView.setItems(CarList);
 
+                    // Clear the text fields
                     CarName.clear();
                     CarPlate.clear();
                     CarPrice.clear();
@@ -85,7 +89,11 @@ public class RentMYSQL_DATABASE {
     }
 
 
-    public void MoveTheRentCarToPending(String carname, String personrented, String dateRented, int pay, String dateReturn, String cashiername, TextField PersonPay, Label personLabel, Label DateRLabel, Label DateRRLabel, Label cashierLabel, Label paylabel, Label dateLabel, ObservableList<CarImage2> RentedCars, TableView<CarImage2> CarView2) {
+    public void MoveTheRentCarToPending(String carname, String personrented, String dateRented, int pay, String dateReturn,
+                                        String cashiername, TextField PersonPay, Label personLabel, Label DateRLabel,
+                                        Label DateRRLabel, Label CashierLabel, Label Paylabel, Label DateLabel,
+                                        ObservableList<CarImage2> RentedCars, TableView<CarImage2> CarView2, TextField SearchCarName,
+                                        TextField PersonRentedName, TextField DateRented, TextField DateReturn,  TextField CashierName) {
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
             // SQL query to select the record based on carname
             String selectQuery = "SELECT * FROM rentedcars WHERE Carname = ?";
@@ -151,31 +159,42 @@ public class RentMYSQL_DATABASE {
                                                 String insertSalesQuery = "INSERT INTO salestable (SaleID, PersonName, Date, PayedStatus, Amount, CashierName) VALUES (?, ?, ?, ?, ?, ?)";
                                                 try (PreparedStatement insertSalesStatement = connection.prepareStatement(insertSalesQuery)) {
                                                     int newSalesId = newId; // Assuming you want to use the new CarID as the SaleID
-                                                    insertSalesStatement.setInt(1, newSalesId);
-                                                    insertSalesStatement.setString(2, personrented);
+                                                    insertSalesStatement.setInt(1, newSalesId); // SaleID
+                                                    insertSalesStatement.setString(2, personrented); // Person name
                                                     insertSalesStatement.setDate(3, new java.sql.Date(System.currentTimeMillis())); // Current date
                                                     insertSalesStatement.setString(4, "Rent a car"); // You may need to adjust this based on your logic
-                                                    insertSalesStatement.setInt(5, pay);
-                                                    insertSalesStatement.setString(6, cashiername);
+                                                    insertSalesStatement.setInt(5, pay); // receive payment amount
+                                                    insertSalesStatement.setString(6, cashiername); // Cashier name
 
                                                     // Execute the insert statement for sales
                                                     int salesRowsInserted = insertSalesStatement.executeUpdate();
 
                                                     if (salesRowsInserted > 0) {
+
+                                                        // Clear the text fields and labels
                                                         CarView2.setItems(RentedCars);
                                                         personLabel.setText(personrented);
                                                         DateRLabel.setText(dateRented);
                                                         DateRRLabel.setText(dateReturn);
-                                                        cashierLabel.setText(cashiername);
-                                                        paylabel.setText(String.valueOf(pay));
-                                                        dateLabel.setText(String.valueOf(new java.sql.Date(System.currentTimeMillis())));
+                                                        CashierLabel.setText(cashiername);
+                                                        Paylabel.setText(String.valueOf(pay));
+                                                        DateLabel.setText(String.valueOf(new java.sql.Date(System.currentTimeMillis())));
 
+                                                        // Insert sales information into salestable for person
                                                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                                         alert.setTitle("Success");
                                                         alert.setHeaderText(null);
                                                         alert.setContentText("Car Moved Successfully");
                                                         alert.showAndWait();
-                                                        
+
+                                                        // Clear the text fields
+                                                        PersonPay.clear();
+                                                        SearchCarName.clear();
+                                                        PersonRentedName.clear();
+                                                        DateRented.clear();
+                                                        DateReturn.clear();
+                                                        CashierName.clear();
+
                                                     }
                                                 }
                                             }

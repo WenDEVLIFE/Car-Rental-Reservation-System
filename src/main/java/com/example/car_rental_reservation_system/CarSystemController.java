@@ -263,11 +263,8 @@ public class CarSystemController {
     @FXML
     private Label DateRRLabel;
 
-
-
     @FXML
     private Label CarFile;
-
 
     @FXML
     private Text year;
@@ -396,7 +393,7 @@ public class CarSystemController {
     // for sidenavbar actions
     @FXML
     void DashboardActions (ActionEvent event) {
-        // This will be connected on the car system fxml file
+        // Go to next tab pane
         TabActions tabActions = new TabActions();
         tabActions.DashboardActions(DashboardTabPane, DashboardTab);
 
@@ -409,7 +406,7 @@ public class CarSystemController {
     @FXML
     void nextCalendar (ActionEvent event){
 
-        // This will be connected on the car system fxml file
+        // Go to next tab pane
         TabActions tabActions = new TabActions();
         tabActions.Calendar(CalendarTab, DashboardTabPane);
 
@@ -423,7 +420,7 @@ public class CarSystemController {
     @FXML
     void CreateUser (ActionEvent event) {
 
-        // This will be connected on the car system fxml file
+        // Go to next tab pane
         TabActions tabActions = new TabActions();
         tabActions.CreateUserActions(DashboardTabPane, AdminTab);
 
@@ -435,6 +432,7 @@ public class CarSystemController {
     @FXML
     void AddCarTabActions (ActionEvent event){
 
+        // Go to next tab pane
         TabActions tabActions = new TabActions();
         tabActions.GoToAddCar(DashboardTabPane, AddRentCarTab);
 
@@ -493,22 +491,31 @@ public class CarSystemController {
                      if (!verifyPasswordLength(password)) {
                          showErrorAlert("Password must be 8-20 characters");
                      } else {
+                         // Check for uppercase and special characters
                          boolean hasCapsLock = false;
                          boolean hasSpecialCharacters = false;
 
+                         // Loop through each character in the password
                          for (char character : password.toCharArray()) {
+                             // Check for uppercase and special characters
                              if (Character.isUpperCase(character)) {
+                                 // If there is an uppercase letter, set hasCapsLock to true
                                  hasCapsLock = true;
                              } else if (!Character.isLetterOrDigit(character)) {
+                                 // If there is a special character, set hasSpecialCharacters to true
                                  hasSpecialCharacters = true;
                              }
                          }
 
                          // Check for both caps lock and special characters
                          if (!hasCapsLock || !hasSpecialCharacters) {
+                             // If either hasCapsLock or hasSpecialCharacters is false, show error alert
                              showErrorAlert("Password must have at least one uppercase letter and one special character");
                          } else {
+                             // If all checks are passed, call the connectMysql class to insert the user to the database
                              ConnectMysql connectMysql = new ConnectMysql();
+
+                             // This will check if the username is already exist or not
                              connectMysql.checkUsername(username, password, status, UserList, UserView,
                                      UsernameField, PasswordfieldText, ConfirmpasswordFieldText, StatusUser);
                          }
@@ -603,13 +610,19 @@ public class CarSystemController {
         //give me upload image file function code here please
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
+                // This will filter the file to image files only
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
         );
         fileChooser.setTitle("Open Resource File");
         fileChooser.showOpenDialog(null);
 
+        // This will open the file chooser and get the file
         java.io.File file = fileChooser.showOpenDialog( CarStage_Receiver);
+
+        // This will check if the file is null or not
         if (file != null) {
+
+            // This will get the absolute path of the file
             System.out.println(file.getAbsolutePath());
             Store_image = file;
             System.out.println(Store_image);
@@ -619,6 +632,7 @@ public class CarSystemController {
 
         }
         else{
+            // This will throw an error if the file is null
             throw new NullPointerException("The file is null");
         }
 
@@ -662,7 +676,7 @@ public class CarSystemController {
             try {
                 // Call the connectMysql class to insert the appointment to the database
                 RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
-                rentMYSQL_database.MoveTheRentCarToPending(carname, personrented, date_rented, pay, date_return, cashiername, PersonPay,PersonLabel, DateRLabel, DateRRLabel, CashierLabel, Paylabel, DateLabel, RentedCars, CarView2);
+                rentMYSQL_database.MoveTheRentCarToPending(carname, personrented, date_rented, pay, date_return, cashiername, PersonPay,PersonLabel, DateRLabel, DateRRLabel, CashierLabel, Paylabel, DateLabel, RentedCars, CarView2, SearchCarName, PersonRentedName, DateRented, DateReturn, CashierName);
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -670,6 +684,20 @@ public class CarSystemController {
         }
 
     }
+    @FXML
+    void ClearChecks(ActionEvent event){
+         // This will clear the checks
+        PersonRentedName.clear();
+        DateRented.clear();
+        PersonPay.clear();
+        DateReturn.clear();
+        CashierName.clear();
+        PersonLabel.setText("");
+        DateRLabel.setText("");
+        DateRRLabel.setText("");
+        CashierLabel.setText("");
+        Paylabel.setText("");
+        DateLabel.setText("");    }
     @FXML
     void RefreshTable(ActionEvent event){
         // This will refresh the table
@@ -850,6 +878,7 @@ public class CarSystemController {
         TableColumn<CarImage2, String> CarPlateNumColumn = new TableColumn<>("Car Plate Number");
         CarPlateNumColumn.setCellValueFactory(cellData -> cellData.getValue().CarPlateNumProperty());
         CarPlateNumColumn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+        CarPlateNumColumn.setMinWidth(130);
 
         TableColumn<CarImage2, Integer> CarPriceColumn = new TableColumn<>("Car Price");
         CarPriceColumn.setCellValueFactory(cellData -> cellData.getValue().CarPriceProperty().asObject());
@@ -858,6 +887,7 @@ public class CarSystemController {
         TableColumn<CarImage2, String> PersonName = new TableColumn<>("Person Rented");
         PersonName.setCellValueFactory(cellData -> cellData.getValue().PersonRentedProperty());
         PersonName.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
+        PersonName.setMinWidth(150);
 
         TableColumn<CarImage2, String> DateRented = new TableColumn<>("Date Rented");
         DateRented.setCellValueFactory(cellData -> cellData.getValue().DateRentedProperty());
@@ -874,7 +904,7 @@ public class CarSystemController {
 
         CarView2.getColumns().addAll(CarIDColumn, ImageColumn, CarNameColumn, CarPlateNumColumn, CarPriceColumn, PersonName, DateRented, DateReturn, actionColumn7);
 
-
+     // call the loading pending method
         LoadPending();
 
     }
@@ -894,9 +924,11 @@ public class CarSystemController {
 
     }
     public void LoadCar(){
+        // load the Carview and CarView1
         CarView.getItems().clear();
         CarView1.getItems().clear();
         try {
+            // call the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             CarList = retrieveFromMYSQL.RetrieveCarTable();
             CarView.setItems(CarList);
@@ -909,9 +941,11 @@ public class CarSystemController {
     }
 
     public void LoadPending(){
+        // Load the approved cars
         CarView2.getItems().clear();
 
         try {
+            // call the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             RentedCars = retrieveFromMYSQL.RetrievePendingCar();
             CarView2.setItems(RentedCars);
