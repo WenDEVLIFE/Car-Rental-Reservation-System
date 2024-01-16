@@ -1,4 +1,4 @@
-package javafxf_functions;
+package javafx_table_functions;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;

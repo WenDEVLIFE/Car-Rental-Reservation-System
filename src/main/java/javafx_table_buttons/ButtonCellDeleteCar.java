@@ -1,9 +1,12 @@
-package javafxf_functions;
+package javafx_table_buttons;
 
-import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import javafx_table_functions.CarImage;
+import javafxf_functions.TabActions;
+import javafxf_functions.UserTable;
+
 public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
     private final Button button;
 

@@ -1,9 +1,12 @@
-package javafxf_functions;
+package javafx_table_buttons;
 
 import DatabaseFunction.RentMYSQL_DATABASE;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import javafx_table_functions.CarImage;
+import javafx_table_functions.CarImage2;
+import javafxf_functions.UserTable;
 
 public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
     private final Button button;
@@ -93,7 +96,7 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
 
     // Static method to create a callback for the table column
-    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars,TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
+    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
         return param -> new ButtonCellDeleteCar1 (buttonText , CarView2, RentedCars, CarView1, CarList, CarView);
     }
 }

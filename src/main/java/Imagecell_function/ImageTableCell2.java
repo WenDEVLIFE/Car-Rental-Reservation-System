@@ -1,12 +1,13 @@
-package javafxf_functions;
+package Imagecell_function;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx_table_functions.CarImage2;
 
-public class ImageTableCell extends javafx.scene.control.TableCell<javafxf_functions.CarImage, javafx.scene.image.Image> {
+public class ImageTableCell2 extends javafx.scene.control.TableCell<CarImage2, javafx.scene.image.Image> {
     private final ImageView imageView;
 
-    public ImageTableCell() {
+    public ImageTableCell2() {
         this.imageView = new ImageView();
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);

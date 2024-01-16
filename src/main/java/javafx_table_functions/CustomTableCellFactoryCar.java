@@ -1,4 +1,4 @@
-package javafxf_functions;
+package javafx_table_functions;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;

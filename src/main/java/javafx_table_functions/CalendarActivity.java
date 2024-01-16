@@ -1,4 +1,4 @@
-package javafxf_functions;
+package javafx_table_functions;
 
 import java.time.ZonedDateTime;
 

@@ -7,8 +7,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import javafxf_functions.CarImage;
-import javafxf_functions.CarImage2;
+import javafx_table_functions.CarImage;
+import javafx_table_functions.CarImage2;
 import javafxf_functions.UserTable;
 
 public class JavafxAnimations {

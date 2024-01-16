@@ -52,4 +52,9 @@ public class TabActions {
         // This method is used to switch between tabs
         DashboardTabPane.getSelectionModel().select(RentCarTab);
     }
+
+    public void GoToSales(TabPane DashboardTabPane, Tab SalesTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(SalesTab);
+    }
 }

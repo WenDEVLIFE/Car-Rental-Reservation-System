@@ -1,9 +1,6 @@
 package DatabaseFunction;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
-import javafxf_functions.CarImage;
 import javafxf_functions.TaskTable;
 import javafxf_functions.UserTable;
 

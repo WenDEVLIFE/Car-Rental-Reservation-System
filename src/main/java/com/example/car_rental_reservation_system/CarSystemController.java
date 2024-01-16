@@ -3,11 +3,15 @@ package com.example.car_rental_reservation_system;
 import DatabaseFunction.ConnectMysql;
 import DatabaseFunction.RentMYSQL_DATABASE;
 import DatabaseFunction.RetrieveFromMYSQL;
+import Imagecell_function.ImageTableCell;
+import Imagecell_function.ImageTableCell2;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +21,11 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx_animation.JavafxAnimations;
+import javafx_table_buttons.ButtonCalendar;
+import javafx_table_buttons.ButtonCellDeleteCar;
+import javafx_table_buttons.ButtonCellDeleteCar1;
+import javafx_table_buttons.ButtonCellDeleteUser;
+import javafx_table_functions.*;
 import javafxf_functions.*;
 
 import java.io.File;
@@ -143,6 +152,10 @@ public class CarSystemController {
 
     @FXML
     private Tab RentCarTab;
+
+    @FXML
+    private Tab SalesTab;
+
     @FXML
     private ComboBox <String> StatusUser;
 
@@ -287,7 +300,6 @@ public class CarSystemController {
       public String receviedDate;
 
       private File Store_image;
-
 
     @FXML
     private TableView<UserTable> UserView;
@@ -471,6 +483,12 @@ public class CarSystemController {
         JavafxAnimations animations = new JavafxAnimations();
         animations.PendingCar(CarView2, RentedCarPane, RentedCarBG);
 
+ }
+
+ @FXML
+ void SalesAction (ActionEvent event){
+        TabActions tabActions = new TabActions();
+        tabActions.GoToSales(DashboardTabPane, SalesTab);
  }
 
     // This action is to create a user
@@ -685,6 +703,30 @@ public class CarSystemController {
 
     }
     @FXML
+    void PrintCheck(ActionEvent event){
+        String personrented = PersonLabel.getText();
+        String personpay = Paylabel.getText();
+        int pay = Integer.parseInt(personpay);
+        String date = DateLabel.getText();
+        String date_rented = DateRLabel.getText();
+        String date_return = DateRRLabel.getText();
+        String cashiername = CashierLabel.getText();
+
+        if(personrented == null || personpay == null || date == null || date_rented == null || date_return == null || cashiername == null){
+            showErrorAlert("Please fill up all the fields");
+        } else {
+            try {
+                // Call the connectMysql class to insert the appointment to the database
+                PrintController printController = new PrintController();
+                printController.PrintCheck(personrented, pay, date, date_rented, date_return, cashiername);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+    @FXML
     void ClearChecks(ActionEvent event){
          // This will clear the checks
         PersonRentedName.clear();
@@ -715,6 +757,7 @@ public class CarSystemController {
 
         System.out.println(CarStage_Receiver+"has a value");
 
+        // This will set the date focus
         dateFocus = ZonedDateTime.now();
         today = ZonedDateTime.now();
         CalendarDisplay calendarDisplay = new CalendarDisplay(calendar, year, month, dateFocus, today, todayinfo, calendarinfo,CalendarInputTab, DashboardTabPane,CalendarDisplayPane, CalendarTitlePane, TaskList, TaskView);

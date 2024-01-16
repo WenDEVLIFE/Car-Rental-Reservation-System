@@ -279,3 +279,21 @@
      -fx-background-color: #ffffff;
      -fx-text-fill: white;
 }
+.chart-area {
+    -fx-background-color: #f0f0f0; /* Set background color */
+    -fx-stroke: #3498db; /* Set stroke color */
+    -fx-stroke-width: 2; /* Set stroke width */
+}
+
+.chart-series-area-line {
+    -fx-fill: transparent; /* Make the area transparent */
+}
+
+.chart-series-area-fill {
+    -fx-fill: #3498db; /* Set fill color for the area */
+}
+
+.axis {
+    -fx-tick-label-fill: #555555; /* Set tick label color */
+    -fx-tick-mark-stroke: #555555; /* Set tick mark color */
+}

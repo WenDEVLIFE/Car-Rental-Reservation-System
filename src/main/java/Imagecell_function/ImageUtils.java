@@ -1,9 +1,8 @@
-package javafxf_functions;
+package Imagecell_function;
 
 import javafx.scene.image.Image;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
