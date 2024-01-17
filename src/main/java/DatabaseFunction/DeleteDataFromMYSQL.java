@@ -1,8 +1,8 @@
 package DatabaseFunction;
 
 import javafx.scene.control.Alert;
-import javafxf_functions.TaskTable;
-import javafxf_functions.UserTable;
+import javafx_table_functions.TaskTable;
+import javafx_table_functions.UserTable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

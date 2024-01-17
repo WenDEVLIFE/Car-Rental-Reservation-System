@@ -2,6 +2,7 @@ package javafx_animation;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.FlowPane;
@@ -9,7 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx_table_functions.CarImage;
 import javafx_table_functions.CarImage2;
-import javafxf_functions.UserTable;
+import javafx_table_functions.SalesTable;
+import javafx_table_functions.UserTable;
 
 public class JavafxAnimations {
 
@@ -120,6 +122,8 @@ public class JavafxAnimations {
         reportScaleTransition.play();
         availableCarsScaleTransition.play();
 
+        System.runFinalization();
+
     }
 
     public void fade_animations(Pane UserPane, TableView<UserTable> UserView, Pane AdminTitle1, Pane AdminBackground) {
@@ -143,6 +147,8 @@ public class JavafxAnimations {
         fadeTransition4.setFromValue(0);
         fadeTransition4.setToValue(1);
         fadeTransition4.play();
+
+        System.runFinalization();
     }
 
     public void fade_calendars(Pane calendarPanel, Pane calendarpanel, FlowPane calendar, TabPane dashboardTabPane) {
@@ -169,7 +175,7 @@ public class JavafxAnimations {
         fadeTransition4.play();
 
 
-
+        System.runFinalization();
 
     }
 
@@ -185,6 +191,8 @@ public class JavafxAnimations {
         fadeTransition2.setFromValue(0);
         fadeTransition2.setToValue(1);
         fadeTransition2.play();
+
+        System.runFinalization();
 
 
 
@@ -206,6 +214,8 @@ public class JavafxAnimations {
         fadeTransition3.setFromValue(0);
         fadeTransition3.setToValue(1);
         fadeTransition3.play();
+
+        System.runFinalization();
     }
 
 
@@ -231,6 +241,8 @@ public class JavafxAnimations {
         fadeTransition4.setFromValue(0);
         fadeTransition4.setToValue(1);
         fadeTransition4.play();
+
+        System.runFinalization();
     }
 
     public void AvailableCar(Pane AvailableCarPane, Pane AvaiLableCarBG, TableView<CarImage> CarView1) {
@@ -249,6 +261,8 @@ public class JavafxAnimations {
         fadeTransition3.setFromValue(0);
         fadeTransition3.setToValue(1);
         fadeTransition3.play();
+
+        System.runFinalization();
     }
 
     public void PendingCar(TableView<CarImage2> carView2, Pane rentedCarPane, Pane rentedCarBG) {
@@ -267,5 +281,61 @@ public class JavafxAnimations {
         fadeTransition3.setFromValue(0);
         fadeTransition3.setToValue(1);
         fadeTransition3.play();
+
+        System.runFinalization();
+    }
+
+
+    public void Sales(TableView<SalesTable> SalesView, Pane SalesTPane, Pane SalesMPane, Pane SalesBackground, Pane SalesNavPane, Button PrintSales, Button RefreshSales) {
+        // set scale
+        SalesTPane.setScaleX(0.1);
+        SalesView.setScaleY(0.1);
+        SalesMPane.setScaleX(0.1);
+        RefreshSales.setScaleY(0.1);
+        SalesBackground.setScaleX(0.1);
+        PrintSales.setScaleY(0.1);
+        SalesNavPane.setScaleX(0.1);
+
+        // Create scale transitions
+        ScaleTransition salesScaleTransition = new ScaleTransition(Duration.seconds(1), SalesTPane);
+        salesScaleTransition.setToX(1);
+        salesScaleTransition.setToY(1);
+
+        ScaleTransition salesViewScaleTransition = new ScaleTransition(Duration.seconds(1), SalesView);
+        salesViewScaleTransition.setToX(1);
+        salesViewScaleTransition.setToY(1);
+
+        ScaleTransition salesMPaneScaleTransition = new ScaleTransition(Duration.seconds(1), SalesMPane);
+        salesMPaneScaleTransition.setToX(1);
+        salesMPaneScaleTransition.setToY(1);
+
+        ScaleTransition salesBackgroundScaleTransition = new ScaleTransition(Duration.seconds(1), SalesBackground);
+        salesBackgroundScaleTransition.setToX(1);
+        salesBackgroundScaleTransition.setToY(1);
+
+        ScaleTransition salesNavPaneScaleTransition = new ScaleTransition(Duration.seconds(1), SalesNavPane);
+        salesNavPaneScaleTransition.setToX(1);
+        salesNavPaneScaleTransition.setToY(1);
+
+        ScaleTransition salesPrintScaleTransition = new ScaleTransition(Duration.seconds(1), PrintSales);
+        salesPrintScaleTransition.setToX(1);
+        salesPrintScaleTransition.setToY(1);
+
+        ScaleTransition salesRefreshScaleTransition = new ScaleTransition(Duration.seconds(1), RefreshSales);
+        salesRefreshScaleTransition.setToX(1);
+        salesRefreshScaleTransition.setToY(1);
+
+        // Play scale transitions
+        salesScaleTransition.play();
+        salesViewScaleTransition.play();
+        salesMPaneScaleTransition.play();
+        salesBackgroundScaleTransition.play();
+        salesNavPaneScaleTransition.play();
+        salesPrintScaleTransition.play();
+        salesRefreshScaleTransition.play();
+
+        System.runFinalization();
+
+
     }
 }

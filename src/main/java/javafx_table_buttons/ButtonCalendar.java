@@ -4,8 +4,8 @@ import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import javafxf_functions.TaskTable;
-import javafxf_functions.UserTable;
+import javafx_table_functions.TaskTable;
+import javafx_table_functions.UserTable;
 
 // This class is used to create a button in a table cell
 public class ButtonCalendar extends TableCell<TaskTable, Void> {

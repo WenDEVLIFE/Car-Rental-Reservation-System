@@ -7,6 +7,8 @@ module com.example.car_rental_reservation_system {
     requires java.sql;
     requires mysql.connector.java;
     requires itextpdf;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     opens com.example.car_rental_reservation_system to javafx.fxml;
     exports com.example.car_rental_reservation_system;

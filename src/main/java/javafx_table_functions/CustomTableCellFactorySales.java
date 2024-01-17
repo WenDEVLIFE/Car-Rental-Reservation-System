@@ -5,9 +5,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
-// This class is used to create custom table cells
-public class CustomTableCellFactory {
-    public static Callback<TableColumn<UserTable, String>, TableCell<UserTable, String>> cellFactoryForString() {
+public class CustomTableCellFactorySales {
+    public static Callback<TableColumn<SalesTable, String>, TableCell<SalesTable, String>> cellFactoryForString() {
         return column -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -18,7 +17,7 @@ public class CustomTableCellFactory {
         };
     }
 
-    public static Callback<TableColumn<UserTable, Integer>, TableCell<UserTable, Integer>> cellFactoryForInteger() {
+    public static Callback<TableColumn<SalesTable, Integer>, TableCell<SalesTable, Integer>> cellFactoryForInteger() {
         return column -> new TableCell<>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -29,7 +28,7 @@ public class CustomTableCellFactory {
         };
     }
 
-    public static Callback<TableColumn<UserTable, String>, TableCell<UserTable, String>> createCenteredStringCell() {
+    public static Callback<TableColumn<SalesTable, String>, TableCell<SalesTable, String>> createCenteredStringCell() {
         return column -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

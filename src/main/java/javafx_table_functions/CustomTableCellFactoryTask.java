@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-import javafxf_functions.TaskTable;
 
 public class CustomTableCellFactoryTask {
     public static Callback<TableColumn<TaskTable, String>, TableCell<TaskTable, String>> cellFactoryForString() {

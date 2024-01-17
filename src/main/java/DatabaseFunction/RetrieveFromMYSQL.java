@@ -2,14 +2,17 @@ package DatabaseFunction;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx_table_functions.CarImage;
 import javafx_table_functions.CarImage2;
-import javafxf_functions.TaskTable;
-import javafxf_functions.UserTable;
+import javafx_table_functions.SalesTable;
+import javafx_table_functions.TaskTable;
+import javafx_table_functions.UserTable;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.time.LocalDate;
 
 public  class RetrieveFromMYSQL {
 
@@ -20,6 +23,8 @@ public  class RetrieveFromMYSQL {
 
     // This will retrieve the data from the database and put it on the table
     public ObservableList<UserTable> RetrieveUserTable() {
+
+        // This will create an ObservableList of UserTable
         ObservableList<UserTable> UserList = FXCollections.observableArrayList();
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
              Statement statement = connection.createStatement();
@@ -45,7 +50,11 @@ public  class RetrieveFromMYSQL {
 
     // This will retrieve the data from the database and put it on the table
     public ObservableList<TaskTable> RetrieveCalendarActivity() {
+
+        // This will create an ObservableList of TaskTable
         ObservableList<TaskTable> TaskList= FXCollections.observableArrayList();
+
+        // This will retrieve the data from the database and put it on the table
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT TaskID, TaskInfo, Date FROM tasktable")) {
@@ -71,11 +80,13 @@ public  class RetrieveFromMYSQL {
     public ObservableList<CarImage> RetrieveCarTable() {
         ObservableList<CarImage> CarList = FXCollections.observableArrayList();
 
+        // This will retrieve the data from the database and put it on the table
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT CarID, Carname, CarPlateNum, CarPrice, CarImage FROM rentedcars")) {
 
             while (resultSet.next()) {
+                // Get the data from the current row using the column index - column data are in the VARCHAR format
                 int carID = resultSet.getInt("CarID");
                 String carname = resultSet.getString("Carname");
                 String carPlateNum = resultSet.getString("CarPlateNum");
@@ -100,13 +111,16 @@ public  class RetrieveFromMYSQL {
     }
 
     public ObservableList<CarImage2> RetrievePendingCar() {
+        // This will create an ObservableList of CarImage2
         ObservableList<CarImage2> RentedCars = FXCollections.observableArrayList();
 
+        // This will retrieve the data from the database and put it on the table
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT CarID, Carname, CarPlateNum, CarPrice, CarImage,PersonRentName, DateRented, DateReturn FROM availablecar")) {
 
             while (resultSet.next()) {
+                 // Get the data from the current row using the column index - column data are in the VARCHAR format
                 int carID = resultSet.getInt("CarID");
                 String carname = resultSet.getString("Carname");
                 String carPlateNum = resultSet.getString("CarPlateNum");
@@ -135,4 +149,95 @@ public  class RetrieveFromMYSQL {
 
         return RentedCars ;
     }
+    public ObservableList<SalesTable> RetrieveSalesTable() {
+        // This will create an ObservableList of SalesTable
+        ObservableList<SalesTable> SalesList = FXCollections.observableArrayList();
+        // This will retrieve the data from the database and put it on the table
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT SaleID, PersonName, Amount, Date, PayedStatus, CashierName FROM salestable")) {
+
+            // Populate the ObservableList with data from the ResultSet
+            while (resultSet.next()) {
+                // Get the data from the current row using the column index - column data are in the VARCHAR format
+                int SalesID = resultSet.getInt("SaleID");
+                String PersonName = resultSet.getString("PersonName");
+                int PayAmount = resultSet.getInt("Amount");
+                String Date = resultSet.getString("Date");
+                String PayedStatus = resultSet.getString("PayedStatus");
+                String CashierName = resultSet.getString("CashierName");
+
+                // This will add the data to the SalesList
+                SalesList.add(new SalesTable(SalesID, PersonName, PayAmount, Date, PayedStatus, CashierName));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //  This will return the SalesList
+        return SalesList;
+    }
+    public void RetrieTotalCars(){
+
+    }
+    public void RetrieveRentedCars(){
+
+    }
+    public void RetrieveAdmin(){
+
+    }
+    public void RetrieveSTAFF(){
+
+    }
+    public void RetrieveAvailableCars(){
+
+    }
+    public void RetrieveReports(){
+
+    }
+    public void display_salesToday(Label SalesToday ){
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement()) {
+            // Get the current date
+            String today = LocalDate.now().toString();
+
+            // Query to get the total sales for today
+            String query = "SELECT SUM(Amount) FROM salestable WHERE Date LIKE ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, today + "%");
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    int totalSales = resultSet.getInt(1);
+                    System.out.println("Total sales for today: " + totalSales);
+
+                    // Display the total sales for today
+                    SalesToday.setText(String.valueOf(totalSales));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void DisplaySalesThisMonth(Label SalesThismonth) throws SQLException {
+        try (Connection con =DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+            Statement statement = con.createStatement()) {
+
+            String query = "SELECT SUM(Amount) FROM salestable WHERE YEAR(Date) = YEAR(CURDATE()) AND MONTH(Date) = MONTH(CURDATE())";
+
+            try(PreparedStatement preparedStatement = con.prepareStatement(query);
+                ResultSet resultSet  = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalSales = resultSet.getInt(1);
+                    System.out.println("Total sales for this month: " + totalSales);
+                    SalesThismonth.setText(String.valueOf(totalSales));
+                }
+            }
+
+
+        }
+    }
+
 }

@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx_table_functions.CarImage;
 import javafxf_functions.TabActions;
-import javafxf_functions.UserTable;
+import javafx_table_functions.UserTable;
 
 public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
     private final Button button;

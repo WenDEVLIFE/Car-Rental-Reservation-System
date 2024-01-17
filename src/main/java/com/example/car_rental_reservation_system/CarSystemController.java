@@ -5,13 +5,13 @@ import DatabaseFunction.RentMYSQL_DATABASE;
 import DatabaseFunction.RetrieveFromMYSQL;
 import Imagecell_function.ImageTableCell;
 import Imagecell_function.ImageTableCell2;
+import javafx_table_buttons.*;
+import javafx_table_functions.SalesTable;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -21,16 +21,20 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx_animation.JavafxAnimations;
-import javafx_table_buttons.ButtonCalendar;
-import javafx_table_buttons.ButtonCellDeleteCar;
-import javafx_table_buttons.ButtonCellDeleteCar1;
-import javafx_table_buttons.ButtonCellDeleteUser;
 import javafx_table_functions.*;
 import javafxf_functions.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CarSystemController {
 
@@ -122,6 +126,25 @@ public class CarSystemController {
 
     @FXML
     private Pane RentedCarBG;
+
+    @FXML
+    private Pane SalesTPane;
+
+    @FXML
+    private Pane SalesMPane;
+
+    @FXML
+    private Pane SalesBackground;
+
+    @FXML
+    private Pane SalesNavPane;
+
+    @FXML
+    private Button PrintSales;
+
+    @FXML
+    private Button RefreshSales;
+
 
     @FXML
     private TabPane DashboardTabPane;
@@ -257,6 +280,12 @@ public class CarSystemController {
     @FXML
     private Label setstatus9;
 
+    @FXML
+    private Label Setusername10;
+
+    @FXML
+    private Label setstatus10;
+
 
     @FXML
     private Label PersonLabel;
@@ -278,6 +307,12 @@ public class CarSystemController {
 
     @FXML
     private Label CarFile;
+
+    @FXML
+    private Label SalesToday;
+
+    @FXML
+    private Label SalesThismonth;
 
     @FXML
     private Text year;
@@ -326,6 +361,16 @@ public class CarSystemController {
     @FXML
     ObservableList <CarImage2>  RentedCars= FXCollections.observableArrayList();
 
+    @FXML
+    private TableView<SalesTable> SalesView;
+
+    ObservableList <SalesTable>  SalesList= FXCollections.observableArrayList();
+
+    @FXML
+    private ComboBox <String> MonthCombo;
+
+
+
     // This will be connected on the car system fxml file
     public void Setstage(Stage CarStage){
 
@@ -354,6 +399,8 @@ public class CarSystemController {
         setstatus8.setText(status);
         Setusername9.setText(username);
         setstatus9.setText(status);
+        Setusername10.setText(username);
+        setstatus10.setText(status);
 
     }
 
@@ -393,6 +440,8 @@ public class CarSystemController {
                   CarStage_Receiver.close();
                   LoadLogin loadLogin = new LoadLogin();
                   loadLogin.loadLogin();
+
+                  System.runFinalization();
             } else {
                 // ... user chose CANCEL or closed the dialog
                 System.out.println("You clicked cancel");
@@ -489,6 +538,9 @@ public class CarSystemController {
  void SalesAction (ActionEvent event){
         TabActions tabActions = new TabActions();
         tabActions.GoToSales(DashboardTabPane, SalesTab);
+
+        JavafxAnimations animations = new JavafxAnimations();
+        animations.Sales(SalesView, SalesTPane, SalesMPane, SalesBackground, SalesNavPane, PrintSales, RefreshSales);
  }
 
     // This action is to create a user
@@ -704,6 +756,7 @@ public class CarSystemController {
     }
     @FXML
     void PrintCheck(ActionEvent event){
+        // This will print the check
         String personrented = PersonLabel.getText();
         String personpay = Paylabel.getText();
         int pay = Integer.parseInt(personpay);
@@ -746,7 +799,75 @@ public class CarSystemController {
         LoadCar();
 
     }
-    public void initialize (){
+
+
+    @FXML
+    void SelectMonth(ActionEvent event) {
+        // This will select the month
+        String month = MonthCombo.getSelectionModel().getSelectedItem();
+
+        if ("Select a month".equals(month)) {
+            // If the default month is selected, show all sales data
+            SalesView.getItems().setAll(SalesList);
+            LoadSalesTable();
+            return;
+        }
+
+        if (month == null || month.isEmpty()) {
+            showErrorAlert("Please select a month");
+            return;
+        }
+
+        // Filter the data based on the selected month
+        List<SalesTable> filteredSales = SalesList.stream()
+                .filter(sales -> getMonthFromSales(sales).equalsIgnoreCase(month))
+                .collect(Collectors.toList());
+        LoadSalesTable();
+
+        // Clear the existing items in the SalesView
+        SalesView.getItems().clear();
+
+        // Add the filtered data to the SalesView
+        SalesView.getItems().addAll(filteredSales);
+    }
+
+    // Utility method to extract the month from SalesTable
+    private String getMonthFromSales(SalesTable sales) {
+        // Placeholder: Replace this with the actual method or property to get the date from SalesTable
+        String salesDate = sales.getDate();  // Replace 'getDate()' with the actual method or property
+        return getMonthFromDate(salesDate);
+    }
+
+    // Utility method to extract the month from the date string
+    private String getMonthFromDate(String date) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(parsedDate);
+            int month = calendar.get(Calendar.MONTH);
+            return new DateFormatSymbols().getMonths()[month];
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    @FXML
+    void PrintExcel(ActionEvent event){
+         // This will print the excel
+        PrintController printController = new PrintController();
+        printController.printReports_Excel(SalesView);
+    }
+    @FXML
+    void RefreshSales (ActionEvent event){
+        // This will refresh the sales table
+        LoadSalesTable();
+    }
+    public void initialize () throws SQLException {
+
+        // This will initialize the car system
+        System.runFinalization();
 
         // This will set the tooltip of the minimize and close button
         Tooltip tooltip = new Tooltip("Minimize");
@@ -772,6 +893,17 @@ public class CarSystemController {
         StatusUser.setItems(Status);
 
         StatusUser.setValue("Select a status");
+
+        ObservableList <String> Month = FXCollections.observableArrayList("Select a month","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December");
+        MonthCombo.setItems(Month);
+
+        // This will set the sales this day to the label
+        RetrieveFromMYSQL sales = new RetrieveFromMYSQL();
+        sales.display_salesToday(SalesToday);
+
+        // This will set the sales this month value to the label
+        RetrieveFromMYSQL sales_this_month = new RetrieveFromMYSQL();
+        sales_this_month.DisplaySalesThisMonth(SalesThismonth);
 
         // This is the function of autosearch in car table
         Search_AvailableCars.setPromptText("Search Available Cars");
@@ -950,6 +1082,35 @@ public class CarSystemController {
      // call the loading pending method
         LoadPending();
 
+        // This will load the sales table
+        TableColumn<SalesTable, Integer> SalesIDColumn = new TableColumn<>("SalesID");
+        SalesIDColumn.setCellValueFactory(cellData -> cellData.getValue().SalesIDProperty().asObject());
+        SalesIDColumn.setCellFactory(CustomTableCellFactorySales.cellFactoryForInteger());
+
+        TableColumn<SalesTable, String> SalesNameColumn = new TableColumn<>("Person Name");
+        SalesNameColumn.setCellValueFactory(cellData -> cellData.getValue().SalesNameProperty());
+        SalesNameColumn.setCellFactory(CustomTableCellFactorySales.cellFactoryForString());
+
+        TableColumn<SalesTable, String> SalesDateColumn = new TableColumn<>("Date");
+        SalesDateColumn.setCellValueFactory(cellData -> cellData.getValue().SalesDateProperty());
+        SalesDateColumn.setCellFactory(CustomTableCellFactorySales.cellFactoryForString());
+
+        TableColumn<SalesTable, Integer> SalesPriceColumn = new TableColumn<>("Amount");
+        SalesPriceColumn.setCellValueFactory(cellData -> cellData.getValue().SalesPriceProperty().asObject());
+        SalesPriceColumn.setCellFactory(CustomTableCellFactorySales.cellFactoryForInteger());
+
+        TableColumn <SalesTable, String> CashierColumn = new TableColumn<>("CashierName");
+        CashierColumn.setCellValueFactory(cellData -> cellData.getValue().CashierNameProperty());
+        CashierColumn.setCellFactory(CustomTableCellFactorySales.cellFactoryForString());
+
+        TableColumn <SalesTable, Void> deletecolumn = new TableColumn<>("Delete");
+       deletecolumn.setCellFactory(param -> new ButtonCellDeleteSales("Delete", SalesView, SalesList));
+
+        SalesView.getColumns().addAll(SalesIDColumn, SalesNameColumn, SalesDateColumn, SalesPriceColumn, CashierColumn, deletecolumn);
+
+        // This will load the sales table
+        LoadSalesTable();
+
     }
 
     // This will load the user table
@@ -996,6 +1157,21 @@ public class CarSystemController {
 
 
         } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void LoadSalesTable() {
+        // Load the sales table
+        SalesView.getItems().clear();
+
+        try {
+            // call the database controller to retrieve the value
+            RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
+            SalesList = retrieveFromMYSQL.RetrieveSalesTable();
+            SalesView.setItems(SalesList);
+
+        } catch ( Exception e){
             e.printStackTrace();
         }
     }

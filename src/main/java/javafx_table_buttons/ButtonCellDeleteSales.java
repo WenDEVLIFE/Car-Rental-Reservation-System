@@ -1,22 +1,21 @@
 package javafx_table_buttons;
 
-import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx_table_functions.UserTable;
+import javafx_table_functions.SalesTable;
 
-public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
+public class ButtonCellDeleteSales extends TableCell<SalesTable, Void> {
     private final Button button;
 
-    private TableView < UserTable > UserView;
+    private TableView< SalesTable > SalesView;
 
-    ObservableList < UserTable > UserList;
-    public ButtonCellDeleteUser(String buttonText, TableView < UserTable > UserView, ObservableList < UserTable > UserList) {
+    ObservableList< SalesTable> SalesList;
+    public ButtonCellDeleteSales(String buttonText, TableView < SalesTable > SalesView, ObservableList < SalesTable> SalesList) {
         this.button = new Button(buttonText);
-        this.UserView = UserView;
-        this.UserList = UserList;
+        this.SalesView = SalesView;
+        this.SalesList = SalesList;
         this.button.setOnAction(event -> {
-            UserTable selectedUser = getTableRow().getItem();
+            SalesTable selectedUser = getTableRow().getItem();
             if (selectedUser != null) {
                 if (buttonText.equals("Delete")) {
                     // Code for deleting user
@@ -34,12 +33,10 @@ public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
                         if (response == buttonTypeYes) {
                             // Code to handle user deletion
                             System.gc(); // This line seems unnecessary for user deletion
-                            DeleteDataFromMYSQL db = new DeleteDataFromMYSQL();
-                            db.deleteUser(selectedUser);
+
 
                             // remove the student from the table and to the database
-                            UserList.remove(selectedUser);
-                            UserView.refresh();
+
                         }
                     });
                 } else if (buttonText.equals("Edit")) {
