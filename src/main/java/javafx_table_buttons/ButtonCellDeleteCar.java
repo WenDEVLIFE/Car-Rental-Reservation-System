@@ -1,5 +1,6 @@
 package javafx_table_buttons;
 
+import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -42,6 +43,15 @@ public class ButtonCellDeleteCar extends TableCell<CarImage, Void> {
                         if (response == ButtonType.OK) {
 
                             // Delete car from database
+
+                            DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
+                            deleteDataFromMYSQL.DeleteCar(SelectedCar.getCarID());
+
+                            // Delete car from table
+                            CarList.remove(SelectedCar);
+                            CarView.refresh();
+                            CarView1.refresh();
+
 
                         }
                     });

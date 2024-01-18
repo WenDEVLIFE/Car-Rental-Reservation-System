@@ -57,4 +57,10 @@ public class TabActions {
         // This method is used to switch between tabs
         DashboardTabPane.getSelectionModel().select(SalesTab);
     }
+
+    public void GoToReport(TabPane DashboardTabPane, Tab ReportTAB) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(ReportTAB);
+
+    }
 }

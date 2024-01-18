@@ -1,6 +1,8 @@
 package javafx_table_buttons;
 
 import DatabaseFunction.DeleteDataFromMYSQL;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -22,55 +24,69 @@ public class ButtonCalendar extends TableCell<TaskTable, Void> {
         this.TaskList = TaskList;
 
         this.button.setOnAction(event -> {
-            TaskTable SelectedTask = getTableRow().getItem();
-            if (SelectedTask != null) {
+            TaskTable selectedTask = getTableRow().getItem();
+            if (selectedTask != null) {
                 if (buttonText.equals("Done Task")) {
                     // Code for Done Task
 
-                            // Code to handle user deletion
-                            getTableView().getItems().remove(SelectedTask);
-                            // Remove the user from the database or perform any other deletion logic
+                    // Code to handle task completion
+                    Platform.runLater(() -> {
+                        ObservableList<TaskTable> taskItems = FXCollections.observableArrayList(
+                                getTableView().getItems()
+                        );
 
-                            DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
-                            deleteDataFromMYSQL.DeleteTask(SelectedTask);
+                        taskItems.remove(selectedTask);
 
-                            TaskList.remove(SelectedTask);
-                            TaskView.refresh();
+                        DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
+                        deleteDataFromMYSQL.DeleteTask(selectedTask);
 
-                            Alert  alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("System Message");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Task Done successfully");
+                        TaskList.remove(selectedTask);
 
+                        TaskView.setItems(taskItems);
+                        TaskView.refresh();
 
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("System Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Task Done successfully");
+                        alert.showAndWait();
+                    });
                 } else if (buttonText.equals("Delete Task")) {
-                    // You may want to open a new dialog or switch to another view here
-                    // For example, show an edit dialog or switch to the edit user view
-                    // Code for deleting user
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Task");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Are you sure you want to delete this user?");
+                    // Code for deleting task
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Delete Task");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Are you sure you want to delete this task?");
 
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
+                        ButtonType buttonTypeYes = new ButtonType("Yes");
+                        ButtonType buttonTypeNo = new ButtonType("No");
 
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-                    alert.showAndWait().ifPresent(response -> {
-                        if (response == buttonTypeYes) {
-                            // Code to handle user deletion
-                            getTableView().getItems().remove(SelectedTask);
-                            // Remove the user from the database or perform any other deletion logic
+                        alert.showAndWait().ifPresent(response -> {
 
-                            DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
-                            deleteDataFromMYSQL.DeleteTask(SelectedTask);
+                            // Code to handle task deletion
+                            if (response == buttonTypeYes) {
+                                // Then collect all the data from the database
+                                ObservableList<TaskTable> taskItems = FXCollections.observableArrayList(
+                                        getTableView().getItems()
+                                );
 
-                            TaskList.remove(SelectedTask);
-                            TaskView.refresh();
+                                // Then update the Observerlist
+                                taskItems.remove(selectedTask);
 
+                                // Call the database controller
+                                DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
+                                deleteDataFromMYSQL.DeleteTask(selectedTask);
 
-                        }
+                                // Then update the table
+                                TaskList.remove(selectedTask);
+
+                                TaskView.setItems(taskItems);
+                                TaskView.refresh();
+                            }
+                        });
                     });
                 }
             }
@@ -99,7 +115,7 @@ public class ButtonCalendar extends TableCell<TaskTable, Void> {
 
 
     // Static method to create a callback for the table column
-    public static Callback<TableColumn<UserTable, Void>, TableCell<TaskTable, Void>> forTableColumn(String buttonText, TableView<TaskTable> TaskView, ObservableList<TaskTable> taskList) {
-        return param -> new ButtonCalendar(buttonText , TaskView, taskList );
+    public static Callback<TableColumn<UserTable, Void>, TableCell<TaskTable, Void>> forTableColumn(String buttonText, TableView<TaskTable> TaskView, ObservableList<TaskTable> TaskList) {
+        return param -> new ButtonCalendar(buttonText , TaskView, TaskList );
     }
 }

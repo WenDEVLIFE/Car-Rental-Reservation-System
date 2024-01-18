@@ -138,6 +138,7 @@ public class loginAuthentication {
         // This will find the status of the user
         String sql = "SELECT status FROM caruser WHERE username=?";
 
+
         // Then proceed to the statement to find the status of the user
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
@@ -149,9 +150,46 @@ public class loginAuthentication {
       // This will call the login success method
         LoginSuccess(event, username, status);
     }
+    public void InsertReport(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Login");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private void loadCarystem(String username, String status ) {
         try {
+            InsertReport(username);
             // This will load the Car rental
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CarRentalSystemUi.fxml"));
             Scene scene = new Scene(fxmlLoader.load());

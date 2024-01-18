@@ -4,11 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx_table_functions.CarImage;
-import javafx_table_functions.CarImage2;
-import javafx_table_functions.SalesTable;
-import javafx_table_functions.TaskTable;
-import javafx_table_functions.UserTable;
+import javafx_table_functions.*;
+import org.apache.poi.ss.formula.functions.Na;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -177,6 +174,34 @@ public  class RetrieveFromMYSQL {
 
         //  This will return the SalesList
         return SalesList;
+    }
+    public ObservableList<Report> RetrieveReportTable() {
+        // This will create an ObservableList of Report Table
+        ObservableList<Report> ReportList = FXCollections.observableArrayList();
+        // This will retrieve the data from the database and put it on the table
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT ReportID, Username, ReportInfo, Date, Time FROM reporttable")) {
+
+            // Populate the ObservableList with data from the ResultSet
+            while (resultSet.next()) {
+                // Get the data from the current row using the column index - column data are in the VARCHAR format
+                int reportID = resultSet.getInt("ReportID");
+                String Name = resultSet.getString("Username");
+                String ReportInfo = resultSet.getString("ReportInfo");
+                String Date = resultSet.getString("Date");
+                String Time = resultSet.getString("Time");
+
+                // This will add the data to the SalesList
+                ReportList.add(new Report( reportID, Name, ReportInfo, Date ,Time));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //  This will return the ReportList
+        return ReportList;
     }
     public void RetrieTotalCars(){
 

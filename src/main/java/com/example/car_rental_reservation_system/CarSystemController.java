@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx_animation.JavafxAnimations;
 import javafx_table_functions.*;
 import javafxf_functions.*;
+import org.controlsfx.control.action.Action;
 
 import java.io.File;
 import java.io.IOException;
@@ -140,10 +141,23 @@ public class CarSystemController {
     private Pane SalesNavPane;
 
     @FXML
+    private Pane ReportSPane;
+
+    @FXML
+    private Pane ReportBG;
+
+
+    @FXML
     private Button PrintSales;
 
     @FXML
     private Button RefreshSales;
+
+    @FXML
+    private Button PrintReport;
+
+    @FXML
+    private Button RefrestReport;
 
 
     @FXML
@@ -180,6 +194,9 @@ public class CarSystemController {
     private Tab SalesTab;
 
     @FXML
+    private Tab ReportTAB;
+
+    @FXML
     private ComboBox <String> StatusUser;
 
     @FXML
@@ -196,6 +213,9 @@ public class CarSystemController {
 
     @FXML
     private TextField Search_AvailableCars;
+
+    @FXML
+    private TextField Search_AvailableCars1;
 
     @FXML
     private TextField SearchCarName;
@@ -367,7 +387,15 @@ public class CarSystemController {
     ObservableList <SalesTable>  SalesList= FXCollections.observableArrayList();
 
     @FXML
+    private TableView <Report> ReportView;
+
+    ObservableList <Report> ReportList= FXCollections.observableArrayList();
+
+    @FXML
     private ComboBox <String> MonthCombo;
+
+    @FXML
+    private ComboBox <String> MonthCombo1;
 
 
 
@@ -475,7 +503,7 @@ public class CarSystemController {
 
         // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.fade_calendars(  CalendarPanel, calendarpanel, calendar, DashboardTabPane);
+        animations.fade_Calendar_Activity(  CalendarPanel, calendarpanel, calendar);
     }
 
     @FXML
@@ -487,7 +515,7 @@ public class CarSystemController {
 
         // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.fade_animations(UserPane, UserView, AdminTitle1, AdminBackground);
+        animations.fade_admin(UserView, UserPane, AdminTitle1, AdminBackground);
 
     }
     @FXML
@@ -498,24 +526,29 @@ public class CarSystemController {
         tabActions.GoToAddCar(DashboardTabPane, AddRentCarTab);
 
         JavafxAnimations animations = new JavafxAnimations();
-        animations.FaceRentCar( CarPane, AddRentCarPaneBG, AddRentCarPanerPane, CarView);
+        animations.FaceRentCar(CarView, CarPane, AddRentCarPaneBG, AddRentCarPanerPane);
+
     }
 
     @FXML
     void RentACarAction (ActionEvent event){
+
+        // Go to next tab pane
         TabActions tabActions = new TabActions();
         tabActions.GoToAvailCars( DashboardTabPane, AvailableRentedCarTab );
 
+        // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.AvailableCar( AvailableCarPane, AVAILableCarBG, CarView1);
+        animations.AvailableCar( CarView1, AvailableCarPane, AVAILableCarBG);
 
 
     }
 
     @FXML
     void CreateAppointment (ActionEvent event) {
+
         String date = calendarinfo.getText();
-        // This will be connected on the car system fxml file
+
         TabActions tabActions = new TabActions();
         tabActions.CreateAppointmentActions(AppointmentTab, DashboardTabPane);
 
@@ -524,24 +557,39 @@ public class CarSystemController {
         fade.fade_Appointment(AppointmentPane, AppointmentInputPane, AppointmentBackground);
 
     }
- @ FXML
- void PendingAction (ActionEvent event){
-        TabActions  tabActions = new TabActions();
-        tabActions.PendingCars(DashboardTabPane, PendingCarTab);
+     @ FXML
+     void PendingAction (ActionEvent event){
+            TabActions  tabActions = new TabActions();
+            tabActions.PendingCars(DashboardTabPane, PendingCarTab);
 
-        JavafxAnimations animations = new JavafxAnimations();
-        animations.PendingCar(CarView2, RentedCarPane, RentedCarBG);
+            // Create scale transitions
+            JavafxAnimations animations = new JavafxAnimations();
+            animations.PendingCar(CarView2, RentedCarPane, RentedCarBG);
 
- }
+     }
 
- @FXML
- void SalesAction (ActionEvent event){
+     @FXML
+     void SalesAction (ActionEvent event){
+            TabActions tabActions = new TabActions();
+            tabActions.GoToSales(DashboardTabPane, SalesTab);
+
+            // Create scale transitions
+            JavafxAnimations animations = new JavafxAnimations();
+         Pane[] panes = {SalesTPane, SalesMPane, SalesBackground, SalesNavPane};
+         Button[] buttons = {PrintSales, RefreshSales};
+            animations.Sales(SalesView, panes, buttons);
+     }
+     @FXML
+     void GoToReport (ActionEvent event){
         TabActions tabActions = new TabActions();
-        tabActions.GoToSales(DashboardTabPane, SalesTab);
+            tabActions.GoToReport(DashboardTabPane, ReportTAB);
 
-        JavafxAnimations animations = new JavafxAnimations();
-        animations.Sales(SalesView, SalesTPane, SalesMPane, SalesBackground, SalesNavPane, PrintSales, RefreshSales);
- }
+            // Create scale transitions
+            Pane [] panes = {ReportSPane, ReportBG};
+            JavafxAnimations animations = new JavafxAnimations();
+            Button [] buttons = {PrintReport, RefrestReport};
+            animations.Report(ReportView, panes, buttons);
+     }
 
     // This action is to create a user
      @FXML
@@ -594,6 +642,7 @@ public class CarSystemController {
                      e.printStackTrace();
                  }
              } else {
+                 // This will show the error that password does not match
                  showErrorAlert("Password does not match");
              }
          }
@@ -731,6 +780,7 @@ public class CarSystemController {
     }
     @FXML
     void Rent (ActionEvent event){
+
         // This will rent the car
         String carname = SearchCarName.getText();
         String personrented = PersonRentedName.getText();
@@ -740,6 +790,7 @@ public class CarSystemController {
         String date_return = DateReturn.getText();
         String cashiername = CashierName.getText();
 
+        // if the textfield or value is null or empty, show error alert
         if (personrented.isEmpty() || date_rented.isEmpty() || personpay.isEmpty() || date_return.isEmpty() || cashiername.isEmpty() || carname.isEmpty()){
             showErrorAlert("Please fill up all the fields");
         } else {
@@ -841,11 +892,22 @@ public class CarSystemController {
     // Utility method to extract the month from the date string
     private String getMonthFromDate(String date) {
         try {
+            // get the month from the date string
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // This will parse the date
             Date parsedDate = dateFormat.parse(date);
+
+            // The calendar will get the month
             Calendar calendar = Calendar.getInstance();
+
+            // This will set the time
             calendar.setTime(parsedDate);
+
+            // This will get the month
             int month = calendar.get(Calendar.MONTH);
+
+            // This will return the month
             return new DateFormatSymbols().getMonths()[month];
         } catch (ParseException e) {
             e.printStackTrace();
@@ -863,7 +925,23 @@ public class CarSystemController {
     void RefreshSales (ActionEvent event){
         // This will refresh the sales table
         LoadSalesTable();
+
     }
+
+    @FXML
+    void SelectMonthReport (ActionEvent event){
+
+    }
+
+    @FXML
+    void PrintReport (ActionEvent event){
+
+    }
+    @FXML
+    void RefreshReport (ActionEvent event){
+
+    }
+
     public void initialize () throws SQLException {
 
         // This will initialize the car system
@@ -894,8 +972,11 @@ public class CarSystemController {
 
         StatusUser.setValue("Select a status");
 
+        // This will set the combo box month
         ObservableList <String> Month = FXCollections.observableArrayList("Select a month","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December");
         MonthCombo.setItems(Month);
+        MonthCombo1.setItems(Month);
+
 
         // This will set the sales this day to the label
         RetrieveFromMYSQL sales = new RetrieveFromMYSQL();
@@ -910,6 +991,12 @@ public class CarSystemController {
         Search_AvailableCars.textProperty().addListener((observable, oldValue, newValue) -> {
             CarView1.setItems(CarList.filtered(carImage -> carImage.getCarname().toLowerCase().contains(newValue.toLowerCase())));
         });
+
+        Search_AvailableCars1.setPromptText("Search Available Cars");
+        Search_AvailableCars1.textProperty().addListener((observable, oldValue, newValue) -> {
+            CarView2.setItems(RentedCars.filtered(carImage -> carImage.getCarname().toLowerCase().contains(newValue.toLowerCase())));
+        });
+
 
 
         TableColumn<UserTable, Integer> userIDColumn = new TableColumn<>("UserID");
@@ -1111,6 +1198,43 @@ public class CarSystemController {
         // This will load the sales table
         LoadSalesTable();
 
+        // This will load the report table
+        TableColumn <Report, Integer> ReportIDColumn = new TableColumn<>("ReportID");
+        ReportIDColumn.setCellValueFactory(cellData -> cellData.getValue().ReportIDProperty().asObject());
+        ReportIDColumn.setCellFactory(CustomTableCellFactoryReport.cellFactoryForInteger());
+
+        TableColumn <Report, String> ReportNameColumn = new TableColumn<>("Username");
+        ReportNameColumn.setCellValueFactory(cellData -> cellData.getValue().ReportNameProperty());
+        ReportNameColumn.setCellFactory(CustomTableCellFactoryReport.cellFactoryForString());
+        ReportNameColumn.setMinWidth(130);
+
+        TableColumn <Report, String> ReportActionColumn = new TableColumn<>("ReportInfo");
+        ReportActionColumn.setCellValueFactory(cellData -> cellData.getValue().ReportInfoProperty());
+        ReportActionColumn.setCellFactory(CustomTableCellFactoryReport.cellFactoryForString());
+        ReportActionColumn.setMinWidth(200);
+
+
+        TableColumn <Report, String> ReportDateColumn = new TableColumn<>("Date");
+        ReportDateColumn.setCellValueFactory(cellData -> cellData.getValue().ReportDateProperty());
+        ReportDateColumn.setCellFactory(CustomTableCellFactoryReport.cellFactoryForString());
+        ReportDateColumn.setMinWidth(130);
+
+        TableColumn <Report, String> ReportTimeColumn = new TableColumn<>("Time");
+        ReportTimeColumn.setCellValueFactory(cellData -> cellData.getValue().ReportTimeProperty());
+        ReportTimeColumn.setCellFactory(CustomTableCellFactoryReport.cellFactoryForString());
+        ReportTimeColumn.setMinWidth(130);
+
+        TableColumn <Report, Void> ReportDeleteColumn = new TableColumn<>("Delete");
+        ReportDeleteColumn.setCellFactory(param -> new ButtonReport("Delete", ReportView, ReportList));
+        ReportDeleteColumn.setMinWidth(140);
+
+        ReportView.getColumns().addAll(ReportIDColumn, ReportNameColumn, ReportActionColumn, ReportDateColumn, ReportTimeColumn, ReportDeleteColumn);
+
+        LoadReport();
+
+
+
+
     }
 
     // This will load the user table
@@ -1128,10 +1252,13 @@ public class CarSystemController {
 
     }
     public void LoadCar(){
+
         // load the Carview and CarView1
         CarView.getItems().clear();
         CarView1.getItems().clear();
+
         try {
+
             // call the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             CarList = retrieveFromMYSQL.RetrieveCarTable();
@@ -1145,10 +1272,12 @@ public class CarSystemController {
     }
 
     public void LoadPending(){
+
         // Load the approved cars
         CarView2.getItems().clear();
 
         try {
+
             // call the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             RentedCars = retrieveFromMYSQL.RetrievePendingCar();
@@ -1161,11 +1290,14 @@ public class CarSystemController {
         }
     }
 
+    // This will load the sales method
     private void LoadSalesTable() {
+
         // Load the sales table
         SalesView.getItems().clear();
 
         try {
+
             // call the database controller to retrieve the value
             RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
             SalesList = retrieveFromMYSQL.RetrieveSalesTable();
@@ -1176,6 +1308,20 @@ public class CarSystemController {
         }
     }
 
+    private void LoadReport(){
+        // Load the report table
+        ReportView.getItems().clear();
+
+        try {
+
+            // call the database controller to retrieve the value
+            RetrieveFromMYSQL retrieveFromMYSQL = new RetrieveFromMYSQL();
+            ReportList = retrieveFromMYSQL.RetrieveReportTable();
+            ReportView.setItems(ReportList);
+        } catch ( Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }
