@@ -122,7 +122,7 @@ public class JavafxAnimations {
         }
     }
 
-    public void Report(TableView<Report> reportView, Pane  [] panes , Button... buttons ) {
+    public void Report(TableView<Report> ReportView, Pane  [] panes , Button... buttons ) {
 
             // for each in panes
         Arrays.stream(panes).forEach(pane -> {
@@ -132,7 +132,7 @@ public class JavafxAnimations {
         });
 
             // for each in nodes (reportView)
-            applyScaleTransition(reportView);
+            applyScaleTransition(ReportView);
 
             // for each in buttons
             for (Button button : buttons) {

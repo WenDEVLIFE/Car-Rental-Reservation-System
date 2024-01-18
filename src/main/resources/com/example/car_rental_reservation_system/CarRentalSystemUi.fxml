@@ -584,7 +584,14 @@
                            </children>
                         </Pane>
                         <TableView fx:id="CarView1" layoutX="166.0" layoutY="167.0" prefHeight="585.0" prefWidth="813.0" />
-                        <JFXButton layoutX="512.0" layoutY="761.0" onAction="#RefreshTable" prefHeight="26.0" prefWidth="124.0" text="Refresh Table" />
+                        <JFXButton layoutX="512.0" layoutY="761.0" onAction="#RefreshTable" prefHeight="42.0" prefWidth="170.0" text="Refresh Table">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="30.0">
+                                 <image>
+                                    <Image url="@icons/refresh-data.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></JFXButton>
                      </children>
                   </AnchorPane>
               </content>
@@ -867,7 +874,17 @@
                                  </font>
                               </Label>
                            </children></Pane>
-                        <Button fx:id="PrintSales" layoutX="656.0" layoutY="761.0" mnemonicParsing="false" onAction="#PrintExcel" prefHeight="15.0" prefWidth="104.0" styleClass="jfx-button" text="Print Sales" />
+                        <Button fx:id="PrintSales" layoutX="617.0" layoutY="761.0" mnemonicParsing="false" onAction="#PrintExcel" prefHeight="42.0" prefWidth="143.0" styleClass="jfx-button" text="Print Sales">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="30.0">
+                                 <image>
+                                    <Image url="@icons/excel.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="11.0" />
+                           </font></Button>
                         <Pane fx:id="SalesTPane" layoutX="158.0" layoutY="195.0" prefHeight="263.0" prefWidth="338.0" styleClass="dashpanels3" stylesheets="@scratch.css">
                            <children>
                               <Label layoutX="75.0" layoutY="38.0" prefHeight="38.0" prefWidth="209.0" text="Sales Today" textFill="#fcfcfc">
@@ -892,7 +909,14 @@
                               <Image url="@icons/peso-sign.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="RefreshSales" layoutX="795.0" layoutY="761.0" mnemonicParsing="false" onAction="#RefreshSales" prefHeight="15.0" prefWidth="104.0" styleClass="jfx-button" text="Refresh" />
+                        <Button fx:id="RefreshSales" layoutX="795.0" layoutY="761.0" mnemonicParsing="false" onAction="#RefreshSales" prefHeight="42.0" prefWidth="142.0" styleClass="jfx-button" text="Refresh">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="30.0">
+                                 <image>
+                                    <Image url="@icons/refresh-data.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </AnchorPane>
               </content>
@@ -913,7 +937,7 @@
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="Setusername101" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="Setusername11" layoutX="752.0" layoutY="12.0" prefHeight="15.0" prefWidth="98.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
@@ -923,15 +947,29 @@
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="setstatus101" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
+                              <Label fx:id="setstatus11" layoutX="754.0" layoutY="27.0" prefHeight="15.0" prefWidth="126.0" text="null" textFill="#fcfcfc">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="PrintReport" layoutX="407.0" layoutY="745.0" mnemonicParsing="false" onAction="#PrintReport" prefHeight="40.0" prefWidth="135.0" styleClass="jfx-button" text="Print Reports" />
-                        <Button fx:id="RefrestReport" layoutX="638.0" layoutY="745.0" mnemonicParsing="false" onAction="#RefreshReport" prefHeight="15.0" prefWidth="104.0" styleClass="jfx-button" text="Refresh" />
+                        <Button fx:id="PrintReport" layoutX="385.0" layoutY="745.0" mnemonicParsing="false" onAction="#PrintReport" prefHeight="50.0" prefWidth="157.0" styleClass="jfx-button" text="Print Reports">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/excel.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button fx:id="RefrestReport" layoutX="638.0" layoutY="745.0" mnemonicParsing="false" onAction="#RefreshReport" prefHeight="50.0" prefWidth="165.0" styleClass="jfx-button" text="Refresh">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/refresh-data.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                         <Pane fx:id="ReportBG" layoutX="150.0" layoutY="79.0" prefHeight="139.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
                               <Label fx:id="DashBoardTitle21" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="291.0" text="Report" textFill="#fcfcfc">

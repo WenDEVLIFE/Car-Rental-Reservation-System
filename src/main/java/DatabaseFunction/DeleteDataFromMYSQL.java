@@ -101,4 +101,30 @@ public class DeleteDataFromMYSQL {
         }
     }
 
+    public void deleteReport(int reportID) {
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will find the report by the ReportID
+            String deleteQuery = "DELETE FROM reporttable WHERE ReportID = ?";
+
+            // Then passed on the prepared statement to delete the ReportID
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, reportID); // Assuming there's a method named getId() in your User class
+                int rowsDeleted = preparedStatement.executeUpdate();
+
+                // This will show the alert if the report is deleted
+                if (rowsDeleted > 0) {
+                    System.out.println("Report deleted successfully");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("System Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Report deletion successfully");
+                    alert.showAndWait();
+                }
+            }
+        } catch (SQLException e) {
+            // This will error if the code is incorrect but the code is working fine
+            throw new RuntimeException(e);
+        }
+    }
 }

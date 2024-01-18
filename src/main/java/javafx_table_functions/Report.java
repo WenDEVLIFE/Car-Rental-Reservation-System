@@ -100,4 +100,13 @@ public class Report {
         return ReportTime;
     }
 
+    public String getDate() {
+        // get() method is used to get the value of the property
+        return ReportDate.get();
+    }
+
+    public String  getTime() {
+        // get() method is used to get the value of the property
+        return ReportTime.get();
+    }
 }

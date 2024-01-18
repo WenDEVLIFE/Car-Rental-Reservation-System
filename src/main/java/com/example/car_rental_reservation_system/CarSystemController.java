@@ -306,6 +306,12 @@ public class CarSystemController {
     @FXML
     private Label setstatus10;
 
+    @FXML
+    private Label Setusername11;
+
+    @FXML
+    private Label setstatus11;
+
 
     @FXML
     private Label PersonLabel;
@@ -429,6 +435,8 @@ public class CarSystemController {
         setstatus9.setText(status);
         Setusername10.setText(username);
         setstatus10.setText(status);
+        Setusername11.setText(username);
+        setstatus11.setText(status);
 
     }
 
@@ -604,8 +612,10 @@ public class CarSystemController {
          if (username.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || status.isEmpty()) {
              showErrorAlert("Please fill up all the fields");
          } else {
+             // This will check if the password and confirm password are the same
              if (password.equals(confirmpassword)) {
                  try {
+                     // Check for password length
                      if (!verifyPasswordLength(password)) {
                          showErrorAlert("Password must be 8-20 characters");
                      } else {
@@ -710,6 +720,7 @@ public class CarSystemController {
 
     @FXML
     void SendApointment_MYSQL (ActionEvent event){
+
         // This will send the appointment to the database
       String appointment_info = AppointmentTextArea.getText();
         if (appointment_info.isEmpty()){
@@ -726,6 +737,7 @@ public class CarSystemController {
     }
     @FXML
     void AddImageAction (ActionEvent event){
+
         //give me upload image file function code here please
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -758,6 +770,7 @@ public class CarSystemController {
     }
     @FXML
     void AddRentedCars(ActionEvent event){
+
         // This will add the rented cars to the database
         String carname = Carname.getText();
         String plate  = CarPlateNum.getText();
@@ -891,6 +904,65 @@ public class CarSystemController {
 
     // Utility method to extract the month from the date string
     private String getMonthFromDate(String date) {
+        return getString(date);
+    }
+
+    @FXML
+    void PrintExcel(ActionEvent event){
+         // This will print the excel
+        PrintController printController = new PrintController();
+        printController.printReports_Excel(SalesView);
+    }
+    @FXML
+    void RefreshSales (ActionEvent event){
+        // This will refresh the sales table
+        LoadSalesTable();
+
+    }
+
+    @FXML
+    void SelectMonthReport (ActionEvent event){
+        // This will select the month
+        String month = MonthCombo1.getSelectionModel().getSelectedItem();
+
+        if ("Select a month".equals(month)) {
+            // If the default month is selected, show all sales data
+            ReportView.getItems().setAll(ReportList);
+            LoadReport();
+            return;
+        }
+
+        if (month == null || month.isEmpty()) {
+            showErrorAlert("Please select a month");
+            return;
+        }
+
+        // Filter the data based on the selected month
+        List<Report> filteredReport = ReportList.stream()
+                .filter(sales -> getMonthFromReport(sales).equalsIgnoreCase(month))
+                .collect(Collectors.toList());
+        LoadReport();
+
+        // Clear the existing items in the SalesView
+        ReportView.getItems().clear();
+
+        // Add the filtered data to the SalesView
+        ReportView.getItems().addAll(filteredReport);
+    }
+
+    // Utility method to extract the month from SalesTable
+    private String getMonthFromReport(Report sales) {
+        // Placeholder: Replace this with the actual method or property to get the date from SalesTable
+        String salesDate = sales.getDate();  // Replace 'getDate()' with the actual method or property
+        return getMonthFromDateReport(salesDate);
+    }
+
+    // Utility method to extract the month from the date string
+    private String getMonthFromDateReport(String date) {
+        return getString(date);
+    }
+
+    private String getString(String date) {
         try {
             // get the month from the date string
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -915,30 +987,19 @@ public class CarSystemController {
         }
     }
 
-    @FXML
-    void PrintExcel(ActionEvent event){
-         // This will print the excel
-        PrintController printController = new PrintController();
-        printController.printReports_Excel(SalesView);
-    }
-    @FXML
-    void RefreshSales (ActionEvent event){
-        // This will refresh the sales table
-        LoadSalesTable();
-
-    }
-
-    @FXML
-    void SelectMonthReport (ActionEvent event){
-
-    }
 
     @FXML
     void PrintReport (ActionEvent event){
 
+        PrintController printController = new PrintController();
+        printController.printReportsTable_Excel(ReportView);
+
     }
     @FXML
     void RefreshReport (ActionEvent event){
+
+        // This will refresh the report table
+        LoadReport();
 
     }
 

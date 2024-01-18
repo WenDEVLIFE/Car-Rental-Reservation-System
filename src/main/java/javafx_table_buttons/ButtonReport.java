@@ -34,6 +34,10 @@ public class ButtonReport extends TableCell<Report, Void> {
                     alert.showAndWait().ifPresent(response -> {
                         if (response == buttonTypeYes) {
                             // Code to handle user deletion
+                            DeleteDataFromMYSQL deleteDataFromMYSQL = new DeleteDataFromMYSQL();
+                            deleteDataFromMYSQL.deleteReport(selectedreport.getReportID());
+                            ReportList.remove(selectedreport);
+                            ReportView.refresh();
 
                         }
                     });
