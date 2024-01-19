@@ -11,6 +11,12 @@ Dashboard
 
 Calendar
 
-![Uploading image.png…]()
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/7dfa0256-ef7c-4167-9963-1d883c3820ce)
+
+Calendar Activity 
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/2b46a09b-3d0a-4d49-8396-b7a87908e17c)
+
+
+
 
 
