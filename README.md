@@ -7,7 +7,8 @@ Login Tab
 ![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/1fbd9c1c-1fcc-4db0-bffb-9050e33bbd0a)
 
 Dashboard
-![Uploading image.png…]()
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/f08b1237-d09f-438c-a261-e499bc4fe3af)
+
 
 
 
