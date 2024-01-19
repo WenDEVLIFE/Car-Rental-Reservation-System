@@ -63,4 +63,19 @@ public class TabActions {
         DashboardTabPane.getSelectionModel().select(ReportTAB);
 
     }
+
+    public void GoToPersonal(TabPane DashboardTabPane, Tab PersonalTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(PersonalTab);
+    }
+
+    public void GoToChangePass(TabPane DashboardTabPane, Tab ChangePassTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(ChangePassTab);
+    }
+
+    public void GoToChangeUser(TabPane DashboardTabPane, Tab ChangeUserTab) {
+        // This method is used to switch between tabs
+        DashboardTabPane.getSelectionModel().select(ChangeUserTab);
+    }
 }

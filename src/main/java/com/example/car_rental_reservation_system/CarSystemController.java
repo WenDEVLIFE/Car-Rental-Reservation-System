@@ -159,6 +159,9 @@ public class CarSystemController {
     @FXML
     private Button RefrestReport;
 
+    @FXML
+    private Button RefreshDB_Button;
+
 
     @FXML
     private TabPane DashboardTabPane;
@@ -195,6 +198,14 @@ public class CarSystemController {
 
     @FXML
     private Tab ReportTAB;
+
+    @FXML
+    private Tab PersonalTab;
+    @FXML
+    private Tab ChangeUserTab;
+
+    @FXML
+    private Tab ChangePassTab;
 
     @FXML
     private ComboBox <String> StatusUser;
@@ -235,12 +246,32 @@ public class CarSystemController {
     @FXML
     private TextField CashierName;
 
+    @FXML
+    private TextField NewUserField;
+
+    @FXML
+    private TextField OldUserField;
+
+    @FXML
+    private TextField UsernameFields;
+
+
+
+    @FXML
+    private PasswordField UserPasswordField;
+
 
     @FXML
     private PasswordField PasswordfieldText;
 
     @FXML
     private PasswordField ConfirmpasswordFieldText;
+
+    @FXML
+    private PasswordField OldpasswordField;
+
+    @FXML
+    private PasswordField NewPasswordField;
 
     @FXML
     private CheckBox checkPasswordBox;
@@ -312,6 +343,31 @@ public class CarSystemController {
     @FXML
     private Label setstatus11;
 
+    @FXML
+    private Label Setusername12;
+
+    @FXML
+    private Label setstatus12;
+
+    @FXML
+    private Label Setusername13;
+
+    @FXML
+    private Label setstatus13;
+
+    @FXML
+    private Label Setusername14;
+
+    @FXML
+    private Label setstatus14;
+
+
+    @FXML
+    private Label Setusername15;
+
+    @FXML
+    private Label setstatus15;
+
 
     @FXML
     private Label PersonLabel;
@@ -339,6 +395,25 @@ public class CarSystemController {
 
     @FXML
     private Label SalesThismonth;
+
+    @FXML
+    private Label TotalCarCount;
+
+    @FXML
+    private Label RentedCarCount;
+
+    @FXML
+    private Label AdminCount;
+
+    @FXML
+    private Label StaffCount;
+
+    @FXML
+    private Label ReportCount;
+
+    @FXML
+    private Label TotalAvaialbeCar;
+
 
     @FXML
     private Text year;
@@ -403,6 +478,12 @@ public class CarSystemController {
     @FXML
     private ComboBox <String> MonthCombo1;
 
+    @FXML
+    private CheckBox checkpasswordbox1;
+
+    @FXML
+    private CheckBox checkpasswordbox11;
+
 
 
     // This will be connected on the car system fxml file
@@ -437,6 +518,14 @@ public class CarSystemController {
         setstatus10.setText(status);
         Setusername11.setText(username);
         setstatus11.setText(status);
+        Setusername12.setText(username);
+        setstatus12.setText(status);
+        Setusername13.setText(username);
+        setstatus13.setText(status);
+        Setusername14.setText(username);
+        setstatus14.setText(status);
+        Setusername15.setText(username);
+        setstatus15.setText(status);
 
     }
 
@@ -487,8 +576,15 @@ public class CarSystemController {
 
     }
 
-    // for sidenavbar actions
+    /* for side navbar actions buttons
+    *
+    *
+    *
+    *
+    * */
+
     @FXML
+    // Dashboard Button
     void DashboardActions (ActionEvent event) {
         // Go to next tab pane
         TabActions tabActions = new TabActions();
@@ -496,10 +592,13 @@ public class CarSystemController {
 
         // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.loadfx_animation(CarPanel, AdminPane, dashboardPanel, DashboardTitle,
-                DashBoardBackground, StaffPane, ReportPane, AvailableCarsPane);
+        Pane [] panes = {CarPanel, AdminPane, dashboardPanel, DashboardTitle,
+                DashBoardBackground, StaffPane, ReportPane, AvailableCarsPane} ;
+        animations.loadfx_animation(panes,RefreshDB_Button);
 
     }
+
+    // Calendar Button
     @FXML
     void nextCalendar (ActionEvent event){
 
@@ -514,18 +613,33 @@ public class CarSystemController {
         animations.fade_Calendar_Activity(  CalendarPanel, calendarpanel, calendar);
     }
 
+    // Create user button
     @FXML
-    void CreateUser (ActionEvent event) {
+    void CreateUser(ActionEvent event) {
+        String[] userInfos = {setstatus1.getText(), setstatus2.getText(), setstatus3.getText(), setstatus4.getText(), setstatus5.getText(), setstatus6.getText(), setstatus7.getText(), setstatus8.getText(), setstatus9.getText(), setstatus10.getText(), setstatus11.getText()};
 
-        // Go to next tab pane
-        TabActions tabActions = new TabActions();
-        tabActions.CreateUserActions(DashboardTabPane, AdminTab);
+        boolean isAdmin = false;
+        for (String userInfo : userInfos) {
+            if (userInfo.equals("Admin")) {
+                isAdmin = true;
+                break;
+            }
+        }
 
-        // Create scale transitions
-        JavafxAnimations animations = new JavafxAnimations();
-        animations.fade_admin(UserView, UserPane, AdminTitle1, AdminBackground);
+        if (isAdmin) {
+            // Go to next tab pane
+            TabActions tabActions = new TabActions();
+            tabActions.CreateUserActions(DashboardTabPane, AdminTab);
 
+            // Create scale transitions
+            JavafxAnimations animations = new JavafxAnimations();
+            animations.fade_admin(UserView, UserPane, AdminTitle1, AdminBackground);
+        } else {
+            showErrorAlert("You are not allowed to create a user");
+        }
     }
+
+    // This is a Car Button
     @FXML
     void AddCarTabActions (ActionEvent event){
 
@@ -538,6 +652,7 @@ public class CarSystemController {
 
     }
 
+    // This is a rented car button
     @FXML
     void RentACarAction (ActionEvent event){
 
@@ -552,6 +667,7 @@ public class CarSystemController {
 
     }
 
+    // This is a create appointment Action
     @FXML
     void CreateAppointment (ActionEvent event) {
 
@@ -565,6 +681,8 @@ public class CarSystemController {
         fade.fade_Appointment(AppointmentPane, AppointmentInputPane, AppointmentBackground);
 
     }
+
+    // This Available car button
      @ FXML
      void PendingAction (ActionEvent event){
             TabActions  tabActions = new TabActions();
@@ -576,6 +694,7 @@ public class CarSystemController {
 
      }
 
+     // This is sales button
      @FXML
      void SalesAction (ActionEvent event){
             TabActions tabActions = new TabActions();
@@ -587,6 +706,8 @@ public class CarSystemController {
          Button[] buttons = {PrintSales, RefreshSales};
             animations.Sales(SalesView, panes, buttons);
      }
+
+     // This is report button
      @FXML
      void GoToReport (ActionEvent event){
         TabActions tabActions = new TabActions();
@@ -598,6 +719,18 @@ public class CarSystemController {
             Button [] buttons = {PrintReport, RefrestReport};
             animations.Report(ReportView, panes, buttons);
      }
+     @FXML
+     void GoToPersonal (ActionEvent event){
+            TabActions tabActions = new TabActions();
+            tabActions.GoToPersonal(DashboardTabPane, PersonalTab);
+     }
+
+     /* These are the function of each events in the system
+     *
+     *
+     *
+     *
+     * */
 
     // This action is to create a user
      @FXML
@@ -991,6 +1124,7 @@ public class CarSystemController {
     @FXML
     void PrintReport (ActionEvent event){
 
+         // This will print the report
         PrintController printController = new PrintController();
         printController.printReportsTable_Excel(ReportView);
 
@@ -1003,10 +1137,128 @@ public class CarSystemController {
 
     }
 
+    @FXML
+    void RefreshDB(ActionEvent event){
+
+         // This will refresh the dashboard
+        RetrieveFromMYSQL data = new RetrieveFromMYSQL();
+        data.Retrieve_TotalCars(TotalCarCount);
+        data.RetrieveRentedCars(RentedCarCount);
+        data.RetrieveAdmin(AdminCount);
+        data.RetrieveSTAFF(StaffCount);
+        data.RetrieveReports(ReportCount);
+        data.RetrieveAvailableCars(TotalAvaialbeCar);
+    }
+
+    // This wil lgo to Change Password Tab
+    @FXML
+    void GotoChangPW(ActionEvent event){
+
+        // This will go to the change password tab
+        TabActions tabActions = new TabActions();
+        tabActions.GoToChangePass(DashboardTabPane, ChangePassTab);
+
+        String user = Setusername13.getText();
+        UsernameFields.setText(user);
+    }
+
+    // This will go to Change User Tab
+    @FXML
+    void GotoChangUser (ActionEvent event){
+
+            // This will go to the change user tab
+            TabActions tabActions = new TabActions();
+            tabActions.GoToChangeUser(DashboardTabPane, ChangeUserTab);
+
+            String user = Setusername12.getText();
+            OldUserField.setText(user);
+
+    }
+
+    @FXML
+    void ChangeUsername(ActionEvent event){
+         String username = NewUserField.getText();
+            String oldusername = OldUserField.getText();
+            String password = UserPasswordField.getText();
+
+            if (username.isEmpty() || oldusername.isEmpty() || password.isEmpty()){
+                showErrorAlert("Please fill up all the fields");
+            } else {
+                try {
+                    // Call the connectMysql class to insert the appointment to the database
+                    ConnectMysql connectMysql = new ConnectMysql();
+                    connectMysql.ChangeUsername(username, oldusername, password, Setusername1, Setusername2, Setusername3, Setusername4, Setusername5, Setusername6, Setusername7, Setusername8, Setusername9, Setusername10, Setusername11, Setusername12, Setusername13, Setusername14, Setusername15, OldUserField, NewUserField, UserPasswordField);
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+    }
+    @FXML
+    void SeepasswordUser (ActionEvent event){
+        System.out.println("Check password");
+
+        if (checkpasswordbox1.isSelected()) {
+            // If checkbox is selected, show the password
+            UserPasswordField.setPromptText(UserPasswordField.getText());
+            UserPasswordField.clear();
+        } else {
+            // If checkbox is not selected, hide the password
+            UserPasswordField.setText(UserPasswordField.getPromptText());
+            UserPasswordField.setPromptText("Password");
+        }
+    }
+    @FXML
+    void ChangePasswordAction(ActionEvent evennt){
+        String oldpassword = OldpasswordField.getText();
+        String newpassword = NewPasswordField.getText();
+        String username = UsernameFields.getText();
+
+        if (oldpassword.isEmpty() || newpassword.isEmpty() || username.isEmpty()){
+            showErrorAlert("Please fill up all the fields");
+        } else {
+            try {
+                // Call the connectMysql class to insert the appointment to the database
+                ConnectMysql connectMysql = new ConnectMysql();
+                connectMysql.ChangePassword(oldpassword, newpassword, username, OldpasswordField, NewPasswordField, UsernameFields);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+    @FXML
+    void Seepasswordcheckbox(ActionEvent event){
+        System.out.println("Check password");
+
+        if (checkpasswordbox11.isSelected()) {
+            // If checkbox is selected, show the password
+            NewPasswordField.setPromptText(NewPasswordField.getText());
+            NewPasswordField.clear();
+            OldpasswordField.setPromptText(OldpasswordField.getText());
+            OldpasswordField.clear();
+        } else {
+            // If checkbox is not selected, hide the password
+            NewPasswordField.setText(NewPasswordField.getPromptText());
+            NewPasswordField.setPromptText("Password");
+            OldpasswordField.setText(OldpasswordField.getPromptText());
+            OldpasswordField.setPromptText("Password");
+        }
+
+    }
     public void initialize () throws SQLException {
 
         // This will initialize the car system
         System.runFinalization();
+
+        RetrieveFromMYSQL data = new RetrieveFromMYSQL();
+        data.Retrieve_TotalCars(TotalCarCount);
+        data.RetrieveRentedCars(RentedCarCount);
+        data.RetrieveAdmin(AdminCount);
+        data.RetrieveSTAFF(StaffCount);
+        data.RetrieveReports(ReportCount);
+        data.RetrieveAvailableCars(TotalAvaialbeCar);
 
         // This will set the tooltip of the minimize and close button
         Tooltip tooltip = new Tooltip("Minimize");
@@ -1025,8 +1277,9 @@ public class CarSystemController {
 
          // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.loadfx_animation(CarPanel, AdminPane, dashboardPanel, DashboardTitle,
-                DashBoardBackground, StaffPane, ReportPane, AvailableCarsPane);
+        Pane [] panes = {CarPanel, AdminPane, dashboardPanel, DashboardTitle,
+                DashBoardBackground, StaffPane, ReportPane, AvailableCarsPane} ;
+         animations.loadfx_animation(panes,RefreshDB_Button);
 
         ObservableList <String> Status = FXCollections.observableArrayList("Select a status","Admin", "Staff");
         StatusUser.setItems(Status);
@@ -1222,7 +1475,7 @@ public class CarSystemController {
 
         TableColumn<CarImage2, Void> actionColumn7 = new TableColumn<>("Moved to Rented");
         actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars, CarView1,CarList,CarView));
-        actionColumn7.setMinWidth(100);
+        actionColumn7.setMinWidth(130);
 
 
         CarView2.getColumns().addAll(CarIDColumn, ImageColumn, CarNameColumn, CarPlateNumColumn, CarPriceColumn, PersonName, DateRented, DateReturn, actionColumn7);
@@ -1287,13 +1540,11 @@ public class CarSystemController {
 
         TableColumn <Report, Void> ReportDeleteColumn = new TableColumn<>("Delete");
         ReportDeleteColumn.setCellFactory(param -> new ButtonReport("Delete", ReportView, ReportList));
-        ReportDeleteColumn.setMinWidth(140);
+        ReportDeleteColumn.setMinWidth(150);
 
         ReportView.getColumns().addAll(ReportIDColumn, ReportNameColumn, ReportActionColumn, ReportDateColumn, ReportTimeColumn, ReportDeleteColumn);
 
         LoadReport();
-
-
 
 
     }

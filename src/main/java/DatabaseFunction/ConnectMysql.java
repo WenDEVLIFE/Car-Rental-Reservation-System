@@ -163,4 +163,150 @@ public class ConnectMysql {
         }
     }
 
+
+
+    public void ChangeUsername(String username, String oldusername, String password, Label Setusername1, Label Setusername2, Label Setusername3, Label Setusername4, Label setusername5, Label Setusername6, Label Setusername7, Label Setusername8, Label Setusername9, Label Setusername10, Label Setusername11, Label Setusername12, Label Setusername13, Label Setusername14, Label Setusername15, TextField OldUserField, TextField NewUserField, PasswordField UserPasswordField) {
+
+
+        boolean usernameChanged = changeUsername( username, oldusername, password);
+
+        if (usernameChanged) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Username has been changed");
+            alert.showAndWait();
+            String oldusername1 = Setusername12.getText();
+            if (oldusername1.equals(oldusername)) {
+                Setusername1.setText(username);
+                Setusername2.setText(username);
+                Setusername3.setText(username);
+                Setusername4.setText(username);
+                setusername5.setText(username);
+                Setusername6.setText(username);
+                Setusername7.setText(username);
+                Setusername8.setText(username);
+                Setusername9.setText(username);
+                Setusername10.setText(username);
+                Setusername11.setText(username);
+                Setusername12.setText(username);
+                Setusername13.setText(username);
+                Setusername14.setText(username);
+                Setusername15.setText(username);
+
+                OldUserField.clear();
+                NewUserField.clear();
+                UserPasswordField.clear();
+            }
+        } else {
+            System.out.println("Username change failed. Please check your credentials.");
+        }
+
+    }
+    public boolean changeUsername(String username, String oldUsername, String password) {
+        try {
+            Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+            String selectQuery = "SELECT * FROM caruser WHERE username = ?";
+            try (PreparedStatement selectStatement = con.prepareStatement(selectQuery)) {
+                selectStatement.setString(1, oldUsername);
+                ResultSet resultSet = selectStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String storedPassword = resultSet.getString("password");
+                    byte[] salt = resultSet.getBytes("salt");
+
+                    if (PasswordUtils.verifyPassword(password, storedPassword, salt)) {
+                        String updateQuery = "UPDATE caruser SET username = ? WHERE username = ?";
+                        try (PreparedStatement updateStatement = con.prepareStatement(updateQuery)) {
+                            updateStatement.setString(1, username);
+                            updateStatement.setString(2, oldUsername);
+
+                            int rowsAffected = updateStatement.executeUpdate();
+
+                            if (rowsAffected > 0) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        // Incorrect password
+                        return false;
+                    }
+                } else {
+                    // Username does not exist
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void ChangePassword(String oldpassword, String newpassword, String username, PasswordField OldpasswordField, PasswordField NewPasswordField, TextField UsernameFields) {
+
+        boolean passwordChanged = changePassword(oldpassword, newpassword, username);
+
+        if (passwordChanged) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Password has been changed");
+            alert.showAndWait();
+            OldpasswordField.clear();
+            NewPasswordField.clear();
+            UsernameFields.clear();
+        } else {
+            System.out.println("Password change failed. Please check your credentials.");
+        }
+    }
+
+    private boolean changePassword(String oldpassword, String newpassword, String username) {
+        try {
+            Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+            String selectQuery = "SELECT * FROM caruser WHERE username = ?";
+            try (PreparedStatement selectStatement = con.prepareStatement(selectQuery)) {
+                selectStatement.setString(1, username);
+                ResultSet resultSet = selectStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String storedPassword = resultSet.getString("password");
+                    byte[] salt = resultSet.getBytes("salt");
+
+                    if (PasswordUtils.verifyPassword(oldpassword, storedPassword, salt)) {
+                        // Old password is correct, generate new salt and hash the new password
+                        byte[] newSalt = PasswordUtils.generateSalt();
+                        String newHashedPassword = PasswordUtils.hashPassword(newpassword, newSalt);
+
+                        String updateQuery = "UPDATE caruser SET password = ?, salt = ? WHERE username = ?";
+                        try (PreparedStatement updateStatement = con.prepareStatement(updateQuery)) {
+                            updateStatement.setString(1, newHashedPassword);
+                            updateStatement.setBytes(2, newSalt);
+                            updateStatement.setString(3, username);
+
+                            int rowsAffected = updateStatement.executeUpdate();
+
+                            return rowsAffected > 0;
+                        }
+                    } else {
+                        // Incorrect old password
+                        return false;
+                    }
+                } else {
+                    // Username does not exist
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Username does not exist");
+                    alert.showAndWait();
+                    return false;
+
+
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

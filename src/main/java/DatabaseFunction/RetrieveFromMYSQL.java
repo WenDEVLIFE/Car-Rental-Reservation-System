@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx_table_functions.*;
-import org.apache.poi.ss.formula.functions.Na;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -203,22 +202,123 @@ public  class RetrieveFromMYSQL {
         //  This will return the ReportList
         return ReportList;
     }
-    public void RetrieTotalCars(){
+    public void Retrieve_TotalCars(Label TotalCarCount) {
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+             Statement ignored = connection.createStatement()) {
+
+            // Query to get the total sales for today
+            String query = "SELECT COUNT(CarID) FROM rentedcars";
+            String query1 = "SELECT COUNT(CarID) FROM availablecar";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+                if (resultSet.next() && resultSet1.next()) {
+                    int totalCars = resultSet.getInt(1) + resultSet1.getInt(1);
+                    System.out.println("Total Cars: " + totalCars);
+                    TotalCarCount.setText(String.valueOf(totalCars));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void RetrieveRentedCars(Label RentedCarCount){
+        try(Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+            Statement ignored = connection.createStatement()){
+
+            String query = "SELECT COUNT(CarID) FROM rentedcars";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalCars = resultSet.getInt(1);
+                    System.out.println("Total Cars: " + totalCars);
+                    RentedCarCount.setText(String.valueOf(totalCars));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
-    public void RetrieveRentedCars(){
+    public void RetrieveAdmin(Label AdminCount){
+        try ( Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+              Statement ignored = connection.createStatement()){
+
+            String query = "SELECT COUNT(UserID) FROM caruser WHERE Status = 'Admin'";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalAdmin = resultSet.getInt(1);
+                    System.out.println("Total Admin: " + totalAdmin);
+                    AdminCount.setText(String.valueOf(totalAdmin));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
-    public void RetrieveAdmin(){
+    public void RetrieveSTAFF(Label StaffCount){
+        try ( Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+              Statement ignored = connection.createStatement()){
+
+            String query = "SELECT COUNT(UserID) FROM caruser WHERE Status = 'Staff'";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalAdmin = resultSet.getInt(1);
+                    System.out.println("Total Admin: " + totalAdmin);
+                    StaffCount.setText(String.valueOf(totalAdmin));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
-    public void RetrieveSTAFF(){
+    public void RetrieveAvailableCars(Label TotalAvaialbeCar){
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+              Statement ignored = connection.createStatement()){
+
+            String query = "SELECT COUNT(CarID) FROM availablecar";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalAdmin = resultSet.getInt(1);
+                    System.out.println("Total Admin: " + totalAdmin);
+                    TotalAvaialbeCar.setText(String.valueOf(totalAdmin));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
-    public void RetrieveAvailableCars(){
+    public void RetrieveReports(Label ReportCount){
+        try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
+              Statement ignored = connection.createStatement()){
 
-    }
-    public void RetrieveReports(){
+            String query = "SELECT COUNT(ReportID) FROM reporttable";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    int totalAdmin = resultSet.getInt(1);
+                    System.out.println("Total Reports: " + totalAdmin);
+                    ReportCount.setText(String.valueOf(totalAdmin));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
     public void display_salesToday(Label SalesToday ){

@@ -44,13 +44,15 @@ public class JavafxAnimations {
             applyFadeTransition(node);
         }
     }
-    public void loadfx_animation(Pane... panes) {
+    public void loadfx_animation(Pane[] panes, Button... buttons) {
 
         // for each node in nodes
         for (Pane pane : panes) {
             pane.setScaleX(0.1);
             pane.setScaleY(0.1);
             applyScaleTransition(pane);
+
+            applyFadeTransition(buttons[0]);
 
 
         }
