@@ -16,6 +16,27 @@ Calendar
 Calendar Activity 
 ![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/2b46a09b-3d0a-4d49-8396-b7a87908e17c)
 
+Appointment Task Tab
+
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/fdb9cac8-991b-4b22-9d27-e203086d903f)
+
+Rent Car
+
+Rent a car
+
+Sales
+
+Add Car
+
+Approved car
+
+Reports
+
+Personal Info
+
+Ceate User
+
+
 
 
 
