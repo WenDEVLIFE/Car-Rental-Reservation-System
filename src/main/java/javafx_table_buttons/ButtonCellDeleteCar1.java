@@ -21,14 +21,17 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
     private TableView<CarImage> CarView;
 
+    private Label Setusername1;
+
     // Constructor for the ButtonCell
-    public ButtonCellDeleteCar1(String buttonText, TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
+    public ButtonCellDeleteCar1(String buttonText, TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView, Label Setusername1) {
         this.button = new Button(buttonText);
         this.CarView2 = CarView2;
         this.RentedCars = RentedCars;
         this.CarView1 = CarView1;
         this.CarList = CarList;
         this.CarView = CarView;
+        this.Setusername1 = Setusername1;
 
         this.button.setOnAction(event -> {
             CarImage2 SelectedCar = getTableRow().getItem();
@@ -44,8 +47,13 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
                             String carname = SelectedCar.getCarName().get();
                             System.out.println(carname);
+
+                            // Move car to rented cars table view
+                            String username = Setusername1.getText();
+
+                            // Delete car from database and move it to rented cars
                             RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
-                            rentMYSQL_database.MovetheCarBacktoRent(carname,CarView1,CarList,CarView);
+                            rentMYSQL_database.MovetheCarBacktoRent(username, carname,CarView1,CarList,CarView);
                             RentedCars.remove(SelectedCar);
                             CarView2.refresh();
 
@@ -96,7 +104,7 @@ public class ButtonCellDeleteCar1 extends TableCell<CarImage2, Void> {
 
 
     // Static method to create a callback for the table column
-    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView) {
-        return param -> new ButtonCellDeleteCar1 (buttonText , CarView2, RentedCars, CarView1, CarList, CarView);
+    public static Callback<TableColumn<UserTable, Void>, TableCell<CarImage2, Void>> forTableColumn(String buttonText , TableView<CarImage2> CarView2, ObservableList<CarImage2> RentedCars, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView, Label Setusername1) {
+        return param -> new ButtonCellDeleteCar1 (buttonText , CarView2, RentedCars, CarView1, CarList, CarView, Setusername1);
     }
 }

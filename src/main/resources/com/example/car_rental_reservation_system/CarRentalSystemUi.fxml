@@ -998,7 +998,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background" stylesheets="@scratch.css">
                      <children>
-                        <Pane fx:id="ReportSPane1" layoutX="144.0" layoutY="32.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                        <Pane fx:id="PersonalTabPane" layoutX="144.0" layoutY="32.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1027,7 +1027,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="ReportBG1" layoutX="150.0" layoutY="80.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
+                        <Pane fx:id="PersonalBG" layoutX="150.0" layoutY="80.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
                               <Label fx:id="DashBoardTitle211" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="291.0" text="Personal Info" textFill="#fcfcfc">
                                  <font>
@@ -1036,7 +1036,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="177.0" layoutY="165.0" prefHeight="626.0" prefWidth="808.0" styleClass="dashpanels2">
+                        <Pane fx:id="PersonalPane" layoutX="177.0" layoutY="165.0" prefHeight="626.0" prefWidth="808.0" styleClass="dashpanels2">
                            <children>
                               <ImageView fitHeight="99.0" fitWidth="136.0" layoutX="339.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1091,7 +1091,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background">
                      <children>
-                        <Pane fx:id="ReportSPane11" layoutX="143.0" layoutY="34.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangeUserPane" layoutX="143.0" layoutY="34.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1120,7 +1120,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="ReportBG11" layoutX="149.0" layoutY="82.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangeUserBG" layoutX="149.0" layoutY="82.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
                               <Label fx:id="DashBoardTitle2111" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="395.0" text="Change Username" textFill="#fcfcfc">
                                  <font>
@@ -1129,7 +1129,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="151.0" layoutY="165.0" prefHeight="637.0" prefWidth="831.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangeUsersPane" layoutX="151.0" layoutY="165.0" prefHeight="637.0" prefWidth="831.0" styleClass="dashpanels2" stylesheets="@scratch.css">
                            <children>
                               <ImageView fitHeight="99.0" fitWidth="136.0" layoutX="339.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1174,7 +1174,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="color-full-background">
                      <children>
-                        <Pane fx:id="ReportSPane111" layoutX="138.0" layoutY="31.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangePassTabPane" layoutX="138.0" layoutY="31.0" prefHeight="48.0" prefWidth="857.0" styleClass="dashpanels1" stylesheets="@scratch.css">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="653.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1203,7 +1203,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="ReportBG111" layoutX="148.0" layoutY="79.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangePassBG" layoutX="148.0" layoutY="79.0" prefHeight="101.0" prefWidth="845.0" styleClass="root" stylesheets="@scratch.css">
                            <children>
                               <Label fx:id="DashBoardTitle21111" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="395.0" text="Change Password" textFill="#fcfcfc">
                                  <font>
@@ -1212,7 +1212,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="150.0" layoutY="158.0" prefHeight="637.0" prefWidth="831.0" styleClass="dashpanels2" stylesheets="@scratch.css">
+                        <Pane fx:id="ChangePassPane" layoutX="150.0" layoutY="158.0" prefHeight="637.0" prefWidth="831.0" styleClass="dashpanels2" stylesheets="@scratch.css">
                            <children>
                               <ImageView fitHeight="99.0" fitWidth="136.0" layoutX="339.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -1370,6 +1370,11 @@
                   <Image url="@icons/seo-report.png" />
                </image>
             </ImageView>
+            <Label layoutX="16.0" layoutY="734.0" prefHeight="15.0" prefWidth="127.0" text="Copyright @2024" textFill="#fcfcfc">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane prefHeight="30.0" prefWidth="1001.0" styleClass="titlebar" stylesheets="@scratch.css">

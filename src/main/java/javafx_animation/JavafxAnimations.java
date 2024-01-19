@@ -38,8 +38,8 @@ public class JavafxAnimations {
 
          // for each node in nodes
         for (Node node : nodes) {
-            node.setScaleX(0.1);
-            node.setScaleY(0.1);
+            node.setScaleX(1);
+            node.setScaleY(1);
             applyScaleTransition(node);
             applyFadeTransition(node);
         }
@@ -69,15 +69,24 @@ public class JavafxAnimations {
         applyFadeAndScaleTransitions(panes);
     }
 
-    public void FaceRentCar(TableView <CarImage> CarView, Pane... panes) {
+    public void FaceRentCar(TableView<CarImage> CarView, Pane[] panes) {
+        // for each node in nodes
+        for (Pane pane : panes) {
+            pane.setScaleX(0.1);
+            pane.setScaleY(0.1);
+            applyScaleTransition(pane);
+        }
 
-         // for each node in nodes
-        applyFadeAndScaleTransitions(panes);
-        applyFadeTransition(CarView);
-
+        // Check if CarView is not null before applying the scale transition
+        if (CarView != null) {
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1), CarView);
+            scaleTransition.setToX(1);
+            scaleTransition.setToY(1);
+            scaleTransition.play();
+        }
     }
 
-    public void AvailableCar(TableView <CarImage> CarView1, Pane... panes) {
+    public void AvailableCar(TableView <CarImage> CarView1, Pane[] panes) {
 
         // for each node in nodes
         Arrays.stream(panes).forEach(pane -> {
@@ -142,5 +151,34 @@ public class JavafxAnimations {
                 button.setScaleY(0.1);
                 applyScaleTransition(button);
             }
+    }
+
+    public void PersonalFX(Pane[] panes) {
+
+            // for each in panes
+            Arrays.stream(panes).forEach(pane -> {
+                pane.setScaleX(0.1);
+                pane.setScaleY(0.1);
+                applyScaleTransition(pane);
+            });
+    }
+
+    public void ChangePassFX(Pane[] panes) {
+        // for each in panes
+        Arrays.stream(panes).forEach(pane -> {
+            pane.setScaleX(0.1);
+            pane.setScaleY(0.1);
+            applyScaleTransition(pane);
+        });
+    }
+
+    public void ChangeUserFX(Pane[] panes) {
+
+            // for each in panes
+            Arrays.stream(panes).forEach(pane -> {
+                pane.setScaleX(0.1);
+                pane.setScaleY(0.1);
+                applyScaleTransition(pane);
+            });
     }
 }

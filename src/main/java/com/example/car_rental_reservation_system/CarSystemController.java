@@ -31,7 +31,10 @@ import java.sql.SQLException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -145,6 +148,33 @@ public class CarSystemController {
 
     @FXML
     private Pane ReportBG;
+
+    @FXML
+    private Pane PersonalTabPane;
+
+    @FXML
+    private Pane PersonalBG;
+
+    @FXML
+    private Pane PersonalPane;
+
+    @FXML
+    private Pane ChangePassTabPane;
+
+    @FXML
+    private Pane ChangePassBG;
+
+    @FXML
+    private Pane ChangePassPane;
+
+    @FXML
+    private Pane ChangeUserPane;
+
+    @FXML
+    private Pane ChangeUserBG;
+
+    @FXML
+    private Pane ChangeUsersPane;
 
 
     @FXML
@@ -431,11 +461,11 @@ public class CarSystemController {
     private TextArea AppointmentTextArea;
 
     public ZonedDateTime dateFocus;
-      public ZonedDateTime today;
+    public ZonedDateTime today;
 
-      public String receviedDate;
+    public String receviedDate;
 
-      private File Store_image;
+    private File Store_image;
 
     @FXML
     private TableView<UserTable> UserView;
@@ -647,8 +677,9 @@ public class CarSystemController {
         TabActions tabActions = new TabActions();
         tabActions.GoToAddCar(DashboardTabPane, AddRentCarTab);
 
+        Pane [] panes = {CarPane, AddRentCarPaneBG, AddRentCarPanerPane};
         JavafxAnimations animations = new JavafxAnimations();
-        animations.FaceRentCar(CarView, CarPane, AddRentCarPaneBG, AddRentCarPanerPane);
+        animations.FaceRentCar(CarView, panes);
 
     }
 
@@ -662,7 +693,8 @@ public class CarSystemController {
 
         // Create scale transitions
         JavafxAnimations animations = new JavafxAnimations();
-        animations.AvailableCar( CarView1, AvailableCarPane, AVAILableCarBG);
+        Pane [] panes = { AvailableCarPane, AVAILableCarBG};
+        animations.AvailableCar( CarView1, panes);
 
 
     }
@@ -723,6 +755,12 @@ public class CarSystemController {
      void GoToPersonal (ActionEvent event){
             TabActions tabActions = new TabActions();
             tabActions.GoToPersonal(DashboardTabPane, PersonalTab);
+
+            // Create scale transitions
+            JavafxAnimations animations = new JavafxAnimations();
+            Pane [] panes = {PersonalPane, PersonalBG, PersonalTabPane};
+            animations.PersonalFX(panes);
+
      }
 
      /* These are the function of each events in the system
@@ -909,6 +947,7 @@ public class CarSystemController {
         String plate  = CarPlateNum.getText();
         String carprice = CarPrice.getText();
         int price = Integer.parseInt(carprice);
+        String username = Setusername1.getText();
 
         if (carname.isEmpty() ||  plate.isEmpty() || carprice.isEmpty()){
             showErrorAlert("Please fill up all the fields");
@@ -917,7 +956,7 @@ public class CarSystemController {
                 // Call the connectMysql class to insert the appointment to the database
                 RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
                 rentMYSQL_database.AddCar(carname, plate, price,Store_image,
-                        CarView, CarList, Carname, CarPlateNum, CarPrice, CarFile);
+                        CarView, CarList, Carname, CarPlateNum, CarPrice, CarFile, username);
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -925,9 +964,7 @@ public class CarSystemController {
         }
     }
     @FXML
-    void Rent (ActionEvent event){
-
-        // This will rent the car
+    void Rent(ActionEvent event) {
         String carname = SearchCarName.getText();
         String personrented = PersonRentedName.getText();
         String date_rented = DateRented.getText();
@@ -935,21 +972,44 @@ public class CarSystemController {
         int pay = Integer.parseInt(personpay);
         String date_return = DateReturn.getText();
         String cashiername = CashierName.getText();
+        String username = Setusername1.getText();
 
-        // if the textfield or value is null or empty, show error alert
-        if (personrented.isEmpty() || date_rented.isEmpty() || personpay.isEmpty() || date_return.isEmpty() || cashiername.isEmpty() || carname.isEmpty()){
+        if (personrented.isEmpty() || date_rented.isEmpty() || personpay.isEmpty() || date_return.isEmpty() || cashiername.isEmpty() || carname.isEmpty()) {
             showErrorAlert("Please fill up all the fields");
         } else {
-            try {
-                // Call the connectMysql class to insert the appointment to the database
-                RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
-                rentMYSQL_database.MoveTheRentCarToPending(carname, personrented, date_rented, pay, date_return, cashiername, PersonPay,PersonLabel, DateRLabel, DateRRLabel, CashierLabel, Paylabel, DateLabel, RentedCars, CarView2, SearchCarName, PersonRentedName, DateRented, DateReturn, CashierName);
+            if (isValidDate(date_rented) && isValidDate(date_return)) {
+                try {
+                    RentMYSQL_DATABASE rentMYSQL_database = new RentMYSQL_DATABASE();
+                    rentMYSQL_database.MoveTheRentCarToPending(username, carname, personrented, date_rented, pay, date_return, cashiername, PersonPay,PersonLabel, DateRLabel, DateRRLabel, CashierLabel, Paylabel, DateLabel, RentedCars, CarView2, SearchCarName, PersonRentedName, DateRented, DateReturn, CashierName);
 
-            } catch (Exception e){
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                showErrorAlert("Please enter valid date formats");
             }
         }
+    }
 
+    private boolean isValidDate(String dateString) {
+        try {
+            // Try to parse the date using different date formats
+            DateTimeFormatter[] dateFormats = {
+                    DateTimeFormatter.ofPattern("MM-dd-yy"),
+                    DateTimeFormatter.ofPattern("MM-dd-yy"),
+                    // Add more formats as needed
+            };
+
+            for (DateTimeFormatter format : dateFormats) {
+                LocalDate.parse(dateString, format);
+            }
+
+            // If no exception is thrown, the parsing was successful
+            return true;
+        } catch (DateTimeParseException e) {
+            // Parsing failed
+            return false;
+        }
     }
     @FXML
     void PrintCheck(ActionEvent event){
@@ -962,6 +1022,7 @@ public class CarSystemController {
         String date_return = DateRRLabel.getText();
         String cashiername = CashierLabel.getText();
 
+        // if the textfield or value is null or empty, show error alert
         if(personrented == null || personpay == null || date == null || date_rented == null || date_return == null || cashiername == null){
             showErrorAlert("Please fill up all the fields");
         } else {
@@ -1160,6 +1221,11 @@ public class CarSystemController {
 
         String user = Setusername13.getText();
         UsernameFields.setText(user);
+
+        // Create scale transitions
+        JavafxAnimations animations = new JavafxAnimations();
+        Pane [] panes = {ChangePassPane, ChangePassBG, ChangePassTabPane};
+        animations.ChangePassFX(panes);
     }
 
     // This will go to Change User Tab
@@ -1173,8 +1239,15 @@ public class CarSystemController {
             String user = Setusername12.getText();
             OldUserField.setText(user);
 
+            // Create scale transitions
+            JavafxAnimations animations = new JavafxAnimations();
+            Pane [] panes = {ChangeUserPane, ChangeUserBG, ChangeUsersPane};
+            animations.ChangeUserFX(panes);
+
+
     }
 
+    // This will change the username
     @FXML
     void ChangeUsername(ActionEvent event){
          String username = NewUserField.getText();
@@ -1194,6 +1267,8 @@ public class CarSystemController {
                 }
             }
     }
+
+    // This will See your password
     @FXML
     void SeepasswordUser (ActionEvent event){
         System.out.println("Check password");
@@ -1208,23 +1283,52 @@ public class CarSystemController {
             UserPasswordField.setPromptText("Password");
         }
     }
+
+    // This will change the password
     @FXML
     void ChangePasswordAction(ActionEvent evennt){
         String oldpassword = OldpasswordField.getText();
-        String newpassword = NewPasswordField.getText();
+        String password = NewPasswordField.getText();
         String username = UsernameFields.getText();
 
-        if (oldpassword.isEmpty() || newpassword.isEmpty() || username.isEmpty()){
+        if (oldpassword.isEmpty() || password.isEmpty() || username.isEmpty()){
             showErrorAlert("Please fill up all the fields");
         } else {
-            try {
-                // Call the connectMysql class to insert the appointment to the database
-                ConnectMysql connectMysql = new ConnectMysql();
-                connectMysql.ChangePassword(oldpassword, newpassword, username, OldpasswordField, NewPasswordField, UsernameFields);
+            if (!verifyPasswordLength(password)) {
+                showErrorAlert("Password must be 8-20 characters");
+            } else {
+                // Check for uppercase and special characters
+                boolean hasCapsLock = false;
+                boolean hasSpecialCharacters = false;
 
-            } catch (Exception e){
-                e.printStackTrace();
+                // Loop through each character in the password
+                for (char character : password.toCharArray()) {
+                    // Check for uppercase and special characters
+                    if (Character.isUpperCase(character)) {
+                        // If there is an uppercase letter, set hasCapsLock to true
+                        hasCapsLock = true;
+                    } else if (!Character.isLetterOrDigit(character)) {
+                        // If there is a special character, set hasSpecialCharacters to true
+                        hasSpecialCharacters = true;
+                    }
+                }
+
+                // Check for both caps lock and special characters
+                if (!hasCapsLock || !hasSpecialCharacters) {
+                    // If either hasCapsLock or hasSpecialCharacters is false, show error alert
+                    showErrorAlert("Password must have at least one uppercase letter and one special character");
+                } else {
+                    try {
+                        // Call the connectMysql class to insert the appointment to the database
+                        ConnectMysql connectMysql = new ConnectMysql();
+                        connectMysql.ChangePassword(oldpassword, password, username, OldpasswordField, NewPasswordField, UsernameFields);
+
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             }
+
         }
 
     }
@@ -1286,6 +1390,9 @@ public class CarSystemController {
 
         StatusUser.setValue("Select a status");
 
+        DateRented.setPromptText("mm/dd/yyyy");
+        DateReturn.setPromptText("mm/dd/yyyy");
+
         // This will set the combo box month
         ObservableList <String> Month = FXCollections.observableArrayList("Select a month","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December");
         MonthCombo.setItems(Month);
@@ -1306,6 +1413,7 @@ public class CarSystemController {
             CarView1.setItems(CarList.filtered(carImage -> carImage.getCarname().toLowerCase().contains(newValue.toLowerCase())));
         });
 
+        // This is the function of autosearch in car table
         Search_AvailableCars1.setPromptText("Search Available Cars");
         Search_AvailableCars1.textProperty().addListener((observable, oldValue, newValue) -> {
             CarView2.setItems(RentedCars.filtered(carImage -> carImage.getCarname().toLowerCase().contains(newValue.toLowerCase())));
@@ -1329,11 +1437,11 @@ public class CarSystemController {
         statusColumn.setMinWidth(110);
 
         TableColumn <UserTable, Void> actionColumn = new TableColumn<>("Delete");
-        actionColumn.setCellFactory(param -> new ButtonCellDeleteUser("Delete", UserView, UserList));
+        actionColumn.setCellFactory(param -> new ButtonCellDeleteUser("Delete", UserView, UserList, DashboardTabPane, ChangeUserTab, ChangePassTab, OldUserField, UsernameFields, ChangeUserPane, ChangeUsersPane, ChangePassTabPane,ChangePassPane, ChangeUserBG, ChangePassBG));
         actionColumn.setMinWidth(100);
 
         TableColumn<UserTable, Void> actionColumn2 = new TableColumn<>("Edit");
-        actionColumn2.setCellFactory(param -> new ButtonCellDeleteUser("Edit", UserView, UserList));
+        actionColumn2.setCellFactory(param -> new ButtonCellDeleteUser("Edit", UserView, UserList, DashboardTabPane, ChangeUserTab, ChangePassTab, OldUserField, UsernameFields, ChangeUserPane, ChangeUsersPane, ChangePassTabPane,ChangePassPane, ChangeUserBG, ChangePassBG));
         actionColumn2.setMinWidth(100);
 
         UserView.getColumns().addAll(userIDColumn, usernameColumn, statusColumn, actionColumn, actionColumn2);
@@ -1474,7 +1582,7 @@ public class CarSystemController {
         DateReturn.setCellFactory(CustomTableCellFactoryCar2.cellFactoryForString());
 
         TableColumn<CarImage2, Void> actionColumn7 = new TableColumn<>("Moved to Rented");
-        actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars, CarView1,CarList,CarView));
+        actionColumn7.setCellFactory(param -> new ButtonCellDeleteCar1("Moved to Rented", CarView2, RentedCars, CarView1,CarList,CarView, Setusername1));
         actionColumn7.setMinWidth(130);
 
 

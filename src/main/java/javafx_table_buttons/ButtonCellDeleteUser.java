@@ -3,7 +3,11 @@ package javafx_table_buttons;
 import DatabaseFunction.DeleteDataFromMYSQL;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx_animation.JavafxAnimations;
 import javafx_table_functions.UserTable;
+
+import java.util.Optional;
 
 public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
     private final Button button;
@@ -11,10 +15,39 @@ public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
     private TableView < UserTable > UserView;
 
     ObservableList < UserTable > UserList;
-    public ButtonCellDeleteUser(String buttonText, TableView < UserTable > UserView, ObservableList < UserTable > UserList) {
+
+    private TabPane DashboardTabPane;
+
+    private Tab ChangePassTab;
+
+    private Tab ChangeUserTab;
+
+    private TextField UsernameFields;
+
+    private TextField OldUserField;
+
+    private Pane ChangeUserPane ;
+    private Pane  ChangePassPane;
+    private Pane  ChangeUserBG;
+    private Pane  ChangePassBG;
+    private Pane  ChangePassTabPane;
+    private Pane ChangeUsersPane;
+
+    public ButtonCellDeleteUser(String buttonText, TableView < UserTable > UserView, ObservableList < UserTable > UserList, TabPane DashboardTabPane, Tab ChangePassTab, Tab ChangeUserTab, TextField UsernameFields, TextField OldUserField, Pane ChangeUserPane, Pane  ChangePassPane, Pane  ChangeUserBG, Pane  ChangePassBG, Pane  ChangePassTabPane, Pane ChangeUsersPane) {
         this.button = new Button(buttonText);
         this.UserView = UserView;
         this.UserList = UserList;
+        this.DashboardTabPane = DashboardTabPane;
+        this.ChangePassTab = ChangePassTab;
+        this.ChangeUserTab = ChangeUserTab;
+        this.UsernameFields = UsernameFields;
+        this.OldUserField = OldUserField;
+        this.ChangeUserPane = ChangeUserPane;
+        this.ChangePassPane = ChangePassPane;
+        this.ChangeUserBG = ChangeUserBG;
+        this.ChangePassBG = ChangePassBG;
+        this.ChangePassTabPane = ChangePassTabPane;
+        this.ChangeUsersPane = ChangeUsersPane;
         this.button.setOnAction(event -> {
             UserTable selectedUser = getTableRow().getItem();
             if (selectedUser != null) {
@@ -46,6 +79,62 @@ public class ButtonCellDeleteUser extends TableCell<UserTable, Void> {
                     // Code for editing user
                     // You may want to open a new dialog or switch to another view here
                     // For example, show an edit dialog or switch to the edit user view
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Edit Message ");
+                    alert.setContentText("Choose your option to edit.");
+                    alert.setHeaderText(null);
+
+                    // Add the buttons
+                    ButtonType button1 = new ButtonType("Change Password");
+                    ButtonType button2 = new ButtonType("Change Username");
+                    ButtonType button3 = new ButtonType("Cancel");
+                    alert.getButtonTypes().setAll(button1, button2);
+
+                    // Handle button events
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent()) {
+                        if (result.get() == button1) {
+                            // Button 1 event handling
+                            // Add your code here
+
+                            // Change the tab to Change User
+                            DashboardTabPane.getSelectionModel().select(ChangeUserTab);
+
+                            // Set the text field to the selected user
+                            OldUserField.setText(selectedUser.getUsername());
+
+                            // Create scale transitions
+                            JavafxAnimations animations = new JavafxAnimations();
+                            Pane [] panes = {ChangeUserPane, ChangeUserBG, ChangeUsersPane};
+                            animations.ChangeUserFX(panes);
+                        } else if (result.get() == button2) {
+                            // Button 2 event handling
+                            // Add your code here
+                            // Change the tab to Change Password
+                            DashboardTabPane.getSelectionModel().select(ChangePassTab);
+
+                            // Set the text field to the selected user
+                            UsernameFields.setText(selectedUser.getUsername());
+
+                            // Create scale transitions
+                            JavafxAnimations animations = new JavafxAnimations();
+                            Pane [] panes = {ChangePassPane, ChangePassBG, ChangePassTabPane};
+                            animations.ChangePassFX(panes);
+
+
+                        } else if (result.get() == button3) {
+                            // Button 3 event handling
+                            // Add your code here
+                            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                            alert2.setTitle("Information");
+                            alert2.setHeaderText(null);
+                            alert2.setContentText("You have cancelled the edit operation");
+                            alert2.showAndWait();
+                        }
+
+
+                    }
+
                 }
             }
         });

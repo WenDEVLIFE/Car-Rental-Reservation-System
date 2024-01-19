@@ -168,6 +168,7 @@ public class ConnectMysql {
     public void ChangeUsername(String username, String oldusername, String password, Label Setusername1, Label Setusername2, Label Setusername3, Label Setusername4, Label setusername5, Label Setusername6, Label Setusername7, Label Setusername8, Label Setusername9, Label Setusername10, Label Setusername11, Label Setusername12, Label Setusername13, Label Setusername14, Label Setusername15, TextField OldUserField, TextField NewUserField, PasswordField UserPasswordField) {
 
 
+        // Change the username in the database
         boolean usernameChanged = changeUsername( username, oldusername, password);
 
         if (usernameChanged) {
@@ -176,8 +177,14 @@ public class ConnectMysql {
             alert.setHeaderText(null);
             alert.setContentText("Username has been changed");
             alert.showAndWait();
+
+            // Change the username in the UI
             String oldusername1 = Setusername12.getText();
+
+            // Check if the old username is the same as the username in the UI
             if (oldusername1.equals(oldusername)) {
+
+                 // Change the username in the UI
                 Setusername1.setText(username);
                 Setusername2.setText(username);
                 Setusername3.setText(username);
@@ -224,6 +231,7 @@ public class ConnectMysql {
                             int rowsAffected = updateStatement.executeUpdate();
 
                             if (rowsAffected > 0) {
+                                InsertReport1(username);
                                 return true;
                             }
                         }
@@ -243,25 +251,8 @@ public class ConnectMysql {
         return false;
     }
 
-    public void ChangePassword(String oldpassword, String newpassword, String username, PasswordField OldpasswordField, PasswordField NewPasswordField, TextField UsernameFields) {
 
-        boolean passwordChanged = changePassword(oldpassword, newpassword, username);
-
-        if (passwordChanged) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Password has been changed");
-            alert.showAndWait();
-            OldpasswordField.clear();
-            NewPasswordField.clear();
-            UsernameFields.clear();
-        } else {
-            System.out.println("Password change failed. Please check your credentials.");
-        }
-    }
-
-    private boolean changePassword(String oldpassword, String newpassword, String username) {
+    private boolean changePassword(String oldpassword, String password, String username) {
         try {
             Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
             String selectQuery = "SELECT * FROM caruser WHERE username = ?";
@@ -276,7 +267,7 @@ public class ConnectMysql {
                     if (PasswordUtils.verifyPassword(oldpassword, storedPassword, salt)) {
                         // Old password is correct, generate new salt and hash the new password
                         byte[] newSalt = PasswordUtils.generateSalt();
-                        String newHashedPassword = PasswordUtils.hashPassword(newpassword, newSalt);
+                        String newHashedPassword = PasswordUtils.hashPassword(password, newSalt);
 
                         String updateQuery = "UPDATE caruser SET password = ?, salt = ? WHERE username = ?";
                         try (PreparedStatement updateStatement = con.prepareStatement(updateQuery)) {
@@ -286,6 +277,7 @@ public class ConnectMysql {
 
                             int rowsAffected = updateStatement.executeUpdate();
 
+                            InsertReport2(username);
                             return rowsAffected > 0;
                         }
                     } else {
@@ -307,6 +299,99 @@ public class ConnectMysql {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+    public void InsertReport2(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Change Password");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /* This will insert the report to the database
+    * This here is insert report from password
+    * */
+
+    public void InsertReport1(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Change Username");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void ChangePassword(String oldpassword, String newpassword, String username, PasswordField OldpasswordField, PasswordField NewPasswordField, TextField UsernameFields) {
+
+        boolean passwordChanged = changePassword(oldpassword, newpassword, username);
+
+        if (passwordChanged) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Password has been changed");
+            alert.showAndWait();
+            OldpasswordField.clear();
+            NewPasswordField.clear();
+            UsernameFields.clear();
+        } else {
+            System.out.println("Password change failed. Please check your credentials.");
         }
     }
 }

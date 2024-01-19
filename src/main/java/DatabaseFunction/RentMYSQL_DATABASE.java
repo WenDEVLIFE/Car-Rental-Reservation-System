@@ -1,10 +1,7 @@
 package DatabaseFunction;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx_table_functions.CarImage;
 import javafx_table_functions.CarImage2;
@@ -20,7 +17,7 @@ public class RentMYSQL_DATABASE {
     private String MYSQL_USERNAME = MYSQLDATABASE.getDatabaseUsername();
     private String MYSQL_PASSWORD = MYSQLDATABASE.getDatabasePassword();
 
-    public void AddCar(String carname, String plate, int price, File storeImage, TableView<CarImage> CarView, ObservableList<CarImage> CarList, TextField CarName, TextField CarPlate, TextField CarPrice, Label CarFile) {
+    public void AddCar(String carname, String plate, int price, File storeImage, TableView<CarImage> CarView, ObservableList<CarImage> CarList, TextField CarName, TextField CarPlate, TextField CarPrice, Label CarFile, String username) {
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT MAX(CarID) FROM rentedcars");
@@ -67,6 +64,8 @@ public class RentMYSQL_DATABASE {
                     CarPrice.clear();
                     CarFile.setText("No File Chosen");
 
+                    InsertReportCreate(username);
+
                     System.runFinalization();
                 }
             }
@@ -89,7 +88,7 @@ public class RentMYSQL_DATABASE {
     }
 
 
-    public void MoveTheRentCarToPending(String carname, String personrented, String dateRented, int pay, String dateReturn,
+    public void MoveTheRentCarToPending(String username, String carname, String personrented, String dateRented, int pay, String dateReturn,
                                         String cashiername, TextField PersonPay, Label personLabel, Label DateRLabel,
                                         Label DateRRLabel, Label CashierLabel, Label Paylabel, Label DateLabel,
                                         ObservableList<CarImage2> RentedCars, TableView<CarImage2> CarView2, TextField SearchCarName,
@@ -195,6 +194,8 @@ public class RentMYSQL_DATABASE {
                                                         DateReturn.clear();
                                                         CashierName.clear();
 
+                                                        InsertReportApprovedCar(username);
+
                                                     }
                                                 }
                                             }
@@ -213,7 +214,7 @@ public class RentMYSQL_DATABASE {
             e.printStackTrace();
         }
     }
-    public  void MovetheCarBacktoRent(String carname, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView){
+    public  void MovetheCarBacktoRent(String username, String carname, TableView<CarImage> CarView1, ObservableList<CarImage> CarList, TableView<CarImage> CarView){
         try (Connection connection = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
             // SQL query to select the record based on carname
             String selectQuery = "SELECT * FROM availablecar WHERE Carname = ?";
@@ -283,7 +284,7 @@ public class RentMYSQL_DATABASE {
                                         alert.setTitle("Success");
                                         alert.setHeaderText(null);
                                         alert.setContentText("Car Moved Successfully");
-
+                                        InsertReportBackToRented(username);
 
                                     }
                                 }
@@ -299,4 +300,122 @@ public class RentMYSQL_DATABASE {
             e.printStackTrace();
         }
     }
+
+    /* This will insert the report to the database
+    * There are assigned methods here
+    * InsertReportCreate - This will insert the report when the user create a car
+    * InsertReportApprovedCar - This will insert the report when the user approved a car
+    * InsertReportBackToRented - This will insert the report when the user move the car back to rented
+    *
+    * */
+    public void InsertReportCreate(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Create Car");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void InsertReportApprovedCar(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Approved Cars");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void InsertReportBackToRented(String username){
+        // This will insert the report to the database
+        try (Connection con = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)) {
+
+            // This will insert the report to the database
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ReportID) FROM reporttable");
+            int highestId = 0;
+            if (resultSet.next()) {
+                highestId = resultSet.getInt(1);
+            }
+
+            // Increment the highest ID value by 1 to get the new ID value.
+            int newId = highestId + 1;
+
+            String sql = "INSERT INTO reporttable (ReportID, Username, ReportInfo, Date, Time) VALUES (?, ?, ?, ?, ?)";
+
+            // Then proceed to the statement to insert the report
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, newId);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, "Done Rented Car");
+                preparedStatement.setString(4, java.time.LocalDate.now().toString());
+                preparedStatement.setString(5, java.time.LocalTime.now().toString());
+
+                int RowsAffected = preparedStatement.executeUpdate();
+                if (RowsAffected > 0) {
+                    System.out.println("Report has been inserted");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
