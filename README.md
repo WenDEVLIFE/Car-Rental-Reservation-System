@@ -21,16 +21,20 @@ Appointment Task Tab
 ![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/fdb9cac8-991b-4b22-9d27-e203086d903f)
 
 Rent Car
-![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/8533d4d7-1259-4a29-b54e-fe750d81555f)
+![Uploading image.png…]()
+
 
 
 Rent a car
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/8533d4d7-1259-4a29-b54e-fe750d81555f)
 
 Sales
 
 Add Car
 
 Approved car
+![image](https://github.com/WenDEVLIFE/Car-Rental-Reservation-System/assets/117834496/a7e4f4d3-ddf0-41dd-a5c3-28d7b280e435)
+
 
 Reports
 
